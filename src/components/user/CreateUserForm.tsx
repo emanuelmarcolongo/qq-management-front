@@ -4,7 +4,7 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,17 +13,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from "@/src/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
-import { registerUserSchema } from "../schemas";
-import { Input } from "@/components/ui/input";
+} from "@/src/components/ui/select";
+import { useToast } from "@/src/components/ui/use-toast";
+import { registerUserSchema } from "../../schemas";
+import { Input } from "@/src/components/ui/input";
 
 const CreateUserForm = () => {
   const { toast, dismiss } = useToast();

@@ -1,9 +1,9 @@
-import CreateUserForm from "./components/createUserForm";
+import { User } from "@/src/components/user";
 
 export default function Home() {
   return (
     <main className="w-full h-screen flex items-center justify-center">
-      <CreateUserForm></CreateUserForm>
+      <User.CreateForm />
     </main>
   );
 }
