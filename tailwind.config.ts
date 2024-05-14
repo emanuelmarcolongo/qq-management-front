@@ -35,6 +35,8 @@ const config = {
       colors: {
         primary: "#DF6721",
         secondary: "#11945A",
+        textColor: "#3c4257",
+        textError: "#cd3d64",
       },
     },
   },

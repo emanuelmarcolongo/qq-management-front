@@ -44,7 +44,7 @@ const CreateUserForm = () => {
   };
 
   return (
-    <section className="w-[400px] border border-secondary p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center">
+    <section className="w-[400px] border border-secondary p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
       <h1 className="self-start font-semibold mb-6 text-lg">
         Cadastro de usuários
       </h1>
@@ -132,7 +132,9 @@ const CreateUserForm = () => {
             )}
           />
 
-          <Button type="submit">Cadastrar</Button>
+          <Button className="w-full" type="submit">
+            Cadastrar
+          </Button>
         </form>
       </Form>
     </section>
