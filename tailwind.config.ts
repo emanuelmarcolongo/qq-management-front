@@ -37,6 +37,7 @@ const config = {
         secondary: "#11945A",
         textColor: "#3c4257",
         textError: "#cd3d64",
+        inputBorder: "#aaa",
       },
     },
   },

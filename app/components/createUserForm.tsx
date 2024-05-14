@@ -34,9 +34,12 @@ const CreateUserForm = () => {
   const onSubmit = (data: z.infer<typeof registerUserSchema>) => {
     const { id } = toast({
       description: (
-        <p className="mt-2 w-[340px] rounded-md bg-secondary p-4 text-bold text-white">
-          Usuário cadastrado com sucesso!
-        </p>
+        <div className="bg-secondary p-4 text-bold mt-2 w-[340px] rounded-md text-white">
+          <p className=" mb-4 font-bold ">Usuário cadastrado com sucesso!</p>
+          <pre>
+            <code>{JSON.stringify(data, null, 2)}</code>
+          </pre>
+        </div>
       ),
     });
 
@@ -45,7 +48,7 @@ const CreateUserForm = () => {
 
   return (
     <section className="w-[400px] border border-secondary p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
-      <h1 className="self-start font-semibold mb-6 text-lg">
+      <h1 className="self-start font-bold text-textColor mb-6 text-xl">
         Cadastro de usuários
       </h1>
       <Form {...form}>
@@ -60,10 +63,7 @@ const CreateUserForm = () => {
               <FormItem>
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Digite o nome do colaborador(a)"
-                    {...field}
-                  />
+                  <Input {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -78,10 +78,10 @@ const CreateUserForm = () => {
               <FormItem>
                 <FormLabel>Nome de usuário</FormLabel>
                 <FormControl>
-                  <Input placeholder="Digite o nome de usuário" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormDescription>
-                  Esse será seu nome de usuário no sistema.
+                  * Essa será a credencial de acesso ao sistema.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -93,12 +93,9 @@ const CreateUserForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>E-mail</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Digite o email do colaborador(a)"
-                    {...field}
-                  />
+                  <Input {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -117,13 +114,12 @@ const CreateUserForm = () => {
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecione o perfil" />
+                      <SelectValue />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1">Administrador(a)</SelectItem>
-                    <SelectItem value="2">Vendedor(a)</SelectItem>
-                    <SelectItem value="3">Default</SelectItem>
+                    <SelectItem value="1">Caixa VC</SelectItem>
+                    <SelectItem value="2">Estabelecimento</SelectItem>
                   </SelectContent>
                 </Select>
 
