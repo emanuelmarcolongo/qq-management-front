@@ -1,4 +1,4 @@
-import { User } from "@/src/components/user";
+import { Module } from "@/src/components/modules";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="w-full h-screen flex items-center justify-center">
-      <User.LoginForm />
+      <Module.CreateForm />
     </main>
   );
 }
