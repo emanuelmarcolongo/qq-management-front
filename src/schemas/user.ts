@@ -3,7 +3,7 @@ import { z } from "zod";
 export const registerUserSchema = z.object({
   name: z
     .string({ message: "Nome é obrigatório" })
-    .min(5, "O nome do colaborador(a) deve conter mais que 5 caracteres"),
+    .min(5, "O nome do colaborador(a) deve conter ao menos que 5 caracteres"),
   username: z
     .string({ message: "Nome de usuário é obrigatório" })
     .min(5, "O nome de usuário deve conter mais que 5 caracteres")
@@ -14,11 +14,11 @@ export const registerUserSchema = z.object({
     .int("ID do perfil deve ser inteiro"),
 });
 
-export const loginUserSchema = z.object({
+export const userLoginSchema = z.object({
   usernameOrEmail: z
     .string({ message: "Nome de usuário ou email é obrigatório" })
-    .min(3, "Nome de usuário/email é obrigatório e maior que 3 caracteres"),
+    .min(5, "Usuário/email deve conter ao menos que 5 caracteres"),
   password: z
-    .string({ message: "Nome de usuário ou email é obrigatório" })
-    .min(5, "A senha deve possuir ao menos 5 caracteres"),
+    .string({ message: "A senha é obrigatória" })
+    .min(5, "A senha deve conter ao menos que 5 caracteres"),
 });
