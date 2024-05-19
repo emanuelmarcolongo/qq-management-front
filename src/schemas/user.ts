@@ -15,9 +15,9 @@ export const registerUserSchema = z.object({
 });
 
 export const userLoginSchema = z.object({
-  usernameOrEmail: z
-    .string({ message: "Nome de usuário ou email é obrigatório" })
-    .min(5, "Usuário/email deve conter ao menos que 5 caracteres"),
+  username: z
+    .string({ message: "Nome de usuário é obrigatório" })
+    .min(5, "Usuário deve conter ao menos que 5 caracteres"),
   password: z
     .string({ message: "A senha é obrigatória" })
     .min(5, "A senha deve conter ao menos que 5 caracteres"),

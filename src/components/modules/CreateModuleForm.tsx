@@ -18,6 +18,7 @@ import { createModuleSchema } from "../../schemas";
 import { Input } from "@/src/components/ui/input";
 import ModuleStylePreview from "./ModuleStylePreview";
 import { Textarea } from "@/src/components/ui/textarea";
+import { CheckCircle } from "lucide-react";
 
 const CreateModuleForm = () => {
   const { toast, dismiss } = useToast();
@@ -43,15 +44,17 @@ const CreateModuleForm = () => {
       backgroundColor: backgroundColor || "#000000",
     });
   };
-
+  {
+  }
   const onSubmit = (data: z.infer<typeof createModuleSchema>) => {
     const { id } = toast({
       description: (
-        <div className="bg-secondary p-4 text-bold mt-2 w-[340px] rounded-md text-white">
-          <p className=" mb-4 font-bold ">Usuário cadastrado com sucesso!</p>
-          <pre>
-            <code>{JSON.stringify(data, null, 2)}</code>
-          </pre>
+        <div className="flex space-x-4">
+          <CheckCircle color="#11945A" />
+          <p>
+            Usuário cadastrado com sucesso!<br></br>
+            {JSON.stringify(data, null, 2)}
+          </p>
         </div>
       ),
     });

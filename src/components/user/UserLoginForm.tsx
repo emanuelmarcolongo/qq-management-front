@@ -19,6 +19,7 @@ import { useToast } from "@/src/components/ui/use-toast";
 import { userLoginSchema } from "../../schemas";
 import { Input } from "@/src/components/ui/input";
 import Image from "next/image";
+import { CheckCircle } from "lucide-react";
 
 const UserLoginForm = () => {
   const { toast, dismiss } = useToast();
@@ -29,11 +30,9 @@ const UserLoginForm = () => {
   const onSubmit = (data: z.infer<typeof userLoginSchema>) => {
     const { id } = toast({
       description: (
-        <div className="bg-secondary p-4 text-bold mt-2 w-[340px] rounded-md text-white">
-          <p className=" mb-4 font-bold ">Tentativa de Login de:</p>
-          <pre>
-            <code>{JSON.stringify(data, null, 2)}</code>
-          </pre>
+        <div className="flex space-x-4">
+          <CheckCircle color="#11945A" />
+          <p>Login bem sucedido!</p>
         </div>
       ),
     });
@@ -63,7 +62,7 @@ const UserLoginForm = () => {
           >
             <FormField
               control={form.control}
-              name="usernameOrEmail"
+              name="username"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Usuário ou e-mail</FormLabel>
