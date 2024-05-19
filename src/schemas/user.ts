@@ -22,3 +22,7 @@ export const userLoginSchema = z.object({
     .string({ message: "A senha é obrigatória" })
     .min(5, "A senha deve conter ao menos que 5 caracteres"),
 });
+
+export const passwordResetRequestSchema = z.object({
+  email: z.string({ message: "Email é obrigatório" }).email("Email inválido"),
+});

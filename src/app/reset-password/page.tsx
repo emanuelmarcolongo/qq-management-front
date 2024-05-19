@@ -1,15 +1,14 @@
-import { Module } from "@/src/components/modules";
-import Transaction from "@/src/components/transaction";
 import { User } from "@/src/components/user";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "QQ | Login",
+  title: "QQ | Redefinir Senha",
 };
-export default function Home() {
+
+export default function RequestPasswordReset() {
   return (
     <main className="w-full h-screen flex items-center justify-center">
-      <User.LoginForm />
+      <User.RequestPassword />
     </main>
   );
 }
