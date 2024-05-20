@@ -6,11 +6,31 @@ import UtilityBar from "@/src/components/utilitybar/UtilityBar";
 import Filter from "@/src/lib/filters";
 import Sort from "@/src/lib/sort";
 import { User } from "@/src/models/User";
+import { Plus } from "lucide-react";
 import React, { useState } from "react";
 
 interface UserPageProps {
   data: User[];
 }
+
+const UserUtilityBarConfig = {
+  selectOptions: [
+    { value: "name", label: "Nome" },
+    { value: "registrationAsc", label: "Matrícula (cresc)" },
+    { value: "registrationDesc", label: "Matrícula (decr)" },
+    { value: "createdAsc", label: "Data criação (cresc)" },
+    { value: "createdDesc", label: "Data criação (decr)" },
+    { value: "updatedAsc", label: "Última atualização (cresc)" },
+    { value: "updatedDesc", label: "Última atualização (decr)" },
+  ],
+  buttonConfig: {
+    label: "Adicionar usuário",
+    icon: <Plus />,
+    onClick: () => {
+      alert("Clicou adiconar usuário");
+    },
+  },
+};
 
 const CCUsersPage = ({ data }: UserPageProps) => {
   const [order, setOrder] = useState<string>("");
@@ -21,7 +41,11 @@ const CCUsersPage = ({ data }: UserPageProps) => {
   return (
     <Content.Root>
       <Content.Title title="Usuários" />
-      <UtilityBar setSearch={setSearch} setOrder={setOrder} />
+      <UtilityBar
+        config={UserUtilityBarConfig}
+        setSearch={setSearch}
+        setOrder={setOrder}
+      />
       <UserTable users={sortedUsers} />
     </Content.Root>
   );

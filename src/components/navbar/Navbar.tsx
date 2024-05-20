@@ -62,7 +62,7 @@ const DesktopNavbar = () => {
 const MobileNavbar = () => {
   return (
     <section className="bg-secondary drop-shadow-xl h-[70px] w-screen fixed top-0 z-10 md:hidden flex items-center justify-between px-4">
-      <div>
+      <div className="flex items-center justify-center">
         <Image
           priority
           className="drop-shadow-xl"
@@ -70,6 +70,10 @@ const MobileNavbar = () => {
           alt="Imagem de perfil do usuário"
           height={60}
         />
+        <div className="text-sm text-white ml-4">
+          <p className="font-bold ">Carlos Silva</p>
+          <p>Administrador(a)</p>
+        </div>
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger>
