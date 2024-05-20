@@ -7,7 +7,6 @@ interface UtilityBarConfig {
   selectOptions: SelectOption[];
   buttonConfig?: {
     label: string;
-    icon?: React.ReactNode;
     onClick: () => void;
   };
 }

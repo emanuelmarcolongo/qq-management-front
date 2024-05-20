@@ -83,7 +83,7 @@ const MobileNavbar = () => {
           <DropdownMenuLabel>Ir para:</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {navigation.map((navlink) => (
-            <DropdownMenuItem>
+            <DropdownMenuItem key={navlink.href}>
               <Link className="flex items-center space-x-4" href={navlink.href}>
                 <navlink.icon size={15} />
                 <p>{navlink.name}</p>

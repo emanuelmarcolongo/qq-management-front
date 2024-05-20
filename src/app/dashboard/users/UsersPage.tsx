@@ -25,7 +25,6 @@ const UserUtilityBarConfig = {
   ],
   buttonConfig: {
     label: "Adicionar usuário",
-    icon: <Plus />,
     onClick: () => {
       alert("Clicou adiconar usuário");
     },

@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/ui/select";
+import { Plus, Search } from "lucide-react";
 
 interface UtilityBarProps {
   setSearch?: Dispatch<SetStateAction<string>>;
@@ -18,17 +19,22 @@ interface UtilityBarProps {
 const UtilityBar = ({ setSearch, setOrder, config }: UtilityBarProps) => {
   return (
     <section className="bg-[#FCF9F8] mb-10 rounded-md border-[1px] p-4 border-[#AAAAAA/50] drop-shadow-xl items-center justify-center sm:flex sm:space-x-10 space-y-4 sm:space-y-0">
-      <Input
-        placeholder="Pesquisar.."
-        onChange={(e) => (setSearch ? setSearch(e.target.value) : "")}
-      ></Input>
+      <div className="relative w-full">
+        <Input
+          className=""
+          placeholder="Pesquisar.."
+          onChange={(e) => (setSearch ? setSearch(e.target.value) : "")}
+        ></Input>
+        <Search className="absolute top-2 right-4" color="#DF6721" size={20} />
+      </div>
+
       <Select onValueChange={(value) => (setOrder ? setOrder(value) : "")}>
         <SelectTrigger className="">
           <SelectValue placeholder="Organizar por" />
         </SelectTrigger>
         <SelectContent>
           {config.selectOptions.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
+            <SelectItem key={option.label} value={option.value}>
               {option.label}
             </SelectItem>
           ))}
@@ -37,9 +43,7 @@ const UtilityBar = ({ setSearch, setOrder, config }: UtilityBarProps) => {
 
       {config.buttonConfig && (
         <Button onClick={config.buttonConfig.onClick}>
-          {config.buttonConfig.icon && (
-            <span className="mr-2">{config.buttonConfig.icon}</span>
-          )}
+          <Plus className="mr-2" />
           {config.buttonConfig.label}
         </Button>
       )}
