@@ -28,7 +28,7 @@ const DesktopNavbar = () => {
   return (
     <section
       id="desktop-navbar"
-      className="hidden md:flex  h-screen w-[300px] bg-secondary drop-shadow-xl  flex-col items-center justify-evenly text-white fixed"
+      className="hidden md:flex  h-screen md:w-[220px] lg:w-[300px] bg-secondary drop-shadow-xl  flex-col items-center justify-evenly text-white fixed"
     >
       <article className="flex items-center justify-center flex-col">
         <Image
