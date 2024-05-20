@@ -14,9 +14,8 @@ import {
   FormMessage,
 } from "@/src/components/ui/form";
 import { useToast } from "@/src/components/ui/use-toast";
-import { createModuleSchema } from "../../schemas";
+import { createModuleSchema } from "../../models/validation";
 import { Input } from "@/src/components/ui/input";
-import ModuleStylePreview from "./ModuleStylePreview";
 import { Textarea } from "@/src/components/ui/textarea";
 import { CheckCircle } from "lucide-react";
 
@@ -146,6 +145,32 @@ const CreateModuleForm = () => {
         </form>
       </Form>
     </section>
+  );
+};
+
+type ModulePreviewProps = {
+  modulePreview: {
+    name: string;
+    backgroundColor: string;
+    textColor: string;
+  };
+};
+const ModuleStylePreview = ({ modulePreview }: ModulePreviewProps) => {
+  const { backgroundColor, name, textColor } = modulePreview;
+  return (
+    <>
+      <p className="text-textColor font-semibold text-sm">Preview</p>
+      <div
+        className={`rounded-2xl flex items-center justify-center h-[40px] font-bold `}
+        style={{
+          backgroundColor,
+          color: textColor,
+          border: `2px ${textColor} solid`,
+        }}
+      >
+        {name}
+      </div>
+    </>
   );
 };
 

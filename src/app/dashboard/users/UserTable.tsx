@@ -1,7 +1,7 @@
 import React from "react";
 import Table from "@/src/components/ui/table";
 import { EllipsisIcon } from "lucide-react";
-import { User } from "@/src/models/User";
+import { User } from "@/src/models/types/User";
 
 interface UserTableProps {
   users: User[];

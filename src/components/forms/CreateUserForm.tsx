@@ -22,23 +22,22 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { useToast } from "@/src/components/ui/use-toast";
-import { createTransactionSchema, registerUserSchema } from "../../schemas";
+import { registerUserSchema } from "../../models/validation";
 import { Input } from "@/src/components/ui/input";
 import { CheckCircle } from "lucide-react";
-import { Textarea } from "../ui/textarea";
 
-const CreateTransactionForm = () => {
+const CreateUserForm = () => {
   const { toast, dismiss } = useToast();
-  const form = useForm<z.infer<typeof createTransactionSchema>>({
-    resolver: zodResolver(createTransactionSchema),
+  const form = useForm<z.infer<typeof registerUserSchema>>({
+    resolver: zodResolver(registerUserSchema),
   });
 
-  const onSubmit = (data: z.infer<typeof createTransactionSchema>) => {
+  const onSubmit = (data: z.infer<typeof registerUserSchema>) => {
     const { id } = toast({
       description: (
         <div className="flex space-x-4">
           <CheckCircle color="#11945A" />
-          <p>Transação cadastrado com sucesso!</p>
+          <p>Usuário cadastrado com sucesso!</p>
         </div>
       ),
     });
@@ -47,7 +46,7 @@ const CreateTransactionForm = () => {
   return (
     <section className="w-[400px] border border-secondary p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
       <h1 className="self-start font-bold text-textColor mb-6 text-xl">
-        Nova Transação
+        Cadastro de usuários
       </h1>
       <Form {...form}>
         <form
@@ -71,17 +70,16 @@ const CreateTransactionForm = () => {
 
           <FormField
             control={form.control}
-            name="description"
+            name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Descrição (opcional)</FormLabel>
+                <FormLabel>Nome de usuário</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Dê um breve resumo sobre a transação"
-                    className="resize-none"
-                    {...field}
-                  />
+                  <Input {...field} />
                 </FormControl>
+                <FormDescription>
+                  * Essa será a credencial de acesso ao sistema.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -89,10 +87,25 @@ const CreateTransactionForm = () => {
 
           <FormField
             control={form.control}
-            name="module_id"
+            name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Módulo da transação</FormLabel>
+                <FormLabel>E-mail</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="profile_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Perfil do colaborador(a)</FormLabel>
                 <Select
                   onValueChange={(value) => field.onChange(parseInt(value))}
                 >
@@ -102,8 +115,8 @@ const CreateTransactionForm = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1">Pagamento</SelectItem>
-                    <SelectItem value="2">Cadastro (CA)</SelectItem>
+                    <SelectItem value="1">Caixa VC</SelectItem>
+                    <SelectItem value="2">Estabelecimento</SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -121,4 +134,4 @@ const CreateTransactionForm = () => {
   );
 };
 
-export default CreateTransactionForm;
+export default CreateUserForm;

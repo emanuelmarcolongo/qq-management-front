@@ -8,7 +8,6 @@ import { Button } from "@/src/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,22 +21,23 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { useToast } from "@/src/components/ui/use-toast";
-import { registerUserSchema } from "../../schemas";
+import { createFunctionSchema } from "../../models/validation";
 import { Input } from "@/src/components/ui/input";
 import { CheckCircle } from "lucide-react";
+import { Textarea } from "../ui/textarea";
 
-const CreateUserForm = () => {
+const CreateFunctionForm = () => {
   const { toast, dismiss } = useToast();
-  const form = useForm<z.infer<typeof registerUserSchema>>({
-    resolver: zodResolver(registerUserSchema),
+  const form = useForm<z.infer<typeof createFunctionSchema>>({
+    resolver: zodResolver(createFunctionSchema),
   });
 
-  const onSubmit = (data: z.infer<typeof registerUserSchema>) => {
+  const onSubmit = (data: z.infer<typeof createFunctionSchema>) => {
     const { id } = toast({
       description: (
         <div className="flex space-x-4">
           <CheckCircle color="#11945A" />
-          <p>Usuário cadastrado com sucesso!</p>
+          <p>Função cadastrado com sucesso!</p>
         </div>
       ),
     });
@@ -46,7 +46,7 @@ const CreateUserForm = () => {
   return (
     <section className="w-[400px] border border-secondary p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
       <h1 className="self-start font-bold text-textColor mb-6 text-xl">
-        Cadastro de usuários
+        Nova Função
       </h1>
       <Form {...form}>
         <form
@@ -70,16 +70,17 @@ const CreateUserForm = () => {
 
           <FormField
             control={form.control}
-            name="username"
+            name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome de usuário</FormLabel>
+                <FormLabel>Descrição (opcional)</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Textarea
+                    placeholder="Dê um breve resumo sobre a função"
+                    className="resize-none"
+                    {...field}
+                  />
                 </FormControl>
-                <FormDescription>
-                  * Essa será a credencial de acesso ao sistema.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -87,25 +88,10 @@ const CreateUserForm = () => {
 
           <FormField
             control={form.control}
-            name="email"
+            name="module_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>E-mail</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="profile_id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Perfil do colaborador(a)</FormLabel>
+                <FormLabel>Módulo da função</FormLabel>
                 <Select
                   onValueChange={(value) => field.onChange(parseInt(value))}
                 >
@@ -115,8 +101,8 @@ const CreateUserForm = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1">Caixa VC</SelectItem>
-                    <SelectItem value="2">Estabelecimento</SelectItem>
+                    <SelectItem value="1">Adicionar (Adic)</SelectItem>
+                    <SelectItem value="2">Restringir</SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -134,4 +120,4 @@ const CreateUserForm = () => {
   );
 };
 
-export default CreateUserForm;
+export default CreateFunctionForm;

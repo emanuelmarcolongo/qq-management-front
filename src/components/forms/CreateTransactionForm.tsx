@@ -8,6 +8,7 @@ import { Button } from "@/src/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,23 +22,26 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { useToast } from "@/src/components/ui/use-toast";
-import { createFunctionSchema } from "../../schemas";
+import {
+  createTransactionSchema,
+  registerUserSchema,
+} from "../../models/validation";
 import { Input } from "@/src/components/ui/input";
 import { CheckCircle } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 
-const CreateFunctionForm = () => {
+const CreateTransactionForm = () => {
   const { toast, dismiss } = useToast();
-  const form = useForm<z.infer<typeof createFunctionSchema>>({
-    resolver: zodResolver(createFunctionSchema),
+  const form = useForm<z.infer<typeof createTransactionSchema>>({
+    resolver: zodResolver(createTransactionSchema),
   });
 
-  const onSubmit = (data: z.infer<typeof createFunctionSchema>) => {
+  const onSubmit = (data: z.infer<typeof createTransactionSchema>) => {
     const { id } = toast({
       description: (
         <div className="flex space-x-4">
           <CheckCircle color="#11945A" />
-          <p>Função cadastrado com sucesso!</p>
+          <p>Transação cadastrado com sucesso!</p>
         </div>
       ),
     });
@@ -46,7 +50,7 @@ const CreateFunctionForm = () => {
   return (
     <section className="w-[400px] border border-secondary p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
       <h1 className="self-start font-bold text-textColor mb-6 text-xl">
-        Nova Função
+        Nova Transação
       </h1>
       <Form {...form}>
         <form
@@ -76,7 +80,7 @@ const CreateFunctionForm = () => {
                 <FormLabel>Descrição (opcional)</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Dê um breve resumo sobre a função"
+                    placeholder="Dê um breve resumo sobre a transação"
                     className="resize-none"
                     {...field}
                   />
@@ -91,7 +95,7 @@ const CreateFunctionForm = () => {
             name="module_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Módulo da função</FormLabel>
+                <FormLabel>Módulo da transação</FormLabel>
                 <Select
                   onValueChange={(value) => field.onChange(parseInt(value))}
                 >
@@ -101,8 +105,8 @@ const CreateFunctionForm = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1">Adicionar (Adic)</SelectItem>
-                    <SelectItem value="2">Restringir</SelectItem>
+                    <SelectItem value="1">Pagamento</SelectItem>
+                    <SelectItem value="2">Cadastro (CA)</SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -120,4 +124,4 @@ const CreateFunctionForm = () => {
   );
 };
 
-export default CreateFunctionForm;
+export default CreateTransactionForm;

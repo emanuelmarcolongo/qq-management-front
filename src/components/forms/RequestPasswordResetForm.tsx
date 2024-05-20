@@ -16,29 +16,27 @@ import {
 import logo from "@/public/queroquero.webp";
 
 import { useToast } from "@/src/components/ui/use-toast";
-import { userLoginSchema } from "../../schemas";
+import { passwordResetRequestSchema } from "../../models/validation";
 import { Input } from "@/src/components/ui/input";
-import Image from "next/image";
 import { CheckCircle } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
-const UserLoginForm = () => {
+const RequestPasswordResetForm = () => {
   const { toast, dismiss } = useToast();
-  const form = useForm<z.infer<typeof userLoginSchema>>({
-    resolver: zodResolver(userLoginSchema),
+  const form = useForm<z.infer<typeof passwordResetRequestSchema>>({
+    resolver: zodResolver(passwordResetRequestSchema),
   });
 
-  const onSubmit = (data: z.infer<typeof userLoginSchema>) => {
+  const onSubmit = (data: z.infer<typeof passwordResetRequestSchema>) => {
     const { id } = toast({
       description: (
         <div className="flex space-x-4">
           <CheckCircle color="#11945A" />
-          <p>Login bem sucedido!</p>
+          <p>Email enviado!</p>
         </div>
       ),
     });
-
-    setTimeout(() => dismiss(id), 2000);
   };
 
   return (
@@ -50,12 +48,15 @@ const UserLoginForm = () => {
         height={200}
         className="rounded-full mb-12 drop-shadow-2xl"
       />
-
       <section className="w-[400px] border border-secondary p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
-        <h1 className="self-start font-bold text-textColor mb-6 text-xl">
-          Acesse sua conta
+        <h1 className="self-start font-bold text-textColor mb-4 text-xl">
+          Redefina sua senha
         </h1>
 
+        <h2 className="mb-12 text-textColor text-sm">
+          Informe o e-mail associado à sua conta para receber um link de
+          redefinição de senha
+        </h2>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -63,10 +64,10 @@ const UserLoginForm = () => {
           >
             <FormField
               control={form.control}
-              name="username"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Usuário ou e-mail</FormLabel>
+                  <FormLabel>E-mail</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -76,35 +77,20 @@ const UserLoginForm = () => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Senha</FormLabel>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <Button className="w-full" type="submit">
-              Entrar
+              Continuar
             </Button>
           </form>
         </Form>
         <Link
-          href={"/reset-password"}
           className="font-bold text-sm text-indigo-700 mt-10 self-start hover:text-textColor hover:cursor-pointer"
+          href={"/"}
         >
-          Esqueceu sua senha?
+          Voltar para o login
         </Link>
       </section>
     </main>
   );
 };
 
-export default UserLoginForm;
+export default RequestPasswordResetForm;

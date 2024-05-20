@@ -1,12 +1,11 @@
 "use client";
 
-import Content from "@/src/components/content";
-import UserTable from "@/src/components/user/UserTable";
+import Content from "@/src/components/page-content";
+import UserTable from "./UserTable";
 import UtilityBar from "@/src/components/utilitybar/UtilityBar";
 import Filter from "@/src/lib/filters";
 import Sort from "@/src/lib/sort";
-import { User } from "@/src/models/User";
-import { Plus } from "lucide-react";
+import { User } from "@/src/models/types/User";
 import React, { useState } from "react";
 
 interface UserPageProps {

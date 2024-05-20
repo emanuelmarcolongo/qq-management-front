@@ -1,4 +1,4 @@
-import { User } from "@/src/components/user";
+import Forms from "@/src/components/forms";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function RequestPasswordReset() {
   return (
     <main className="w-full h-screen flex items-center justify-center">
-      <User.RequestPassword />
+      <Forms.RequestPasswordReset />
     </main>
   );
 }
