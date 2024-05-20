@@ -21,8 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} relative`}>
-        <main className="flex bg-[#F8F8F8]">
+      <body
+        className={`${inter.className} relative max-w-[100%] overflow-x-hidden`}
+      >
+        <main className="md:flex bg-[#F8F8F8]">
           <Navbar />
           {children}
           <Toaster />

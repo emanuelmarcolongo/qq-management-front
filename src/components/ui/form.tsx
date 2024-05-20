@@ -11,7 +11,7 @@ import {
 } from "react-hook-form";
 import { Alert02Icon } from "hugeicons-react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/src/lib/utils";
 import { Label } from "@/src/components/ui/label";
 
 const Form = FormProvider;
