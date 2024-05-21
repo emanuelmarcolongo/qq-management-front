@@ -7,6 +7,8 @@ import Filter from "@/src/lib/filters";
 import Sort from "@/src/lib/sort";
 import { User } from "@/src/models/types/User";
 import React, { useState } from "react";
+import Modal from "@/src/components/modal";
+import Forms from "@/src/components/forms";
 
 interface UserPageProps {
   data: User[];
@@ -24,15 +26,13 @@ const UserUtilityBarConfig = {
   ],
   buttonConfig: {
     label: "Adicionar usuário",
-    onClick: () => {
-      alert("Clicou adiconar usuário");
-    },
   },
 };
 
 const CCUsersPage = ({ data }: UserPageProps) => {
   const [order, setOrder] = useState<string>("");
   const [search, setSearch] = useState<string>("");
+  const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
   const filteredUsers = Filter.Users(data, search);
   const sortedUsers = Sort.Users(filteredUsers, order);
@@ -40,11 +40,18 @@ const CCUsersPage = ({ data }: UserPageProps) => {
     <Content.Root>
       <Content.Title title="Usuários" />
       <UtilityBar
+        setShowModal={setShowCreateModal}
         config={UserUtilityBarConfig}
         setSearch={setSearch}
         setOrder={setOrder}
       />
       <UserTable users={sortedUsers} />
+
+      {showCreateModal && (
+        <Modal.Root setShowModal={setShowCreateModal}>
+          <Forms.CreateUser setShowModal={setShowCreateModal} />
+        </Modal.Root>
+      )}
     </Content.Root>
   );
 };

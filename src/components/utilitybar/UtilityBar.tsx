@@ -14,9 +14,15 @@ interface UtilityBarProps {
   setSearch?: Dispatch<SetStateAction<string>>;
   setOrder?: Dispatch<SetStateAction<string>>;
   config: UtilityBarConfig;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const UtilityBar = ({ setSearch, setOrder, config }: UtilityBarProps) => {
+const UtilityBar = ({
+  setSearch,
+  setOrder,
+  config,
+  setShowModal,
+}: UtilityBarProps) => {
   return (
     <section className="bg-[#FCF9F8] mb-10 rounded-md border-[1px] p-4 border-[#AAAAAA/50] drop-shadow-xl items-center justify-center sm:flex sm:space-x-10 space-y-4 sm:space-y-0">
       <div className="relative w-full">
@@ -42,7 +48,7 @@ const UtilityBar = ({ setSearch, setOrder, config }: UtilityBarProps) => {
       </Select>
 
       {config.buttonConfig && (
-        <Button onClick={config.buttonConfig.onClick}>
+        <Button onClick={() => setShowModal(true)}>
           <Plus className="mr-2" />
           {config.buttonConfig.label}
         </Button>

@@ -9,10 +9,10 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
-import { Alert02Icon } from "hugeicons-react";
 
 import { cn } from "@/src/lib/utils";
 import { Label } from "@/src/components/ui/label";
+import { TriangleAlert } from "lucide-react";
 
 const Form = FormProvider;
 
@@ -164,7 +164,7 @@ const FormMessage = React.forwardRef<
       {...props}
     >
       <p>
-        <Alert02Icon size={16} className="mr-1" />
+        <TriangleAlert size={16} className="mr-1" />
       </p>
 
       {body}

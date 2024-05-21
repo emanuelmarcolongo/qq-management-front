@@ -7,6 +7,5 @@ interface UtilityBarConfig {
   selectOptions: SelectOption[];
   buttonConfig?: {
     label: string;
-    onClick: () => void;
   };
 }
