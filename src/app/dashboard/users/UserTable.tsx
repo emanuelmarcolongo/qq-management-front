@@ -1,10 +1,10 @@
 import React from "react";
 import Table from "@/src/components/ui/table";
 import { EllipsisIcon } from "lucide-react";
-import { User } from "@/src/models/types/User";
+import { User, UserWithProfile } from "@/src/models/types/User";
 
 interface UserTableProps {
-  users: User[];
+  users: UserWithProfile[];
 }
 
 const UserTable = ({ users }: UserTableProps) => {
@@ -23,7 +23,7 @@ const UserTable = ({ users }: UserTableProps) => {
             <Table.Cell>{user.registration}</Table.Cell>
             <Table.Cell>{user.name}</Table.Cell>
             <Table.Cell className="hidden md:table-cell">
-              {user.profile}
+              {user.profile.name}
             </Table.Cell>
             <Table.Cell className="hidden lg:table-cell">
               {user.email}

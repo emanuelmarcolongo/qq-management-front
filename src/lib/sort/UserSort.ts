@@ -1,6 +1,9 @@
-import { User } from "@/src/models/User";
+import { UserWithProfile } from "@/src/models/types/User";
 
-const sortUsers = (users: User[], sortKey: string): User[] => {
+const sortUsers = (
+  users: UserWithProfile[],
+  sortKey: string
+): UserWithProfile[] => {
   const sortedUsers = [...users];
 
   switch (sortKey) {
@@ -15,22 +18,26 @@ const sortUsers = (users: User[], sortKey: string): User[] => {
       break;
     case "createdAsc":
       sortedUsers.sort(
-        (a, b) => a.created_at.getTime() - b.created_at.getTime()
+        (a, b) =>
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
       );
       break;
     case "createdDesc":
       sortedUsers.sort(
-        (a, b) => b.created_at.getTime() - a.created_at.getTime()
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
       break;
     case "updatedAsc":
       sortedUsers.sort(
-        (a, b) => a.updated_at.getTime() - b.updated_at.getTime()
+        (a, b) =>
+          new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
       );
       break;
     case "updatedDesc":
       sortedUsers.sort(
-        (a, b) => b.updated_at.getTime() - a.updated_at.getTime()
+        (a, b) =>
+          new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
       );
       break;
     default:

@@ -1,7 +1,6 @@
 import React from "react";
 import profileAvatar from "@/public/profile-avatar.png";
 import Image from "next/image";
-import mockUsers from "@/src/data/datamock";
 import { LucideLogOut, Menu } from "lucide-react";
 import Link from "next/link";
 import Navlinks from "./Navlinks";
@@ -39,8 +38,8 @@ const DesktopNavbar = () => {
           height={150}
         />
         <div className="flex flex-col items-center justify-center text-white">
-          <p className="font-semibold text-lg">{mockUsers[0].name}</p>
-          <p className="text-sm font-light ">{mockUsers[0].profile}</p>
+          <p className="font-semibold text-lg">Emanuel</p>
+          <p className="text-sm font-light ">Admin</p>
         </div>
       </article>
       <div className="divider h-[1px] w-[90%] my-4 bg-white mx-auto" />

@@ -5,13 +5,13 @@ import UserTable from "./UserTable";
 import UtilityBar from "@/src/components/utilitybar/UtilityBar";
 import Filter from "@/src/lib/filters";
 import Sort from "@/src/lib/sort";
-import { User } from "@/src/models/types/User";
+import { User, UserWithProfile } from "@/src/models/types/User";
 import React, { useState } from "react";
 import Modal from "@/src/components/modal";
 import Forms from "@/src/components/forms";
 
 interface UserPageProps {
-  data: User[];
+  data: UserWithProfile[];
 }
 
 const UserUtilityBarConfig = {
