@@ -41,13 +41,6 @@ const RequestPasswordResetForm = () => {
 
   return (
     <main className="flex flex-col items-center ">
-      <Image
-        src={logo}
-        alt="Logo Lojas Quero-Quero"
-        width={200}
-        height={200}
-        className="rounded-full mb-12 drop-shadow-2xl"
-      />
       <section className="w-[400px] border border-secondary p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
         <h1 className="self-start font-bold text-textColor mb-4 text-xl">
           Redefina sua senha
