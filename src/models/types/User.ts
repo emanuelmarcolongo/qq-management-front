@@ -25,3 +25,11 @@ export interface UserWithProfile {
     name: string;
   };
 }
+
+export interface CreateUserData {
+  name: string;
+  username: string;
+  email: string;
+  registration: string;
+  profile_id: number;
+}
