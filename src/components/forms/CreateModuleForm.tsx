@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,55 +17,82 @@ import { useToast } from "@/src/components/ui/use-toast";
 import { createModuleSchema } from "../../models/validation";
 import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
-import { CheckCircle } from "lucide-react";
+import { AlertCircle, CheckCircle, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import ModulesService from "@/src/services/ModulesService";
 
-const CreateModuleForm = () => {
+interface CreateModuleFormProps {
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+}
+
+const CreateModuleForm = ({ setShowModal }: CreateModuleFormProps) => {
+  const router = useRouter();
   const { toast, dismiss } = useToast();
   const form = useForm<z.infer<typeof createModuleSchema>>({
     resolver: zodResolver(createModuleSchema),
     defaultValues: {
-      backgroundColor: "#000000",
-      textColor: "#ffffff",
+      background_color: "#000000",
+      text_color: "#ffffff",
     },
   });
 
   const [modulePreview, setModulePreview] = useState({
     name: "Meu Módulo",
-    textColor: "#ffffff",
-    backgroundColor: "#000000",
+    text_color: "#ffffff",
+    background_color: "#000000",
   });
 
   const handleInputChange = () => {
-    const { name, textColor, backgroundColor } = form.getValues();
+    const { name, text_color, background_color } = form.getValues();
     setModulePreview({
       name: name || "Meu Módulo",
-      textColor: textColor || "#ffffff",
-      backgroundColor: backgroundColor || "#000000",
+      text_color: text_color || "#ffffff",
+      background_color: background_color || "#000000",
     });
   };
   {
   }
-  const onSubmit = (data: z.infer<typeof createModuleSchema>) => {
-    const { id } = toast({
-      description: (
-        <div className="flex space-x-4">
-          <CheckCircle color="#11945A" />
-          <p>
-            Usuário cadastrado com sucesso!<br></br>
-            {JSON.stringify(data, null, 2)}
-          </p>
-        </div>
-      ),
-    });
+  const onSubmit = async (data: z.infer<typeof createModuleSchema>) => {
+    try {
+      const newModule = await ModulesService.postModule(data);
+      const { id } = toast({
+        description: (
+          <div className="flex space-x-4">
+            <CheckCircle color="#11945A" />
+            <p>Módulo cadastrado com sucesso!</p>
+          </div>
+        ),
+      });
+      router.refresh();
+    } catch (error) {
+      let message = "Erro ao cadastrar módulo";
+      if (error instanceof Error) {
+        message = error.message;
+      }
 
-    setTimeout(() => dismiss(id), 2000);
+      const { id } = toast({
+        variant: "destructive",
+        description: (
+          <div className="flex space-x-4 font-bold">
+            <AlertCircle color="white" />
+            <p>{message}</p>
+          </div>
+        ),
+      });
+    }
   };
 
   return (
-    <section className="w-[400px] border border-secondary p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
-      <h1 className="self-start font-bold text-textColor mb-6 text-xl">
-        Adicionar módulo
-      </h1>
+    <section className="w-[400px] border border-textColor p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
+      <div className="flex justify-between w-full">
+        <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
+          Adicionar Módulo
+        </h1>
+        <X
+          onClick={() => setShowModal(false)}
+          className="hover:cursor-pointer"
+        />
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -108,7 +135,7 @@ const CreateModuleForm = () => {
           <div className="flex justify-between">
             <FormField
               control={form.control}
-              name="backgroundColor"
+              name="background_color"
               render={({ field }) => (
                 <FormItem className="w-[43%]">
                   <FormLabel>Cor de fundo</FormLabel>
@@ -123,7 +150,7 @@ const CreateModuleForm = () => {
 
             <FormField
               control={form.control}
-              name="textColor"
+              name="text_color"
               render={({ field }) => (
                 <FormItem className="w-[43%]">
                   <FormLabel>Cor do texto</FormLabel>
@@ -151,21 +178,21 @@ const CreateModuleForm = () => {
 type ModulePreviewProps = {
   modulePreview: {
     name: string;
-    backgroundColor: string;
-    textColor: string;
+    background_color: string;
+    text_color: string;
   };
 };
 const ModuleStylePreview = ({ modulePreview }: ModulePreviewProps) => {
-  const { backgroundColor, name, textColor } = modulePreview;
+  const { background_color, name, text_color } = modulePreview;
   return (
     <>
       <p className="text-textColor font-semibold text-sm">Preview</p>
       <div
         className={`rounded-2xl flex items-center justify-center h-[40px] font-bold `}
         style={{
-          backgroundColor,
-          color: textColor,
-          border: `2px ${textColor} solid`,
+          backgroundColor: background_color,
+          color: text_color,
+          border: `2px ${text_color} solid`,
         }}
       >
         {name}

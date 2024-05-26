@@ -5,7 +5,7 @@ export const createModuleSchema = z.object({
     .string({ message: "Nome é obrigatório" })
     .min(6, "Nome do módulo deve ter pelo menos 7 caracteres"),
   description: z.string().optional(),
-  backgroundColor: z
+  background_color: z
     .string()
     .length(7, "A cor de fundo deve conter exatamente 7 caracteres")
     .startsWith(
@@ -14,7 +14,7 @@ export const createModuleSchema = z.object({
     )
     .default("#000000")
     .optional(),
-  textColor: z
+  text_color: z
     .string()
     .length(7, "A cor do texto deve conter exatamente 7 caracteres")
     .startsWith(

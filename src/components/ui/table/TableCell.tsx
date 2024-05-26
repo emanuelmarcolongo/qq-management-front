@@ -1,13 +1,18 @@
 import React, { ReactNode } from "react";
 
-interface TableCellProps {
+interface TableCellProps extends React.ComponentPropsWithoutRef<"td"> {
   children: ReactNode;
-  className?: string;
 }
-
-const TableCell: React.FC<TableCellProps> = ({ children, className }) => {
+const TableCell: React.FC<TableCellProps> = ({
+  children,
+  className,
+  ...rest
+}) => {
   return (
-    <td className={`${className} py-4 px-10 break-words max-w-[180px] `}>
+    <td
+      className={`${className} py-4 px-10 break-words max-w-[180px] `}
+      {...rest}
+    >
       {children}
     </td>
   );

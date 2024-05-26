@@ -34,12 +34,14 @@ import { AlertCircle, CheckCircle, X } from "lucide-react";
 import { Profile } from "@/src/models/types/Profiles";
 import ProfilesService from "@/src/services/ProfileService";
 import UserService from "@/src/services/UserService";
+import { useRouter } from "next/navigation";
 
 interface CreateUserFormProps {
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const CreateUserForm = ({ setShowModal }: CreateUserFormProps) => {
+  const router = useRouter();
   const { toast, dismiss } = useToast();
   const form = useForm<z.infer<typeof registerUserSchema>>({
     resolver: zodResolver(registerUserSchema),
@@ -63,9 +65,8 @@ const CreateUserForm = ({ setShowModal }: CreateUserFormProps) => {
           </div>
         ),
       });
+      router.refresh();
     } catch (error) {
-      console.error(error);
-
       let message = "Erro ao cadastrar usuário";
       if (error instanceof Error) {
         message = error.message;
@@ -91,7 +92,15 @@ const CreateUserForm = ({ setShowModal }: CreateUserFormProps) => {
         const fetchedProfiles = await ProfilesService.getProfiles();
         if (fetchedProfiles) setProfiles(fetchedProfiles);
       } catch (error) {
-        console.error("Erro ao carregar perfis:", error);
+        const { id } = toast({
+          variant: "destructive",
+          description: (
+            <div className="flex space-x-4 font-bold">
+              <AlertCircle color="white" />
+              <p>Erro ao carregar perfis</p>
+            </div>
+          ),
+        });
       }
     };
 
