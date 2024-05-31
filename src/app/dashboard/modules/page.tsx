@@ -1,5 +1,10 @@
 import ModulesService from "@/src/services/ModulesService";
 import CCModulesPage from "./ModulesPage";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Quero-Quero | Módulos",
+};
 
 const ModulesPage = async () => {
   const modules = await ModulesService.getModules();

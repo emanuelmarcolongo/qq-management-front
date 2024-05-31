@@ -14,7 +14,11 @@ const getUsers = async (): Promise<UserWithProfile[] | void> => {
 
   const response = await fetch(`${process.env.API_BASE_URL}/users`, options);
   if (!response.ok) {
-    throw new Error(`Erro na requisição: ${response.status}`);
+    if (response.status === 401) {
+      throw new Error("Não autorizado, faça login e tente novamente");
+    }
+
+    throw new Error("Algo deu errado, falha ao criar usuário");
   }
 
   const data: UserWithProfile[] = await response.json();

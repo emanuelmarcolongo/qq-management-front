@@ -108,7 +108,7 @@ const CreateUserForm = ({ setShowModal }: CreateUserFormProps) => {
   }, []);
 
   return (
-    <section className="w-[400px] h-full border border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-center jusitfy-center bg-white overflow-y-scroll text-sm">
+    <section className="w-[400px] max-h-[700px] h-full border border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-center jusitfy-center bg-white overflow-y-auto text-sm">
       <div className="flex justify-between w-full">
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
           Adicionar Usuário
