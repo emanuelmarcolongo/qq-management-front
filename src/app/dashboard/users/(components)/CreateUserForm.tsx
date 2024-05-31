@@ -28,7 +28,7 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { useToast } from "@/src/components/ui/use-toast";
-import { registerUserSchema } from "../../models/validation";
+import { registerUserSchema } from "../../../../models/validation";
 import { Input } from "@/src/components/ui/input";
 import { AlertCircle, CheckCircle, X } from "lucide-react";
 import { Profile } from "@/src/models/types/Profiles";

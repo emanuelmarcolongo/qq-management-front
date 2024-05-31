@@ -90,10 +90,35 @@ const updateModule = async (
   return responseData;
 };
 
+const deleteModule = async (id: number): Promise<any> => {
+  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
+
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules/${id}`,
+    options
+  );
+
+  if (!response.ok) {
+    throw new Error("Algo deu errado, falha ao deletar o módulo");
+  }
+
+  const responseData = await response.json();
+  return responseData;
+};
+
 const ModulesService = {
   getModules,
   postModule,
   updateModule,
+  deleteModule,
 };
 
 export default ModulesService;

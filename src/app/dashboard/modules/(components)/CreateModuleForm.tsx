@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/src/components/ui/form";
 import { useToast } from "@/src/components/ui/use-toast";
-import { createModuleSchema } from "../../models/validation";
+import { createModuleSchema } from "../../../../models/validation";
 import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
 import { AlertCircle, CheckCircle, X } from "lucide-react";

@@ -13,20 +13,27 @@ import {
 
 interface ModuleTableProps {
   modules: ModulesData[];
-  showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
   setModuleIndex: Dispatch<SetStateAction<number>>;
+  setShowDelete: Dispatch<SetStateAction<boolean>>;
 }
 
 const ModuleTable = ({
   modules,
   setShowModal,
+  setShowDelete,
   setModuleIndex,
 }: ModuleTableProps) => {
   const handleEditModule = (idx: number) => {
     setModuleIndex(idx);
     setShowModal(true);
   };
+
+  const handleDeleteModule = (idx: number) => {
+    setModuleIndex(idx);
+    setShowDelete(true);
+  };
+
   return (
     <>
       <Table.Root>
@@ -57,6 +64,9 @@ const ModuleTable = ({
                     <DropdownMenuItem onClick={() => handleEditModule(idx)}>
                       Editar
                     </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleDeleteModule(idx)}>
+                      Deletar
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </Table.Cell>
@@ -77,7 +87,7 @@ interface ModuleTagProps {
 const ModuleTag = ({ text, background_color, text_color }: ModuleTagProps) => {
   return (
     <p
-      className={`rounded-2xl max-w-[150px] text-xs break-words flex items-center justify-center h-[40px] font-bold `}
+      className={`rounded-2xl max-w-[150px] text-xs break-words flex items-center justify-center h-[50px] font-bold text-center `}
       style={{
         backgroundColor: background_color,
         color: text_color,

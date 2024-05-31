@@ -6,10 +6,11 @@ import Filter from "@/src/lib/filters";
 import Sort from "@/src/lib/sort";
 import React, { useState } from "react";
 import Modal from "@/src/components/modal";
-import Forms from "@/src/components/forms";
 import { ModulesData } from "@/src/models/types/Modules";
-import ModuleTable from "./ModuleTable";
-import UpdateModuleForm from "./UpdateModuleForm";
+import ModuleTable from "./(components)/ModuleTable";
+import UpdateModuleForm from "./(components)/UpdateModuleForm";
+import DeleteModule from "./(components)/DeleteModule";
+import CreateModuleForm from "./(components)/CreateModuleForm";
 
 interface ModulesPageProps {
   data: ModulesData[];
@@ -33,6 +34,7 @@ const CCModulesPage = ({ data }: ModulesPageProps) => {
   const [search, setSearch] = useState<string>("");
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [editModuleIndex, setEditModuleIndex] = useState<number>(0);
 
   const filteredModules = Filter.Modules(data, search);
@@ -47,15 +49,15 @@ const CCModulesPage = ({ data }: ModulesPageProps) => {
         setOrder={setOrder}
       />
       <ModuleTable
-        showModal={showUpdateModal}
         setShowModal={setShowUpdateModal}
+        setShowDelete={setShowDeleteModal}
         modules={sortedModules}
         setModuleIndex={setEditModuleIndex}
       />
 
       {showCreateModal && (
         <Modal.Root setShowModal={setShowCreateModal}>
-          <Forms.CreateModule setShowModal={setShowCreateModal} />
+          <CreateModuleForm setShowModal={setShowCreateModal} />
         </Modal.Root>
       )}
 
@@ -64,6 +66,15 @@ const CCModulesPage = ({ data }: ModulesPageProps) => {
           <UpdateModuleForm
             moduleInfo={data[editModuleIndex]}
             setShowModal={setShowUpdateModal}
+          />
+        </Modal.Root>
+      )}
+
+      {showDeleteModal && (
+        <Modal.Root setShowModal={setShowDeleteModal}>
+          <DeleteModule
+            moduleInfo={data[editModuleIndex]}
+            setShowModal={setShowDeleteModal}
           />
         </Modal.Root>
       )}

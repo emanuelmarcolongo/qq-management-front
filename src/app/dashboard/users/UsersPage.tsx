@@ -1,14 +1,14 @@
 "use client";
 
 import Content from "@/src/components/page-content";
-import UserTable from "./UserTable";
+import UserTable from "./(components)/UserTable";
 import UtilityBar from "@/src/components/utilitybar/UtilityBar";
 import Filter from "@/src/lib/filters";
 import Sort from "@/src/lib/sort";
-import { User, UserWithProfile } from "@/src/models/types/User";
+import { UserWithProfile } from "@/src/models/types/User";
 import React, { useState } from "react";
 import Modal from "@/src/components/modal";
-import Forms from "@/src/components/forms";
+import CreateUserForm from "./(components)/CreateUserForm";
 
 interface UserPageProps {
   data: UserWithProfile[];
@@ -49,7 +49,7 @@ const CCUsersPage = ({ data }: UserPageProps) => {
 
       {showCreateModal && (
         <Modal.Root setShowModal={setShowCreateModal}>
-          <Forms.CreateUser setShowModal={setShowCreateModal} />
+          <CreateUserForm setShowModal={setShowCreateModal} />
         </Modal.Root>
       )}
     </Content.Root>
