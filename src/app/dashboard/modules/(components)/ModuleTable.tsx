@@ -1,6 +1,5 @@
 "use client";
 
-import React, { Dispatch, SetStateAction } from "react";
 import Table from "@/src/components/ui/table";
 import { EllipsisIcon } from "lucide-react";
 import { ModulesData } from "@/src/models/types/Modules";
@@ -10,30 +9,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
+import Link from "next/link";
 
 interface ModuleTableProps {
   modules: ModulesData[];
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-  setModuleIndex: Dispatch<SetStateAction<number>>;
-  setShowDelete: Dispatch<SetStateAction<boolean>>;
 }
 
-const ModuleTable = ({
-  modules,
-  setShowModal,
-  setShowDelete,
-  setModuleIndex,
-}: ModuleTableProps) => {
-  const handleEditModule = (idx: number) => {
-    setModuleIndex(idx);
-    setShowModal(true);
-  };
-
-  const handleDeleteModule = (idx: number) => {
-    setModuleIndex(idx);
-    setShowDelete(true);
-  };
-
+const ModuleTable = ({ modules }: ModuleTableProps) => {
   return (
     <>
       <Table.Root>
@@ -61,12 +43,15 @@ const ModuleTable = ({
                     <EllipsisIcon className="cursor-pointer" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem onClick={() => handleEditModule(idx)}>
-                      Editar
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleDeleteModule(idx)}>
-                      Deletar
-                    </DropdownMenuItem>
+                    <Link href={`/dashboard/modules?edit=true&id=${module.id}`}>
+                      <DropdownMenuItem>Editar</DropdownMenuItem>
+                    </Link>
+
+                    <Link
+                      href={`/dashboard/modules?delete=true&id=${module.id}`}
+                    >
+                      <DropdownMenuItem>Deletar</DropdownMenuItem>
+                    </Link>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </Table.Cell>
@@ -87,7 +72,7 @@ interface ModuleTagProps {
 const ModuleTag = ({ text, background_color, text_color }: ModuleTagProps) => {
   return (
     <p
-      className={`rounded-2xl max-w-[150px] text-xs break-words flex items-center justify-center h-[50px] font-bold text-center `}
+      className={`rounded-2xl max-w-[150px] text-xs break-words flex items-center justify-center h-[40px] font-bold text-center `}
       style={{
         backgroundColor: background_color,
         color: text_color,

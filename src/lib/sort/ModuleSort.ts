@@ -3,7 +3,7 @@ import { ModulesData } from "@/src/models/types/Modules";
 
 const sortModules = (
   modules: ModulesData[],
-  sortKey: string
+  sortKey: string | null
 ): ModulesData[] => {
   const sortedModules = [...modules];
 
@@ -37,6 +37,7 @@ const sortModules = (
       );
       break;
     default:
+      sortedModules;
       break;
   }
 

@@ -35,12 +35,9 @@ import { Profile } from "@/src/models/types/Profiles";
 import ProfilesService from "@/src/services/ProfileService";
 import UserService from "@/src/services/UserService";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-interface CreateUserFormProps {
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-}
-
-const CreateUserForm = ({ setShowModal }: CreateUserFormProps) => {
+const CreateUserForm = () => {
   const router = useRouter();
   const { toast, dismiss } = useToast();
   const form = useForm<z.infer<typeof registerUserSchema>>({
@@ -113,10 +110,9 @@ const CreateUserForm = ({ setShowModal }: CreateUserFormProps) => {
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
           Adicionar Usuário
         </h1>
-        <X
-          onClick={() => setShowModal(false)}
-          className="hover:cursor-pointer"
-        />
+        <Link href={"/dashboard/users"}>
+          <X />
+        </Link>
       </div>
 
       <Form {...form}>

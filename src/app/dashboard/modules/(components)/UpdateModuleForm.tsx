@@ -22,16 +22,14 @@ import { useRouter } from "next/navigation";
 import ModulesService from "@/src/services/ModulesService";
 import { ModulesData } from "@/src/models/types/Modules";
 import ModuleStylePreview from "./ModuleStylePreview";
+import Link from "next/link";
 
 interface CreateModuleFormProps {
-  setShowModal: Dispatch<SetStateAction<boolean>>;
   moduleInfo: ModulesData;
 }
 
-const UpdateModuleForm = ({
-  setShowModal,
-  moduleInfo,
-}: CreateModuleFormProps) => {
+const UpdateModuleForm = ({ moduleInfo }: CreateModuleFormProps) => {
+  console.log(moduleInfo);
   const router = useRouter();
   const { toast, dismiss } = useToast();
   const form = useForm<z.infer<typeof createModuleSchema>>({
@@ -71,6 +69,7 @@ const UpdateModuleForm = ({
           </div>
         ),
       });
+      router.push("/dashboard/modules");
       router.refresh();
     } catch (error) {
       let message = "Erro ao cadastrar módulo";
@@ -96,10 +95,9 @@ const UpdateModuleForm = ({
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
           Editar Módulo
         </h1>
-        <X
-          onClick={() => setShowModal(false)}
-          className="hover:cursor-pointer"
-        />
+        <Link href={"/dashboard/modules"}>
+          <X />
+        </Link>
       </div>
       <Form {...form}>
         <form

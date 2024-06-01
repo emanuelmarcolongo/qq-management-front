@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Dispatch, SetStateAction } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -9,20 +11,16 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { Plus, Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface UtilityBarProps {
   setSearch?: Dispatch<SetStateAction<string>>;
-  setOrder?: Dispatch<SetStateAction<string>>;
   config: UtilityBarConfig;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const UtilityBar = ({
-  setSearch,
-  setOrder,
-  config,
-  setShowModal,
-}: UtilityBarProps) => {
+const UtilityBar = ({ setSearch, config }: UtilityBarProps) => {
+  const router = useRouter();
   return (
     <section className="bg-[#FCF9F8] mb-10 rounded-md border-[1px] p-4 border-[#AAAAAA/50] drop-shadow-xl items-center justify-center sm:flex sm:space-x-10 space-y-4 sm:space-y-0">
       <div className="relative w-full">
@@ -34,7 +32,11 @@ const UtilityBar = ({
         <Search className="absolute top-2 right-4" color="#DF6721" size={20} />
       </div>
 
-      <Select onValueChange={(value) => (setOrder ? setOrder(value) : "")}>
+      <Select
+        onValueChange={(value) =>
+          router.push(`${config.baseUrl}?orderBy=${value}`)
+        }
+      >
         <SelectTrigger className="">
           <SelectValue placeholder="Organizar por" />
         </SelectTrigger>
@@ -48,9 +50,11 @@ const UtilityBar = ({
       </Select>
 
       {config.buttonConfig && (
-        <Button onClick={() => setShowModal(true)}>
+        <Button>
           <Plus className="mr-2" />
-          {config.buttonConfig.label}
+          <Link href={`${config.baseUrl}?add=true`}>
+            {config.buttonConfig.label}
+          </Link>
         </Button>
       )}
     </section>

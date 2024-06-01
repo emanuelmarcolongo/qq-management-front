@@ -2,7 +2,7 @@ import { UserWithProfile } from "@/src/models/types/User";
 
 const sortUsers = (
   users: UserWithProfile[],
-  sortKey: string
+  sortKey: string | null
 ): UserWithProfile[] => {
   const sortedUsers = [...users];
 
@@ -41,6 +41,7 @@ const sortUsers = (
       );
       break;
     default:
+      sortedUsers;
       break;
   }
 

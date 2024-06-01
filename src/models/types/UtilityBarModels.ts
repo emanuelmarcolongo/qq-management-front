@@ -4,6 +4,7 @@ interface SelectOption {
 }
 
 interface UtilityBarConfig {
+  baseUrl: string;
   selectOptions: SelectOption[];
   buttonConfig?: {
     label: string;

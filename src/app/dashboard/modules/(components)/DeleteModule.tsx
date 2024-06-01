@@ -1,6 +1,5 @@
 "use client";
 
-import React, { Dispatch, SetStateAction } from "react";
 import { Button } from "@/src/components/ui/button";
 import { useToast } from "@/src/components/ui/use-toast";
 import { AlertCircle, CheckCircle, X } from "lucide-react";
@@ -8,13 +7,13 @@ import { useRouter } from "next/navigation";
 import ModulesService from "@/src/services/ModulesService";
 import { ModulesData } from "@/src/models/types/Modules";
 import ModuleStylePreview from "./ModuleStylePreview";
+import Link from "next/link";
 
 interface CreateModuleFormProps {
-  setShowModal: Dispatch<SetStateAction<boolean>>;
   moduleInfo: ModulesData;
 }
 
-const DeleteModule = ({ setShowModal, moduleInfo }: CreateModuleFormProps) => {
+const DeleteModule = ({ moduleInfo }: CreateModuleFormProps) => {
   const router = useRouter();
   const { toast, dismiss } = useToast();
 
@@ -35,8 +34,9 @@ const DeleteModule = ({ setShowModal, moduleInfo }: CreateModuleFormProps) => {
           </div>
         ),
       });
+
+      router.push("/dashboard/modules");
       router.refresh();
-      setShowModal(false);
     } catch (error) {
       let message = "Erro ao deletar módulo";
       if (error instanceof Error) {
@@ -61,10 +61,9 @@ const DeleteModule = ({ setShowModal, moduleInfo }: CreateModuleFormProps) => {
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
           Deletar Módulo
         </h1>
-        <X
-          onClick={() => setShowModal(false)}
-          className="hover:cursor-pointer"
-        />
+        <Link href={"/dashboard/modules"}>
+          <X />
+        </Link>
       </div>
       <header className=" flex items-center justify-between w-full mb-6">
         <h1 className="font-bold text-xl">{moduleInfo.name}</h1>
@@ -85,8 +84,9 @@ const DeleteModule = ({ setShowModal, moduleInfo }: CreateModuleFormProps) => {
         >
           Deletar
         </Button>
-        <Button onClick={() => setShowModal(false)} className="w-[47%]">
-          Cancelar
+
+        <Button className="w-[47%] ring-1 ring-textColor">
+          <Link href={"/dashboard/modules"}>Cancelar</Link>
         </Button>
       </div>
     </section>

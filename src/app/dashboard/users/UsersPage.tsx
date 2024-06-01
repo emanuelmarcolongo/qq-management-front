@@ -9,12 +9,16 @@ import { UserWithProfile } from "@/src/models/types/User";
 import React, { useState } from "react";
 import Modal from "@/src/components/modal";
 import CreateUserForm from "./(components)/CreateUserForm";
+import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
+import { useSearchParams } from "next/navigation";
 
 interface UserPageProps {
   data: UserWithProfile[];
 }
 
 const UserUtilityBarConfig = {
+  baseUrl: "/dashboard/users",
   selectOptions: [
     { value: "name", label: "Nome" },
     { value: "registrationAsc", label: "Matrícula (cresc)" },
@@ -30,26 +34,23 @@ const UserUtilityBarConfig = {
 };
 
 const CCUsersPage = ({ data }: UserPageProps) => {
-  const [order, setOrder] = useState<string>("");
+  const searchParams = useSearchParams();
+  const userIdParams = searchParams.get("id");
+  const orderByParams = searchParams.get("orderBy");
+  const addModalParams = convertStringToBoolean(searchParams.get("add"));
   const [search, setSearch] = useState<string>("");
-  const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
   const filteredUsers = Filter.Users(data, search);
-  const sortedUsers = Sort.Users(filteredUsers, order);
+  const sortedUsers = Sort.Users(filteredUsers, orderByParams);
   return (
     <Content.Root>
       <Content.Title title="Usuários" />
-      <UtilityBar
-        setShowModal={setShowCreateModal}
-        config={UserUtilityBarConfig}
-        setSearch={setSearch}
-        setOrder={setOrder}
-      />
+      <UtilityBar config={UserUtilityBarConfig} setSearch={setSearch} />
       <UserTable users={sortedUsers} />
 
-      {showCreateModal && (
-        <Modal.Root setShowModal={setShowCreateModal}>
-          <CreateUserForm setShowModal={setShowCreateModal} />
+      {addModalParams && (
+        <Modal.Root>
+          <CreateUserForm />
         </Modal.Root>
       )}
     </Content.Root>

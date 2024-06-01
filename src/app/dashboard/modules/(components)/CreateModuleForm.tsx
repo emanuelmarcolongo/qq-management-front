@@ -1,6 +1,5 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -18,15 +17,15 @@ import { createModuleSchema } from "../../../../models/validation";
 import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
 import { AlertCircle, CheckCircle, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ModulesService from "@/src/services/ModulesService";
+import Link from "next/link";
+import { useState } from "react";
 
-interface CreateModuleFormProps {
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-}
-
-const CreateModuleForm = ({ setShowModal }: CreateModuleFormProps) => {
+const CreateModuleForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const moduleIdParams = searchParams.get("id");
   const { toast, dismiss } = useToast();
   const form = useForm<z.infer<typeof createModuleSchema>>({
     resolver: zodResolver(createModuleSchema),
@@ -88,10 +87,9 @@ const CreateModuleForm = ({ setShowModal }: CreateModuleFormProps) => {
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
           Adicionar Módulo
         </h1>
-        <X
-          onClick={() => setShowModal(false)}
-          className="hover:cursor-pointer"
-        />
+        <Link href={"/dashboard/modules"}>
+          <X />
+        </Link>
       </div>
       <Form {...form}>
         <form
