@@ -12,6 +12,8 @@ import CreateUserForm from "./(components)/CreateUserForm";
 import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
 import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
 import { useSearchParams } from "next/navigation";
+import UpdateUserForm from "./(components)/UpdateUserForm";
+import DeleteUser from "./(components)/DeleteUser";
 
 interface UserPageProps {
   data: UserWithProfile[];
@@ -38,7 +40,13 @@ const CCUsersPage = ({ data }: UserPageProps) => {
   const userIdParams = searchParams.get("id");
   const orderByParams = searchParams.get("orderBy");
   const addModalParams = convertStringToBoolean(searchParams.get("add"));
+  const editModalParams = convertStringToBoolean(searchParams.get("edit"));
+  const deleteModalParams = convertStringToBoolean(searchParams.get("delete"));
   const [search, setSearch] = useState<string>("");
+
+  const userInfo = data.find(
+    (user) => user.id === convertStringToInt(userIdParams)
+  );
 
   const filteredUsers = Filter.Users(data, search);
   const sortedUsers = Sort.Users(filteredUsers, orderByParams);
@@ -51,6 +59,17 @@ const CCUsersPage = ({ data }: UserPageProps) => {
       {addModalParams && (
         <Modal.Root>
           <CreateUserForm />
+        </Modal.Root>
+      )}
+
+      {editModalParams && userInfo && (
+        <Modal.Root>
+          <UpdateUserForm userInfo={userInfo} />
+        </Modal.Root>
+      )}
+      {deleteModalParams && userInfo && (
+        <Modal.Root>
+          <DeleteUser userInfo={userInfo} />
         </Modal.Root>
       )}
     </Content.Root>

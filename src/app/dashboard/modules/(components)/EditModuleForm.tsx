@@ -29,7 +29,6 @@ interface CreateModuleFormProps {
 }
 
 const UpdateModuleForm = ({ moduleInfo }: CreateModuleFormProps) => {
-  console.log(moduleInfo);
   const router = useRouter();
   const { toast, dismiss } = useToast();
   const form = useForm<z.infer<typeof createModuleSchema>>({

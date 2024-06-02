@@ -1,4 +1,5 @@
-import { CreateUserData, UserWithProfile } from "../models/types/User";
+import { ApiResponse } from "../models/types/ApiResponse";
+import { CreateUserData, User, UserWithProfile } from "../models/types/User";
 
 const getUsers = async (): Promise<UserWithProfile[] | void> => {
   const token = `${process.env.TOKEN}`;
@@ -13,16 +14,13 @@ const getUsers = async (): Promise<UserWithProfile[] | void> => {
   };
 
   const response = await fetch(`${process.env.API_BASE_URL}/users`, options);
-  if (!response.ok) {
-    if (response.status === 401) {
-      throw new Error("Não autorizado, faça login e tente novamente");
-    }
+  const body = await response.json();
 
-    throw new Error("Algo deu errado, falha ao criar usuário");
+  if (!response.ok) {
+    throw new Error(body.message);
   }
 
-  const data: UserWithProfile[] = await response.json();
-  return data;
+  return body;
 };
 
 const postUser = async (data: CreateUserData): Promise<any> => {
@@ -41,24 +39,74 @@ const postUser = async (data: CreateUserData): Promise<any> => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/register`,
     options
   );
-  if (!response.ok) {
-    if (response.status === 401) {
-      throw new Error("Não autorizado, faça login e tente novamente");
-    }
-    if (response.status === 409) {
-      throw new Error("Conflito, nome de usuário, email ou matrícula em uso ");
-    }
+  const body = await response.json();
 
-    throw new Error("Algo deu errado, falha ao criar usuário");
+  if (!response.ok) {
+    throw new Error(body.message);
   }
 
-  const responseData = await response.json();
-  return responseData;
+  return body;
+};
+
+const updateUser = async (
+  id: number,
+  data: CreateUserData
+): Promise<ApiResponse<User>> => {
+  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
+
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  };
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/${id}`,
+    options
+  );
+
+  const body = await response.json();
+
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+
+  return body;
+};
+
+const deleteUser = async (id: number): Promise<User> => {
+  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
+
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/${id}`,
+    options
+  );
+
+  const body = await response.json();
+
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+
+  return body;
 };
 
 const UserService = {
   getUsers,
   postUser,
+  updateUser,
+  deleteUser,
 };
 
 export default UserService;

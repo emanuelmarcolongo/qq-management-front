@@ -1,5 +1,4 @@
 import { Profile } from "../models/types/Profiles";
-import { CreateUserData } from "../models/types/User";
 
 const getProfiles = async (): Promise<Profile[] | void> => {
   const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
@@ -17,12 +16,13 @@ const getProfiles = async (): Promise<Profile[] | void> => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles`,
     options
   );
+  const body = await response.json();
+
   if (!response.ok) {
-    throw new Error(`Erro na requisição: ${response.status}`);
+    throw new Error(body.message);
   }
 
-  const data: Profile[] = await response.json();
-  return data;
+  return body;
 };
 
 const ProfilesService = {

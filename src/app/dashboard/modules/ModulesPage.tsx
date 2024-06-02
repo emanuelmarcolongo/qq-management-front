@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import Modal from "@/src/components/modal";
 import { ModulesData } from "@/src/models/types/Modules";
 import ModuleTable from "./(components)/ModuleTable";
-import UpdateModuleForm from "./(components)/UpdateModuleForm";
+import UpdateModuleForm from "./(components)/EditModuleForm";
 import DeleteModule from "./(components)/DeleteModule";
 import CreateModuleForm from "./(components)/CreateModuleForm";
 import { useSearchParams } from "next/navigation";

@@ -56,7 +56,7 @@ const DeleteModule = ({ moduleInfo }: CreateModuleFormProps) => {
   };
 
   return (
-    <section className="w-[400px] border text-textColor border-textColor p-8 rounded-xl shadow-2xl flex flex-col items-start jusitfy-center bg-white space-y-10">
+    <section className="w-[400px] border text-textColor border-textColor p-8 rounded-xl shadow-2xl flex flex-col items-start jusitfy-center bg-white ">
       <div className="flex justify-between w-full mb-6">
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
           Deletar Módulo
@@ -66,28 +66,33 @@ const DeleteModule = ({ moduleInfo }: CreateModuleFormProps) => {
         </Link>
       </div>
       <header className=" flex items-center justify-between w-full mb-6">
-        <h1 className="font-bold text-xl">{moduleInfo.name}</h1>
+        <h1 className="font-medium text-xl">{moduleInfo.name}</h1>
         <ModuleStylePreview modulePreview={moduleTagInfo} />
       </header>
       {moduleInfo.description && (
         <div>
-          <p className="font-bold">Descrição</p>
+          <p className="font-medium">Descrição</p>
           <p>{moduleInfo.description}</p>
         </div>
       )}
-      <p className="font-semibold">Tem certeza que deseja deletar o módulo?</p>
-      <div className="flex justify-between w-full">
-        <Button
-          onClick={() => onSubmit()}
-          variant={"ghost"}
-          className="w-[47%] ring-1 ring-textColor"
-        >
-          Deletar
-        </Button>
 
-        <Button className="w-[47%] ring-1 ring-textColor">
-          <Link href={"/dashboard/modules"}>Cancelar</Link>
-        </Button>
+      <div className="mt-10">
+        <p className="font-semibold">
+          Tem certeza que deseja deletar o módulo?
+        </p>
+        <div className="flex justify-between w-full mt-10">
+          <Button
+            onClick={() => onSubmit()}
+            variant={"ghost"}
+            className="w-[47%] ring-1 ring-textColor"
+          >
+            Deletar
+          </Button>
+
+          <Button className="w-[47%] ring-1 ring-textColor">
+            <Link href={"/dashboard/modules"}>Cancelar</Link>
+          </Button>
+        </div>
       </div>
     </section>
   );

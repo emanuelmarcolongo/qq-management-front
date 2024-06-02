@@ -38,19 +38,13 @@ const postModule = async (data: CreateModuleData): Promise<any> => {
     options
   );
 
-  if (!response.ok) {
-    if (response.status === 401) {
-      throw new Error("Não autorizado, faça login e tente novamente");
-    }
-    if (response.status === 409) {
-      throw new Error("Conflito - nome do módulo já existe ");
-    }
+  const body = await response.json();
 
-    throw new Error("Algo deu errado, falha ao criar módulo");
+  if (!response.ok) {
+    throw new Error(body.message);
   }
 
-  const responseData = await response.json();
-  return responseData;
+  return body;
 };
 
 const updateModule = async (
@@ -73,21 +67,13 @@ const updateModule = async (
     options
   );
 
-  if (!response.ok) {
-    if (response.status === 404) {
-      throw new Error("Módulo com o ID dado não encontrado");
-    }
-    if (response.status === 409) {
-      throw new Error(
-        "Conflito - nome do módulo pertence a outro módulo já existente "
-      );
-    }
+  const body = await response.json();
 
-    throw new Error("Algo deu errado, falha ao atualizar o módulo");
+  if (!response.ok) {
+    throw new Error(body.message);
   }
 
-  const responseData = await response.json();
-  return responseData;
+  return body;
 };
 
 const deleteModule = async (id: number): Promise<any> => {
@@ -106,12 +92,13 @@ const deleteModule = async (id: number): Promise<any> => {
     options
   );
 
+  const body = await response.json();
+
   if (!response.ok) {
-    throw new Error("Algo deu errado, falha ao deletar o módulo");
+    throw new Error(body.message);
   }
 
-  const responseData = await response.json();
-  return responseData;
+  return body;
 };
 
 const ModulesService = {
