@@ -36,5 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 #hiding some test code 
-src/app/dashboard/profiles
-src/mockData
+deletedCode

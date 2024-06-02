@@ -6,21 +6,21 @@ import Filter from "@/src/lib/filters";
 import Sort from "@/src/lib/sort";
 import React, { useState } from "react";
 import Modal from "@/src/components/modal";
-import { ModulesData } from "@/src/models/types/Modules";
-import ModuleTable from "./(components)/ModuleTable";
-import UpdateModuleForm from "./(components)/UpdateModuleForm";
-import DeleteModule from "./(components)/DeleteModule";
-import CreateModuleForm from "./(components)/CreateModuleForm";
-import { useSearchParams } from "next/navigation";
-import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
 import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
+import { useSearchParams } from "next/navigation";
+import ProfileTable from "./(components)/ProfileTable";
+import { Profile } from "@/src/models/types/Profiles";
+import CreatProfileForm from "./(components)/CreateProfileForm";
+import UpdateProfileForm from "./(components)/UpdateProfileForm";
+import DeleteProfile from "./(components)/DeleteProfile";
 
-interface ModulesPageProps {
-  data: ModulesData[];
+interface UserPageProps {
+  data: Profile[];
 }
 
 const UserUtilityBarConfig = {
-  baseUrl: "/dashboard/modules",
+  baseUrl: "/dashboard/profiles",
   selectOptions: [
     { value: "name", label: "Nome" },
     { value: "createdAsc", label: "Data criação (cresc)" },
@@ -29,50 +29,49 @@ const UserUtilityBarConfig = {
     { value: "updatedDesc", label: "Última atualização (decr)" },
   ],
   buttonConfig: {
-    label: "Adicionar Módulo",
+    label: "Adicionar perfil",
   },
 };
 
-const CCModulesPage = ({ data }: ModulesPageProps) => {
+const CCProfilePage = ({ data }: UserPageProps) => {
   const searchParams = useSearchParams();
-  const moduleIdParams = searchParams.get("id");
+  const profileIdParams = searchParams.get("id");
   const orderByParams = searchParams.get("orderBy");
   const addModalParams = convertStringToBoolean(searchParams.get("add"));
   const editModalParams = convertStringToBoolean(searchParams.get("edit"));
   const deleteModalParams = convertStringToBoolean(searchParams.get("delete"));
   const [search, setSearch] = useState<string>("");
-  const moduleInfo = data.find(
-    (module) => module.id === convertStringToInt(moduleIdParams)
+
+  const profileInfo = data.find(
+    (profile) => profile.id === convertStringToInt(profileIdParams)
   );
 
-  const filteredModules = Filter.Modules(data, search);
-  const sortedModules = Sort.Modules(filteredModules, orderByParams);
-
+  const filteredProfiles = Filter.Profiles(data, search);
+  const sortedProfiles = Sort.Profiles(filteredProfiles, orderByParams);
   return (
     <Content.Root>
-      <Content.Title title="Módulos" />
+      <Content.Title title="Perfis" />
       <UtilityBar config={UserUtilityBarConfig} setSearch={setSearch} />
-      <ModuleTable modules={sortedModules} />
+      <ProfileTable profiles={sortedProfiles} />
 
       {addModalParams && (
         <Modal.Root>
-          <CreateModuleForm />
+          <CreatProfileForm />
         </Modal.Root>
       )}
 
-      {editModalParams && (
+      {editModalParams && profileInfo && (
         <Modal.Root>
-          {moduleInfo && <UpdateModuleForm moduleInfo={moduleInfo} />}
+          <UpdateProfileForm profileInfo={profileInfo} />
         </Modal.Root>
       )}
-
-      {deleteModalParams && (
+      {deleteModalParams && profileInfo && (
         <Modal.Root>
-          {moduleInfo && <DeleteModule moduleInfo={moduleInfo} />}
+          <DeleteProfile profileInfo={profileInfo} />
         </Modal.Root>
       )}
     </Content.Root>
   );
 };
 
-export default CCModulesPage;
+export default CCProfilePage;

@@ -62,6 +62,7 @@ const CreateUserForm = () => {
           </div>
         ),
       });
+      router.push(`/dashboard/users`);
       router.refresh();
     } catch (error) {
       let message = "Erro ao cadastrar usuário";

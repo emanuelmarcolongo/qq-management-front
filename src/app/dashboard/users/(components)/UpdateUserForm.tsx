@@ -61,6 +61,7 @@ const UpdateUserForm = ({ userInfo }: UpdateUserFormProps) => {
           </div>
         ),
       });
+      router.push(`/dashboard/users`);
       router.refresh();
     } catch (error) {
       let message = "Erro ao editar usuário";

@@ -2,45 +2,39 @@
 
 import { Button } from "@/src/components/ui/button";
 import { useToast } from "@/src/components/ui/use-toast";
-import {
-  AlertCircle,
-  AtSign,
-  CheckCircle,
-  Fingerprint,
-  Mail,
-  Tags,
-  User,
-  X,
-} from "lucide-react";
+import { AlertCircle, CheckCircle, Tags, Text, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { UserWithProfile } from "@/src/models/types/User";
 import UserService from "@/src/services/UserService";
+import { Profile } from "@/src/models/types/Profiles";
+import ProfilesService from "@/src/services/ProfileService";
 
-interface DeleteUserProps {
-  userInfo: UserWithProfile;
+interface DeleteProfileProps {
+  profileInfo: Profile;
 }
 
-const DeleteUser = ({ userInfo }: DeleteUserProps) => {
+const DeleteProfile = ({ profileInfo }: DeleteProfileProps) => {
   const router = useRouter();
   const { toast, dismiss } = useToast();
 
   const onSubmit = async () => {
     try {
-      const newUser = await UserService.deleteUser(userInfo.id);
+      const deletedProfile = await ProfilesService.deleteProfile(
+        profileInfo.id
+      );
       const { id } = toast({
         description: (
           <div className="flex space-x-4">
             <CheckCircle color="#11945A" />
-            <p>Usuário deletado com sucesso!</p>
+            <p>Perfil deletado com sucesso!</p>
           </div>
         ),
       });
 
-      router.push("/dashboard/users");
+      router.push("/dashboard/profiles");
       router.refresh();
     } catch (error) {
-      let message = "Erro ao deletar usuário";
+      let message = "Erro ao deletar perfil";
       if (error instanceof Error) {
         message = error.message;
       }
@@ -61,38 +55,26 @@ const DeleteUser = ({ userInfo }: DeleteUserProps) => {
     <section className="w-[400px] border text-textColor border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-start jusitfy-center bg-white ">
       <header className="flex justify-between w-full mb-6">
         <h1 className="self-start font-bold  text-textColor mb-6 text-lg">
-          Deletar Usuário
+          Deletar Perfil
         </h1>
-        <Link href={"/dashboard/users"}>
+        <Link href={"/dashboard/profiles"}>
           <X />
         </Link>
       </header>
       <article className=" w-full mb-6 space-y-2 font-medium text-md">
         <div className="flex items-center justify-start space-x-2">
-          <User />
-          <p className="">{userInfo.name}</p>
-        </div>
-        <div className="flex items-center justify-start space-x-2">
-          <AtSign />
-          <p className=" text-md">{userInfo.username}</p>
-        </div>
-        <div className="flex items-center justify-start space-x-2">
           <Tags />
-          <p className=" text-md">{userInfo.profile.name}</p>
+          <p className="">{profileInfo.name}</p>
         </div>
         <div className="flex items-center justify-start space-x-2">
-          <Fingerprint />
-          <p className=" text-md">{userInfo.registration}</p>
-        </div>
-        <div className="flex items-center justify-start space-x-2">
-          <Mail />
-          <p className=" text-md">{userInfo.email}</p>
+          <Text />
+          <p className=" text-md">{profileInfo.description}</p>
         </div>
       </article>
 
       <div className="mt-10">
         <p className="font-semibold">
-          Tem certeza que deseja deletar o usuário?
+          Tem certeza que deseja deletar o perfil?
         </p>
         <div className="flex justify-between w-full mt-10">
           <Button
@@ -104,7 +86,7 @@ const DeleteUser = ({ userInfo }: DeleteUserProps) => {
           </Button>
 
           <Button className="w-[47%] ring-1 ring-textColor">
-            <Link href={"/dashboard/users"}>Cancelar</Link>
+            <Link href={"/dashboard/profiles"}>Cancelar</Link>
           </Button>
         </div>
       </div>
@@ -112,4 +94,4 @@ const DeleteUser = ({ userInfo }: DeleteUserProps) => {
   );
 };
 
-export default DeleteUser;
+export default DeleteProfile;

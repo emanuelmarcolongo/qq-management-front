@@ -41,7 +41,7 @@ const RequestPasswordResetForm = () => {
 
   return (
     <main className="flex flex-col items-center ">
-      <section className="w-[400px] border border-secondary p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
+      <section className="w-[400px] border border-secondary p-8 rounded-md shadow-2xl flex flex-col items-center jusitfy-center bg-white">
         <h1 className="self-start font-bold text-textColor mb-4 text-xl">
           Redefina sua senha
         </h1>

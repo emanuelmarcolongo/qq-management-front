@@ -62,6 +62,7 @@ const CreateModuleForm = () => {
           </div>
         ),
       });
+      router.push(`/dashboard/modules`);
       router.refresh();
     } catch (error) {
       let message = "Erro ao cadastrar módulo";
@@ -82,7 +83,7 @@ const CreateModuleForm = () => {
   };
 
   return (
-    <section className="w-[400px] border border-textColor p-8 rounded-xl shadow-2xl flex flex-col items-center jusitfy-center bg-white">
+    <section className="w-[400px] border border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-center jusitfy-center bg-white">
       <div className="flex justify-between w-full">
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
           Adicionar Módulo

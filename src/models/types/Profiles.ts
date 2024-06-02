@@ -6,3 +6,8 @@ export interface Profile {
   created_at: Date;
   updated_at: Date;
 }
+
+export interface CreateProfileData {
+  name: string;
+  description?: string;
+}

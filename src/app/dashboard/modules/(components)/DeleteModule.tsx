@@ -56,7 +56,7 @@ const DeleteModule = ({ moduleInfo }: CreateModuleFormProps) => {
   };
 
   return (
-    <section className="w-[400px] border text-textColor border-textColor p-8 rounded-xl shadow-2xl flex flex-col items-start jusitfy-center bg-white ">
+    <section className="w-[400px] border text-textColor border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-start jusitfy-center bg-white ">
       <div className="flex justify-between w-full mb-6">
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
           Deletar Módulo
