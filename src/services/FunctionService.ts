@@ -1,4 +1,6 @@
-const postFunction = async (data: CreateFunction): Promise<any> => {
+import { Function } from "../models/types/Modules";
+
+const postFunction = async (data: CreateFunction): Promise<Function> => {
   const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
 
   const options = {

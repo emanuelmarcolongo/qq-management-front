@@ -1,4 +1,8 @@
-const postTransaction = async (data: CreateTransaction): Promise<any> => {
+import { Transaction } from "../models/types/Modules";
+
+const postTransaction = async (
+  data: CreateTransaction
+): Promise<Transaction> => {
   const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
 
   const options = {

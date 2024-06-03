@@ -4,7 +4,7 @@ import {
   ModulesData,
 } from "../models/types/Modules";
 
-const getModules = async (): Promise<ModulesData[] | void> => {
+const getModules = async (): Promise<ModulesData[]> => {
   const token = `${process.env.TOKEN}`;
 
   const options = {
@@ -49,7 +49,7 @@ const getModuleById = async (id: number): Promise<DetailedModule> => {
   return data;
 };
 
-const getModulesFromClient = async (): Promise<ModulesData[] | void> => {
+const getModulesFromClient = async (): Promise<ModulesData[]> => {
   const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
 
   const options = {
@@ -73,7 +73,7 @@ const getModulesFromClient = async (): Promise<ModulesData[] | void> => {
   return data;
 };
 
-const postModule = async (data: CreateModuleData): Promise<any> => {
+const postModule = async (data: CreateModuleData): Promise<ModulesData> => {
   const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
 
   const options = {
@@ -102,7 +102,7 @@ const postModule = async (data: CreateModuleData): Promise<any> => {
 const updateModule = async (
   data: CreateModuleData,
   id: number
-): Promise<any> => {
+): Promise<ModulesData> => {
   const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
 
   const options = {
@@ -128,7 +128,7 @@ const updateModule = async (
   return body;
 };
 
-const deleteModule = async (id: number): Promise<any> => {
+const deleteModule = async (id: number): Promise<ModulesData> => {
   const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
 
   const options = {

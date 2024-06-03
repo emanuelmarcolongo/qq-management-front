@@ -1,7 +1,7 @@
 import { ApiResponse } from "../models/types/ApiResponse";
 import { CreateProfileData, Profile } from "../models/types/Profiles";
 
-const getProfiles = async (): Promise<Profile[] | void> => {
+const getProfiles = async (): Promise<Profile[]> => {
   const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
 
   const options = {
@@ -54,10 +54,7 @@ const createProfile = async (
   return body;
 };
 
-const updateProfile = async (
-  id: number,
-  data: any
-): Promise<ApiResponse<Profile>> => {
+const updateProfile = async (id: number, data: any): Promise<Profile> => {
   const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
 
   const options = {
