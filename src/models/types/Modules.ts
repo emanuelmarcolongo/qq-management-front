@@ -14,3 +14,22 @@ export interface CreateModuleData {
   text_color?: string;
   background_color?: string;
 }
+
+export interface Function {
+  id: number;
+  name: string;
+  description?: string;
+  created_at: Date;
+}
+
+export interface Transaction {
+  id: number;
+  name: string;
+  description: string;
+  created_at: Date;
+}
+
+export interface DetailedModule extends ModulesData {
+  functions: Function[];
+  transactions: Transaction[];
+}

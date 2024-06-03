@@ -7,7 +7,7 @@ import Navbar from "@/src/components/navbar/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "QQ | Usuários ",
+  title: "QQ | Dashboard ",
   description: "Sistema de gestão Lojas Quero-Quero",
   icons: {
     shortcut: "/favicon.ico",

@@ -22,7 +22,7 @@ interface UtilityBarProps {
 const UtilityBar = ({ setSearch, config }: UtilityBarProps) => {
   const router = useRouter();
   return (
-    <section className="bg-[#FCF9F8] mb-10 rounded-md border-[1px] p-4 border-[#AAAAAA/50] drop-shadow-xl items-center justify-center sm:flex sm:space-x-10 space-y-4 sm:space-y-0">
+    <section className="bg-[#FCF9F8] my-10 rounded-md border-[1px] p-4 border-[#AAAAAA/50] drop-shadow-xl items-center justify-center sm:flex sm:space-x-10 space-y-4 sm:space-y-0">
       <div className="relative w-full">
         <Input
           className=""
@@ -50,12 +50,12 @@ const UtilityBar = ({ setSearch, config }: UtilityBarProps) => {
       </Select>
 
       {config.buttonConfig && (
-        <Button>
-          <Plus className="mr-2" />
-          <Link href={`${config.baseUrl}?add=true`}>
+        <Link href={`${config.baseUrl}?add=true`}>
+          <Button>
+            <Plus className="mr-2" />
             {config.buttonConfig.label}
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       )}
     </section>
   );

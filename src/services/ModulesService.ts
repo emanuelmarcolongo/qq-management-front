@@ -1,4 +1,8 @@
-import { CreateModuleData, ModulesData } from "../models/types/Modules";
+import {
+  CreateModuleData,
+  DetailedModule,
+  ModulesData,
+} from "../models/types/Modules";
 
 const getModules = async (): Promise<ModulesData[] | void> => {
   const token = `${process.env.TOKEN}`;
@@ -18,6 +22,30 @@ const getModules = async (): Promise<ModulesData[] | void> => {
   }
 
   const data: ModulesData[] = await response.json();
+  return data;
+};
+
+const getModuleById = async (id: number): Promise<DetailedModule> => {
+  const token = `${process.env.TOKEN}`;
+
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store" as RequestCache,
+  };
+
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/modules/${id}`,
+    options
+  );
+  if (!response.ok) {
+    throw new Error(`Erro na requisição: ${response.status}`);
+  }
+
+  const data: DetailedModule = await response.json();
   return data;
 };
 
@@ -131,6 +159,7 @@ const ModulesService = {
   updateModule,
   deleteModule,
   getModulesFromClient,
+  getModuleById,
 };
 
 export default ModulesService;

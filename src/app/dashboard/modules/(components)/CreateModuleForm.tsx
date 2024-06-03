@@ -24,8 +24,6 @@ import { useState } from "react";
 
 const CreateModuleForm = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const moduleIdParams = searchParams.get("id");
   const { toast, dismiss } = useToast();
   const form = useForm<z.infer<typeof createModuleSchema>>({
     resolver: zodResolver(createModuleSchema),

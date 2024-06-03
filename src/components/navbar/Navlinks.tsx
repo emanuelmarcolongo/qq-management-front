@@ -17,7 +17,9 @@ const Navlinks = () => {
           key={item.name}
           href={item.href}
           className={`flex space-x-4 text-sm w-full h-[45px] pl-12 items-center ${
-            pathname === item.href ? "bg-white text-secondary font-bold " : ""
+            pathname.includes(item.href)
+              ? "bg-white text-secondary font-bold "
+              : ""
           }`}
         >
           <item.icon></item.icon>

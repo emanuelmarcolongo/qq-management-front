@@ -43,6 +43,9 @@ const ModuleTable = ({ modules }: ModuleTableProps) => {
                     <EllipsisIcon className="cursor-pointer" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
+                    <Link href={`/dashboard/modules/${module.id}`}>
+                      <DropdownMenuItem>Acessar</DropdownMenuItem>
+                    </Link>
                     <Link href={`/dashboard/modules?edit=true&id=${module.id}`}>
                       <DropdownMenuItem>Editar</DropdownMenuItem>
                     </Link>
