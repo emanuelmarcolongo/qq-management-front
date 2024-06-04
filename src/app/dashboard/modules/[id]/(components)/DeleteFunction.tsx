@@ -12,6 +12,7 @@ import { createFunctionSchema } from "@/src/models/validation";
 import { Button } from "@/src/components/ui/button";
 import React from "react";
 import functionService from "@/src/services/FunctionService";
+import Card from "@/src/components/card";
 
 interface DeleteFunctionProps {
   functionInfo: Function;
@@ -63,33 +64,29 @@ const DeleteFunction = ({ functionInfo, module_id }: DeleteFunctionProps) => {
   };
 
   return (
-    <section className="w-[400px] border border-inputBorder space-y-10 p-8 rounded-md shadow-2xl flex flex-col items-start  bg-white">
-      <header className="flex justify-between w-full">
-        <h1 className="flex items-center justify-start space-x-2 font-bold  text-textColor text-xl">
-          <GripHorizontal className="mr-2" /> {functionInfo.name}
-        </h1>
-        <Link href={`/dashboard/modules/${module_id}`}>
-          <X />
-        </Link>
-      </header>
-      <div>
-        {functionInfo.description && (
-          <div className="space-y-4">
-            <p className="text-medium font-semibold">Descrição</p>
-            <p className="text-sm">{functionInfo.description}</p>
-          </div>
-        )}
-      </div>
+    <Card.Container>
+      <Card.Header
+        link={`/dashboard/modules/${module_id}`}
+        title="Deletar Função"
+        Icon={GripHorizontal}
+      />
 
-      <article className="space-y-4">
-        <p className="font-semibold">
-          Tem certeza que deseja deletar a função?
-        </p>
-        <p className="text-sm">
+      <Card.Section>
+        <Card.Item>
+          <Card.Label>Descrição</Card.Label>
+          <Card.Description>
+            {functionInfo.description || "Sem descrição"}
+          </Card.Description>
+        </Card.Item>
+      </Card.Section>
+      <Card.Item>
+        <Card.Label> Tem certeza que deseja deletar a função?</Card.Label>
+        <Card.Description>
           Essa ação irá deletar todos os vinculos com os perfis e transações que
           essa função possui
-        </p>
-      </article>
+        </Card.Description>
+      </Card.Item>
+
       <div className="flex justify-between w-full">
         <Button
           onClick={() => onSubmit()}
@@ -103,7 +100,7 @@ const DeleteFunction = ({ functionInfo, module_id }: DeleteFunctionProps) => {
           <Link href={`/dashboard/modules/${module_id}`}>Cancelar</Link>
         </Button>
       </div>
-    </section>
+    </Card.Container>
   );
 };
 

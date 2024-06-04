@@ -2,12 +2,21 @@
 
 import { Button } from "@/src/components/ui/button";
 import { useToast } from "@/src/components/ui/use-toast";
-import { AlertCircle, CheckCircle, Tags, Text, X } from "lucide-react";
+import {
+  AlertCircle,
+  Badge,
+  CheckCircle,
+  Tag,
+  Tags,
+  Text,
+  X,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import UserService from "@/src/services/UserService";
 import { Profile } from "@/src/models/types/Profiles";
 import ProfilesService from "@/src/services/ProfileService";
+import Card from "@/src/components/card";
 
 interface DeleteProfileProps {
   profileInfo: Profile;
@@ -52,30 +61,36 @@ const DeleteProfile = ({ profileInfo }: DeleteProfileProps) => {
   };
 
   return (
-    <section className="w-[400px] border text-textColor border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-start jusitfy-center bg-white ">
-      <header className="flex justify-between w-full mb-6">
-        <h1 className="self-start font-bold  text-textColor mb-6 text-lg">
-          Deletar Perfil
-        </h1>
-        <Link href={"/dashboard/profiles"}>
-          <X />
-        </Link>
-      </header>
-      <article className=" w-full mb-6 space-y-2 font-medium text-md">
-        <div className="flex items-center justify-start space-x-2">
-          <Tags />
-          <p className="">{profileInfo.name}</p>
-        </div>
-        <div className="flex items-center justify-start space-x-2">
-          <Text />
-          <p className=" text-md">{profileInfo.description}</p>
-        </div>
-      </article>
+    <Card.Container>
+      <Card.Header
+        link="/dashboard/profiles"
+        title="Deletar Perfil"
+        Icon={Tag}
+      />
+
+      <Card.Section>
+        <Card.Item>
+          <Card.Label>Nome</Card.Label>
+          <Card.Description>{profileInfo.name}</Card.Description>
+        </Card.Item>
+        <Card.Item>
+          <Card.Label>Descrição</Card.Label>
+          <Card.Description>
+            {profileInfo.description || "Sem Descrição"}
+          </Card.Description>
+        </Card.Item>
+      </Card.Section>
 
       <div className="mt-10">
-        <p className="font-semibold">
-          Tem certeza que deseja deletar o perfil?
-        </p>
+        <Card.Item>
+          <Card.Label>Tem certeza que deseja deletar o perfil?</Card.Label>
+          <Card.Description>
+            Certifique-se que não há usuários com esse perfil antes de
+            deletá-lo.<br></br>
+            Essa ação irá deletar todas as associações existentes entre o perfil
+            e módulo, transações e funções
+          </Card.Description>
+        </Card.Item>
         <div className="flex justify-between w-full mt-10">
           <Button
             onClick={() => onSubmit()}
@@ -90,7 +105,7 @@ const DeleteProfile = ({ profileInfo }: DeleteProfileProps) => {
           </Button>
         </div>
       </div>
-    </section>
+    </Card.Container>
   );
 };
 

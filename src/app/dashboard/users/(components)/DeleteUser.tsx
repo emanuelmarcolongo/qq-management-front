@@ -2,20 +2,12 @@
 
 import { Button } from "@/src/components/ui/button";
 import { useToast } from "@/src/components/ui/use-toast";
-import {
-  AlertCircle,
-  AtSign,
-  CheckCircle,
-  Fingerprint,
-  Mail,
-  Tags,
-  User,
-  X,
-} from "lucide-react";
+import { AlertCircle, CheckCircle, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { UserWithProfile } from "@/src/models/types/User";
 import UserService from "@/src/services/UserService";
+import Card from "@/src/components/card";
 
 interface DeleteUserProps {
   userInfo: UserWithProfile;
@@ -58,43 +50,35 @@ const DeleteUser = ({ userInfo }: DeleteUserProps) => {
   };
 
   return (
-    <section className="w-[400px] border text-textColor border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-start jusitfy-center bg-white ">
-      <header className="flex justify-between w-full mb-6">
-        <h1 className="self-start font-bold  text-textColor mb-6 text-lg">
-          Deletar Usuário
-        </h1>
-        <Link href={"/dashboard/users"}>
-          <X />
-        </Link>
-      </header>
-      <article className=" w-full mb-6 space-y-2 font-medium text-md">
-        <div className="flex items-center justify-start space-x-2">
-          <User />
-          <p className="">{userInfo.name}</p>
-        </div>
-        <div className="flex items-center justify-start space-x-2">
-          <AtSign />
-          <p className=" text-md">{userInfo.username}</p>
-        </div>
-        <div className="flex items-center justify-start space-x-2">
-          <Tags />
-          <p className=" text-md">{userInfo.profile.name}</p>
-        </div>
-        <div className="flex items-center justify-start space-x-2">
-          <Fingerprint />
-          <p className=" text-md">{userInfo.registration}</p>
-        </div>
-        <div className="flex items-center justify-start space-x-2">
-          <Mail />
-          <p className=" text-md">{userInfo.email}</p>
-        </div>
-      </article>
+    <Card.Container>
+      <Card.Header
+        Icon={User}
+        link={`dashboard/usess`}
+        title={`Deletar Usuário`}
+      />
 
-      <div className="mt-10">
-        <p className="font-semibold">
-          Tem certeza que deseja deletar o usuário?
-        </p>
-        <div className="flex justify-between w-full mt-10">
+      <Card.Section>
+        <Card.Item>
+          <Card.Label>Nome</Card.Label>
+          <Card.Description>{userInfo.name}</Card.Description>
+        </Card.Item>
+        <Card.Item>
+          <Card.Label>Matrícula</Card.Label>
+          <Card.Description>{userInfo.registration}</Card.Description>
+        </Card.Item>
+        <Card.Item>
+          <Card.Label>E-mail</Card.Label>
+          <Card.Description>{userInfo.email}</Card.Description>
+        </Card.Item>
+        <Card.Item>
+          <Card.Label>Usuário</Card.Label>
+          <Card.Description>{userInfo.username}</Card.Description>
+        </Card.Item>
+      </Card.Section>
+
+      <div className="">
+        <Card.Label>Tem certeza que deseja deletar o usuário?</Card.Label>
+        <div className="flex justify-between w-full mt-4">
           <Button
             onClick={() => onSubmit()}
             variant={"ghost"}
@@ -108,7 +92,7 @@ const DeleteUser = ({ userInfo }: DeleteUserProps) => {
           </Button>
         </div>
       </div>
-    </section>
+    </Card.Container>
   );
 };
 

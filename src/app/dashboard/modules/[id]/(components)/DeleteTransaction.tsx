@@ -13,6 +13,7 @@ import { Button } from "@/src/components/ui/button";
 import React from "react";
 
 import transactionService from "@/src/services/TransactionService";
+import Card from "@/src/components/card";
 
 interface DeleteTransactionProps {
   transactionInfo: Transaction;
@@ -67,33 +68,34 @@ const DeleteTransaction = ({
   };
 
   return (
-    <section className="w-[400px] border border-inputBorder p-8  space-y-10 rounded-md shadow-2xl flex flex-col items-start  bg-white">
-      <header className="flex justify-between w-full">
-        <h1 className="flex items-center justify-start space-x-2 font-bold  text-textColortext-xl">
-          <ArrowRightLeft className="mr-2" /> {transactionInfo.name}
-        </h1>
-        <Link href={`/dashboard/modules/${module_id}`}>
-          <X />
-        </Link>
-      </header>
-      <div>
-        {transactionInfo.description && (
-          <div className="space-y-4">
-            <p className="text-medium font-semibold">Descrição</p>
-            <p className="text-sm">{transactionInfo.description}</p>
-          </div>
-        )}
-      </div>
+    <Card.Container>
+      <Card.Header
+        link={`/dashboard/modules/${module_id}`}
+        title="Deletar transação"
+        Icon={ArrowRightLeft}
+      />
+      <Card.Section>
+        <Card.Item>
+          <Card.Label>{transactionInfo.name}</Card.Label>
+        </Card.Item>
+        <Card.Item>
+          <Card.Label>Descrição</Card.Label>
+          <Card.Description>
+            {transactionInfo.description || "Sem descrição"}
+          </Card.Description>
+        </Card.Item>
+      </Card.Section>
 
-      <article className=" space-y-4">
-        <p className="font-semibold">
-          Tem certeza que deseja deletar a transação?
-        </p>
-        <p className="text-sm">
-          Essa ação irá deletar todos os vinculos com os perfis e funções que
-          essa transação possui
-        </p>
-      </article>
+      <Card.Section>
+        <Card.Item>
+          <Card.Label> Tem certeza que deseja deletar a transação?</Card.Label>
+          <Card.Description>
+            Essa ação irá deletar todos os vinculos com os perfis e funções que
+            essa transação possui
+          </Card.Description>
+        </Card.Item>
+      </Card.Section>
+
       <div className="flex justify-between w-full ">
         <Button
           onClick={() => onSubmit()}
@@ -107,7 +109,7 @@ const DeleteTransaction = ({
           <Link href={`/dashboard/modules/${module_id}`}>Cancelar</Link>
         </Button>
       </div>
-    </section>
+    </Card.Container>
   );
 };
 

@@ -2,12 +2,13 @@
 
 import { Button } from "@/src/components/ui/button";
 import { useToast } from "@/src/components/ui/use-toast";
-import { AlertCircle, CheckCircle, X } from "lucide-react";
+import { AlertCircle, CheckCircle, Package, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ModulesService from "@/src/services/ModulesService";
 import { ModulesData } from "@/src/models/types/Modules";
 import ModuleStylePreview from "./ModuleStylePreview";
 import Link from "next/link";
+import Card from "@/src/components/card";
 
 interface CreateModuleFormProps {
   moduleInfo: ModulesData;
@@ -56,45 +57,49 @@ const DeleteModule = ({ moduleInfo }: CreateModuleFormProps) => {
   };
 
   return (
-    <section className="w-[400px] border text-textColor border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-start jusitfy-center bg-white ">
-      <div className="flex justify-between w-full mb-6">
-        <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
-          Deletar Módulo
-        </h1>
-        <Link href={"/dashboard/modules"}>
-          <X />
-        </Link>
-      </div>
-      <header className=" flex items-center justify-between w-full mb-6">
-        <h1 className="font-medium text-xl">{moduleInfo.name}</h1>
-        <ModuleStylePreview modulePreview={moduleTagInfo} />
-      </header>
-      {moduleInfo.description && (
-        <div>
-          <p className="font-medium">Descrição</p>
-          <p>{moduleInfo.description}</p>
-        </div>
-      )}
+    <Card.Container>
+      <Card.Header
+        link="/dashboard/modules"
+        title="Deletar Módulo"
+        Icon={Package}
+      />
 
-      <div className="mt-10">
-        <p className="font-semibold">
-          Tem certeza que deseja deletar o módulo?
-        </p>
-        <div className="flex justify-between w-full mt-10">
-          <Button
-            onClick={() => onSubmit()}
-            variant={"ghost"}
-            className="w-[47%] ring-1 ring-textColor"
-          >
-            Deletar
-          </Button>
+      <Card.Section>
+        <Card.Item>
+          <Card.Label>{moduleInfo.name}</Card.Label>
+        </Card.Item>
+        <Card.Item>
+          <Card.Label>Descrição</Card.Label>
+          <Card.Description>
+            {moduleInfo.description || "Sem descrição"}
+          </Card.Description>
+        </Card.Item>
+      </Card.Section>
 
-          <Button className="w-[47%] ring-1 ring-textColor">
-            <Link href={"/dashboard/modules"}>Cancelar</Link>
-          </Button>
-        </div>
+      <Card.Section>
+        <Card.Item>
+          <Card.Label> Tem certeza que deseja deletar o módulo?</Card.Label>
+          <Card.Description>
+            Ao deletar esse módulo, você irá deletar todas as transações e
+            funções a ele relacionadas, bem como as associações entre esses
+            elementos e os perfis
+          </Card.Description>
+        </Card.Item>
+      </Card.Section>
+      <div className="flex justify-between w-full mt-10">
+        <Button
+          onClick={() => onSubmit()}
+          variant={"ghost"}
+          className="w-[47%] ring-1 ring-textColor"
+        >
+          Deletar
+        </Button>
+
+        <Button className="w-[47%] ring-1 ring-textColor">
+          <Link href={"/dashboard/modules"}>Cancelar</Link>
+        </Button>
       </div>
-    </section>
+    </Card.Container>
   );
 };
 
