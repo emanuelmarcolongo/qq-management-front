@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} relative max-w-[100%] overflow-x-hidden`}
+        className={`${inter.className} relative max-w-[100%] overflow-x-hidden text-textColor`}
       >
         <main className="md:flex bg-[#F8F8F8]">
           <Navbar />

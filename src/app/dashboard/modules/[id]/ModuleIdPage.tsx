@@ -19,6 +19,10 @@ import CreateTransactionForm from "./(components)/CreateTransactionForm";
 import Modal from "@/src/components/modal";
 import Link from "next/link";
 import CreateFunctionForm from "./(components)/CreateFunctionForm";
+import UpdateFunctionForm from "./(components)/UpdateFunctionForm";
+import UpdateTransactionForm from "./(components)/UpdateTransactionForm";
+import DeleteFunction from "./(components)/DeleteFunction";
+import DeleteTransaction from "./(components)/DeleteTransaction";
 
 type ModuleIdPageProps = {
   moduleInfo: DetailedModule;
@@ -106,6 +110,33 @@ const ModuleIdPage = ({ moduleInfo }: ModuleIdPageProps) => {
       {itemType === "function" && addModalParams && (
         <Modal.Root>
           <CreateFunctionForm module_id={id} />
+        </Modal.Root>
+      )}
+
+      {itemType === "function" && editModalParams && functionInfo && (
+        <Modal.Root>
+          <UpdateFunctionForm functionInfo={functionInfo} module_id={id} />
+        </Modal.Root>
+      )}
+
+      {itemType === "transaction" && editModalParams && transactionInfo && (
+        <Modal.Root>
+          <UpdateTransactionForm
+            transactionInfo={transactionInfo}
+            module_id={id}
+          />
+        </Modal.Root>
+      )}
+
+      {itemType === "function" && deleteModalParams && functionInfo && (
+        <Modal.Root>
+          <DeleteFunction functionInfo={functionInfo} module_id={id} />
+        </Modal.Root>
+      )}
+
+      {itemType === "transaction" && deleteModalParams && transactionInfo && (
+        <Modal.Root>
+          <DeleteTransaction transactionInfo={transactionInfo} module_id={id} />
         </Modal.Root>
       )}
     </Content.Root>

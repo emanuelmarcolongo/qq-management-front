@@ -66,10 +66,8 @@ const CCModulesPage = ({ data }: ModulesPageProps) => {
         </Modal.Root>
       )}
 
-      {deleteModalParams && (
-        <Modal.Root>
-          {moduleInfo && <DeleteModule moduleInfo={moduleInfo} />}
-        </Modal.Root>
+      {deleteModalParams && moduleInfo && (
+        <Modal.Root>{<DeleteModule moduleInfo={moduleInfo} />}</Modal.Root>
       )}
     </Content.Root>
   );

@@ -34,8 +34,6 @@ const UserLoginForm = () => {
         </div>
       ),
     });
-
-    setTimeout(() => dismiss(id), 2000);
   };
 
   return (

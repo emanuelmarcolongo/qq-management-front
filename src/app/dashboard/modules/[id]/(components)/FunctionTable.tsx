@@ -37,11 +37,15 @@ const FunctionsTable = ({ functions, moduleId }: FunctionsTableProps) => {
                     <EllipsisIcon className="cursor-pointer" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <Link href={`${baseUrl}?edit=true&id=${func.id}`}>
+                    <Link
+                      href={`${baseUrl}?type=function&edit=true&id=${func.id}`}
+                    >
                       <DropdownMenuItem>Editar</DropdownMenuItem>
                     </Link>
 
-                    <Link href={`${baseUrl}?delete=true&id=${func.id}`}>
+                    <Link
+                      href={`${baseUrl}?type=function&delete=true&id=${func.id}`}
+                    >
                       <DropdownMenuItem>Deletar</DropdownMenuItem>
                     </Link>
                   </DropdownMenuContent>

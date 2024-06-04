@@ -50,8 +50,8 @@ const CreateTransactionForm = ({ module_id }: CreateTransactionFormProps) => {
         ),
       });
 
+      router.push(`/dashboard/modules/${module_id}`);
       router.refresh();
-      router.push(`/dashboard/modules/${module_id}`)
     } catch (error) {
       let message = "Erro ao cadastrar transação";
       if (error instanceof Error) {

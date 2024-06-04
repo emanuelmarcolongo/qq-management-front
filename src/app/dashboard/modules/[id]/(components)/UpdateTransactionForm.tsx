@@ -17,41 +17,52 @@ import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
 import { AlertCircle, CheckCircle, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Transaction } from "@/src/models/types/Modules";
 import Link from "next/link";
-import { createFunctionSchema } from "@/src/models/validation";
-import functionService from "@/src/services/FunctionService";
+import { createTransactionSchema } from "@/src/models/validation";
+import transactionService from "@/src/services/TransactionService";
 
-interface CreateFunctionFormProps {
+interface UpdateTransactionFormProps {
+  transactionInfo: Transaction;
   module_id: number;
 }
 
-const CreateFunctionForm = ({ module_id }: CreateFunctionFormProps) => {
+const UpdateTransactionForm = ({
+  transactionInfo,
+  module_id,
+}: UpdateTransactionFormProps) => {
   const router = useRouter();
   const { toast, dismiss } = useToast();
-  const form = useForm<z.infer<typeof createFunctionSchema>>({
-    resolver: zodResolver(createFunctionSchema),
+  const form = useForm<z.infer<typeof createTransactionSchema>>({
+    resolver: zodResolver(createTransactionSchema),
+    defaultValues: {
+      name: transactionInfo.name,
+      description: transactionInfo?.description || "",
+    },
   });
 
-  const onSubmit = async (data: z.infer<typeof createFunctionSchema>) => {
-    const functionData = {
+  const onSubmit = async (data: z.infer<typeof createTransactionSchema>) => {
+    const dataWithModule = {
       ...data,
       module_id,
     };
     try {
-      const newFunction = await functionService.postFunction(functionData);
-      toast({
+      const updatedFunction = await transactionService.updateTransaction(
+        dataWithModule,
+        transactionInfo.id
+      );
+      const { id } = toast({
         description: (
           <div className="flex space-x-4">
             <CheckCircle color="#11945A" />
-            <p>Função criada com sucesso!</p>
+            <p>Transação editada com sucesso!</p>
           </div>
         ),
       });
-
       router.push(`/dashboard/modules/${module_id}`);
       router.refresh();
     } catch (error) {
-      let message = "Erro ao cadastrar Função";
+      let message = "Erro ao atualizar função";
       if (error instanceof Error) {
         message = error.message;
       }
@@ -72,7 +83,7 @@ const CreateFunctionForm = ({ module_id }: CreateFunctionFormProps) => {
     <section className="w-[400px] border border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-center jusitfy-center bg-white">
       <div className="flex justify-between w-full">
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
-          Adicionar Função
+          Editar Transação
         </h1>
         <Link href={`/dashboard/modules/${module_id}`}>
           <X />
@@ -106,7 +117,7 @@ const CreateFunctionForm = ({ module_id }: CreateFunctionFormProps) => {
                 <FormLabel>Descrição (opcional)</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Dê um breve resumo sobre a função"
+                    placeholder="Dê um breve resumo sobre a transação"
                     className="resize-none"
                     {...field}
                   />
@@ -117,7 +128,7 @@ const CreateFunctionForm = ({ module_id }: CreateFunctionFormProps) => {
           />
 
           <Button className="w-full" type="submit">
-            Cadastrar
+            Atualizar
           </Button>
         </form>
       </Form>
@@ -125,4 +136,4 @@ const CreateFunctionForm = ({ module_id }: CreateFunctionFormProps) => {
   );
 };
 
-export default CreateFunctionForm;
+export default UpdateTransactionForm;

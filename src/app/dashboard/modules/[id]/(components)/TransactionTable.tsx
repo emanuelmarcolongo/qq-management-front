@@ -42,11 +42,15 @@ const TransactionTable = ({
                     <EllipsisIcon className="cursor-pointer" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <Link href={`${baseUrl}?edit=true&id=${transaction.id}`}>
+                    <Link
+                      href={`${baseUrl}?type=transaction&edit=true&id=${transaction.id}`}
+                    >
                       <DropdownMenuItem>Editar</DropdownMenuItem>
                     </Link>
 
-                    <Link href={`${baseUrl}?delete=true&id=${transaction.id}`}>
+                    <Link
+                      href={`${baseUrl}?type=transaction&delete=true&id=${transaction.id}`}
+                    >
                       <DropdownMenuItem>Deletar</DropdownMenuItem>
                     </Link>
                   </DropdownMenuContent>
