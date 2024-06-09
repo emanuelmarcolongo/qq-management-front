@@ -9,3 +9,7 @@ export const createProfileSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
   description: z.string().optional(),
 });
+
+export const createProfileModuleLink = z.object({
+  moduleIds: z.array(z.number({ message: "Selecione algum módulo" })),
+});

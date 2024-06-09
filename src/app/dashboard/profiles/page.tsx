@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Quero-Quero | Perfis",
 };
 
-const UsersPage = async () => {
+const ProfilesPage = async () => {
   const profiles = await ProfilesService.getProfiles();
   if (!profiles) {
     throw new Error("Falha ao acessar os dados dos perfis, tente novamente!");
@@ -15,4 +15,4 @@ const UsersPage = async () => {
   return <CCProfilePage data={profiles} />;
 };
 
-export default UsersPage;
+export default ProfilesPage;

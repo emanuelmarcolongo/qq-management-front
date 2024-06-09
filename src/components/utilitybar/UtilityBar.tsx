@@ -51,7 +51,7 @@ const UtilityBar = ({ setSearch, config }: UtilityBarProps) => {
 
       {config.buttonConfig && (
         <Link href={`${config.baseUrl}?add=true`}>
-          <Button>
+          <Button className="mt-4 sm:mt-0">
             <Plus className="mr-2" />
             {config.buttonConfig.label}
           </Button>

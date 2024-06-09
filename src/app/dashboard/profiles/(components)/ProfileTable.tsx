@@ -34,6 +34,9 @@ const ProfileTable = ({ profiles }: ProbileTableProps) => {
                   <EllipsisIcon className="cursor-pointer" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
+                  <Link href={`/dashboard/profiles/${profile.id}`}>
+                    <DropdownMenuItem>Acessar</DropdownMenuItem>
+                  </Link>
                   <Link href={`/dashboard/profiles?edit=true&id=${profile.id}`}>
                     <DropdownMenuItem>Editar</DropdownMenuItem>
                   </Link>

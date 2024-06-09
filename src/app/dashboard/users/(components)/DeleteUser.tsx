@@ -53,7 +53,7 @@ const DeleteUser = ({ userInfo }: DeleteUserProps) => {
     <Card.Container>
       <Card.Header
         Icon={User}
-        link={`dashboard/usess`}
+        link={`/dashboard/users`}
         title={`Deletar Usuário`}
       />
 
