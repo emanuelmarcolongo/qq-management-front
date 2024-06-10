@@ -79,7 +79,7 @@ const CreatProfileModuleForm = ({
           </div>
         ),
       });
-      router.push(`/dashboard/profiles`);
+      router.push(`/dashboard/profiles/${profileId}`);
       router.refresh();
     } catch (error) {
       let message = "Erro ao cadastrar perfil";
@@ -116,15 +116,29 @@ const CreatProfileModuleForm = ({
             name="moduleIds"
             render={() => (
               <FormItem>
-                <div className="mb-4">
-                  <FormLabel className="text-base">
-                    Módulos disponíveis
-                  </FormLabel>
-                  <FormDescription>
-                    Selecione os módulos que você deseja dar permissão
-                  </FormDescription>
-                </div>
+                <div className="mb-4"></div>
                 <Suspense fallback={<p>Carregando módulos disponiveis.</p>}>
+                  {availableModules.length > 0 ? (
+                    <>
+                      <FormLabel className="text-base">
+                        Módulos disponíveis
+                      </FormLabel>
+                      <FormDescription>
+                        Selecione os módulos que você deseja dar permissão
+                      </FormDescription>{" "}
+                    </>
+                  ) : (
+                    <>
+                      <FormLabel className="text-base">
+                        Parece que não há módulos disponíveis
+                      </FormLabel>
+                      <FormDescription>
+                        Esse perfil já tem permissão de acesso a todos os
+                        módulos
+                      </FormDescription>
+                    </>
+                  )}
+
                   {availableModules.map((module, idx) => (
                     <FormField
                       key={module.id}
@@ -163,8 +177,15 @@ const CreatProfileModuleForm = ({
               </FormItem>
             )}
           />
-
-          <Button type="submit">Submit</Button>
+          {availableModules.length > 0 ? (
+            <Button type="submit">Vincular</Button>
+          ) : (
+            <Link href={`/dashboard/profiles/${profileId}`}>
+              <Button className="mt-4" type="submit">
+                Voltar
+              </Button>
+            </Link>
+          )}
         </form>
       </Form>
     </section>

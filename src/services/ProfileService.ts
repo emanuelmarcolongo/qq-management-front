@@ -191,6 +191,36 @@ const postProfileModule = async (
   return body;
 };
 
+const deleteProfileModule = async (
+  profile_id: number,
+  module_id: number
+): Promise<any> => {
+  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
+
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profile_id}/modules/${module_id}`,
+    options
+  );
+
+  const body = await response.json();
+
+  console.log(body);
+
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+
+  return body;
+};
+
 const ProfilesService = {
   getProfiles,
   deleteProfile,
@@ -199,6 +229,7 @@ const ProfilesService = {
   getProfileById,
   getAvailableModules,
   postProfileModule,
+  deleteProfileModule,
 };
 
 export default ProfilesService;

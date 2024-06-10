@@ -14,6 +14,9 @@ import { useSearchParams } from "next/navigation";
 import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
+import { X } from "lucide-react";
+import DeleteProfileRelation from "../(components)/DeleteProfileRelation";
+import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
 
 type ProfileIdPageProps = {
   profileInfo: DetailedProfile;
@@ -23,7 +26,7 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
   const { name, description, id, modules } = profileInfo;
 
   const searchParams = useSearchParams();
-  const itemIdParams = searchParams.get("id");
+  const itemIdParams = convertStringToInt(searchParams.get("id"));
   const itemType = searchParams.get("type");
   const addModalParams = convertStringToBoolean(searchParams.get("add"));
   const editModalParams = convertStringToBoolean(searchParams.get("edit"));
@@ -67,6 +70,12 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
             >
               <AccordionItem value={`module-${module.id}`}>
                 <AccordionTrigger className=" [&[data-state=open]]:bg-primary rounded-sm [&[data-state=open]]:text-white  p-2 text-base font-semibold">
+                  <Link
+                    href={`/dashboard/profiles/${profileInfo.id}?delete=true&type=module&id=${module.id}`}
+                    className="flex "
+                  >
+                    <X className="bg-red-500 rounded-xl text-white mr-4 ring-2 ring-white" />
+                  </Link>
                   Módulo - {module.name}
                 </AccordionTrigger>
                 <AccordionContent className="space-y-4 p-2 ">
@@ -116,6 +125,16 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
       {itemType === "module" && addModalParams && (
         <Modal.Root>
           <CreatProfileModuleForm profileId={profileInfo.id} />
+        </Modal.Root>
+      )}
+
+      {itemType === "module" && deleteModalParams && (
+        <Modal.Root>
+          <DeleteProfileRelation
+            type={itemType}
+            entity_id={itemIdParams}
+            profile_id={profileInfo.id}
+          />
         </Modal.Root>
       )}
     </Content.Root>
