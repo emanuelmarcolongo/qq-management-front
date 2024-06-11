@@ -71,3 +71,7 @@ export interface CreateModuleProfileData {
 export interface CreateProfileTransactionData {
   transactionIds: number[];
 }
+
+export interface CreateProfileFunctionData {
+  functionIds: number[];
+}

@@ -12,6 +12,7 @@ interface DeleteProfileRelationProps {
   profile_id: number;
   type: ProfileType;
   entity_id: number;
+  transaction_id?: number;
 }
 const dictionary = {
   module: "módulo",
@@ -25,6 +26,7 @@ const DeleteProfileRelation = ({
   profile_id,
   type,
   entity_id,
+  transaction_id,
 }: DeleteProfileRelationProps) => {
   const router = useRouter();
   const { toast, dismiss } = useToast();
@@ -37,9 +39,13 @@ const DeleteProfileRelation = ({
       } else if (type === "transaction") {
         const deletedProfileRelation =
           await ProfilesService.deleteProfileTransaction(profile_id, entity_id);
-        // } else if (type === "function") {
-        //    const deletedProfileRelation =
-        //      await ProfilesService.deleteProfileModule(profile_id, entity_id);
+      } else if (type === "function" && transaction_id) {
+        const deletedProfileRelation =
+          await ProfilesService.deleteProfileFunction(
+            profile_id,
+            transaction_id,
+            entity_id
+          );
       }
 
       const { id } = toast({

@@ -17,3 +17,7 @@ export const createProfileModuleLink = z.object({
 export const createProfileTransactionLink = z.object({
   transactionIds: z.array(z.number({ message: "Selecione alguma transação" })),
 });
+
+export const createProfileFunctionLink = z.object({
+  functionIds: z.array(z.number({ message: "Selecione alguma função" })),
+});

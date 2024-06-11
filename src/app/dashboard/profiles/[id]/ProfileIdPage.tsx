@@ -18,6 +18,7 @@ import { X } from "lucide-react";
 import DeleteProfileRelation from "../(components)/DeleteProfileRelation";
 import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
 import CreateProfileTransactionForm from "../(components)/CreateProfileTransactionForm";
+import CreateProfileFunctionForm from "../(components)/CreateProfileFunctionForm";
 
 type ProfileIdPageProps = {
   profileInfo: DetailedProfile;
@@ -29,6 +30,9 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
   const searchParams = useSearchParams();
   const itemIdParams = convertStringToInt(searchParams.get("id"));
   const moduleIdParams = convertStringToInt(searchParams.get("module_id"));
+  const transactionIdParams = convertStringToInt(
+    searchParams.get("transaction_id")
+  );
   const itemType = searchParams.get("type");
   const addModalParams = convertStringToBoolean(searchParams.get("add"));
   const editModalParams = convertStringToBoolean(searchParams.get("edit"));
@@ -53,7 +57,7 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
           <Link
             href={`/dashboard/profiles/${profileInfo.id}?add=true&type=module`}
           >
-            <Button>Adicionar módulo</Button>
+            <p>Adicionar módulo</p>
           </Link>
         </div>
 
@@ -64,7 +68,7 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
         )}
         {modules.length > 0 &&
           modules.map((module) => (
-            <>
+            <div key={module.name}>
               <div className="flex space-x-2">
                 <p className="font-bold text-md">{module.name}</p>
                 <Link
@@ -86,7 +90,7 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
                     <Link
                       href={`/dashboard/profiles/${profileInfo.id}?add=true&type=transaction&module_id=${module.id}`}
                     >
-                      <Button>Adicionar transação</Button>
+                      <p>Adicionar transação</p>
                     </Link>
                   </AccordionTrigger>
                   <AccordionContent className="space-y-4 p-2 ">
@@ -102,7 +106,7 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
                       module.transactions.map((transaction) => (
                         <Accordion
                           className="border border-inputBorder rounded-sm "
-                          key={transaction.id + transaction.name}
+                          key={transaction.name + module.id}
                           type="single"
                           collapsible
                         >
@@ -121,19 +125,30 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
                               </div>
                             </AccordionTrigger>
                             <AccordionContent className="ml-4 space-y-4">
+                              <Link
+                                href={`/dashboard/profiles/${profileInfo.id}?add=true&type=function&transaction_id=${transaction.id}`}
+                              >
+                                <p>Adicionar função</p>
+                              </Link>
                               {transaction.functions.length === 0 && (
                                 <h2 className="font-bold text-md mb-2 flex items-center justify-center mt-2">
                                   Não há funções acessíveis
                                 </h2>
                               )}
                               {transaction.functions.length > 0 &&
-                                transaction.functions.map((func) => (
-                                  <h2
-                                    key={func.id + func.name}
-                                    className="font-bold text-md mb-2 flex items-center justify-start mt-2"
+                                transaction.functions.map((func, idx) => (
+                                  <div
+                                    key={module.name + transaction.name}
+                                    className="flex space-x-2"
                                   >
-                                    Função - {func.name}
-                                  </h2>
+                                    <p>{func.name}</p>
+                                    <Link
+                                      href={`/dashboard/profiles/${profileInfo.id}?delete=true&type=function&id=${func.id}&transaction_id=${transaction.id}`}
+                                      className="flex "
+                                    >
+                                      <X className="bg-red-500 rounded-xl text-white mr-4 ring-2 ring-white" />
+                                    </Link>
+                                  </div>
                                 ))}
                             </AccordionContent>
                           </AccordionItem>
@@ -142,7 +157,7 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-            </>
+            </div>
           ))}
       </section>
 
@@ -157,6 +172,15 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
           <CreateProfileTransactionForm
             module_id={moduleIdParams}
             profile_id={profileInfo.id}
+          />
+        </Modal.Root>
+      )}
+
+      {itemType === "function" && addModalParams && (
+        <Modal.Root>
+          <CreateProfileFunctionForm
+            profile_id={profileInfo.id}
+            transaction_id={transactionIdParams}
           />
         </Modal.Root>
       )}
@@ -177,6 +201,17 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
             type={itemType}
             entity_id={itemIdParams}
             profile_id={profileInfo.id}
+          />
+        </Modal.Root>
+      )}
+
+      {itemType === "function" && deleteModalParams && (
+        <Modal.Root>
+          <DeleteProfileRelation
+            type={itemType}
+            entity_id={itemIdParams}
+            profile_id={profileInfo.id}
+            transaction_id={transactionIdParams}
           />
         </Modal.Root>
       )}
