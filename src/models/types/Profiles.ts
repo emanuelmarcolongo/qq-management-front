@@ -27,6 +27,23 @@ export interface ProfileModule {
   updated_at: Date;
 }
 
+export interface ProfileTransaction {
+  id: number;
+  profile_id: number;
+  transaction_id: number;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface ProfileFunction {
+  id: number;
+  profile_id: number;
+  transaction_id: number;
+  function_id: number;
+  created_at: Date;
+  updated_at: Date;
+}
+
 interface ModuleDetail {
   id: number;
   name: string;
@@ -49,4 +66,8 @@ interface FunctionDetail {
 
 export interface CreateModuleProfileData {
   moduleIds: number[];
+}
+
+export interface CreateProfileTransactionData {
+  transactionIds: number[];
 }

@@ -31,10 +31,17 @@ const DeleteProfileRelation = ({
 
   const onSubmit = async () => {
     try {
-      const deletedProfileRelation = await ProfilesService.deleteProfileModule(
-        profile_id,
-        entity_id
-      );
+      if (type === "module") {
+        const deletedProfileRelation =
+          await ProfilesService.deleteProfileModule(profile_id, entity_id);
+      } else if (type === "transaction") {
+        const deletedProfileRelation =
+          await ProfilesService.deleteProfileTransaction(profile_id, entity_id);
+        // } else if (type === "function") {
+        //    const deletedProfileRelation =
+        //      await ProfilesService.deleteProfileModule(profile_id, entity_id);
+      }
+
       const { id } = toast({
         description: (
           <div className="flex space-x-4">

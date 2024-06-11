@@ -17,6 +17,7 @@ import { Button } from "@/src/components/ui/button";
 import { X } from "lucide-react";
 import DeleteProfileRelation from "../(components)/DeleteProfileRelation";
 import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import CreateProfileTransactionForm from "../(components)/CreateProfileTransactionForm";
 
 type ProfileIdPageProps = {
   profileInfo: DetailedProfile;
@@ -27,6 +28,7 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
 
   const searchParams = useSearchParams();
   const itemIdParams = convertStringToInt(searchParams.get("id"));
+  const moduleIdParams = convertStringToInt(searchParams.get("module_id"));
   const itemType = searchParams.get("type");
   const addModalParams = convertStringToBoolean(searchParams.get("add"));
   const editModalParams = convertStringToBoolean(searchParams.get("edit"));
@@ -62,63 +64,85 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
         )}
         {modules.length > 0 &&
           modules.map((module) => (
-            <Accordion
-              className="border border-inputBorder rounded-sm "
-              key={module.id + module.name}
-              type="single"
-              collapsible
-            >
-              <AccordionItem value={`module-${module.id}`}>
-                <AccordionTrigger className=" [&[data-state=open]]:bg-primary rounded-sm [&[data-state=open]]:text-white  p-2 text-base font-semibold">
-                  <Link
-                    href={`/dashboard/profiles/${profileInfo.id}?delete=true&type=module&id=${module.id}`}
-                    className="flex "
-                  >
-                    <X className="bg-red-500 rounded-xl text-white mr-4 ring-2 ring-white" />
-                  </Link>
-                  Módulo - {module.name}
-                </AccordionTrigger>
-                <AccordionContent className="space-y-4 p-2 ">
-                  {module.transactions.length === 0 && (
-                    <h2 className="font-bold text-md mb-2 flex items-center justify-center mt-2">
-                      Não há transações acessíveis
-                    </h2>
-                  )}
+            <>
+              <div className="flex space-x-2">
+                <p className="font-bold text-md">{module.name}</p>
+                <Link
+                  href={`/dashboard/profiles/${profileInfo.id}?delete=true&type=module&id=${module.id}`}
+                  className="flex "
+                >
+                  <X className="bg-red-500 rounded-xl text-white mr-4 ring-2 ring-white" />
+                </Link>
+              </div>
+              <Accordion
+                className="border border-inputBorder rounded-sm "
+                key={module.id + module.name}
+                type="single"
+                collapsible
+              >
+                <AccordionItem value={`module-${module.id}`}>
+                  <AccordionTrigger className=" [&[data-state=open]]:bg-primary rounded-sm [&[data-state=open]]:text-white  p-2 text-base font-semibold">
+                    Transações
+                    <Link
+                      href={`/dashboard/profiles/${profileInfo.id}?add=true&type=transaction&module_id=${module.id}`}
+                    >
+                      <Button>Adicionar transação</Button>
+                    </Link>
+                  </AccordionTrigger>
+                  <AccordionContent className="space-y-4 p-2 ">
+                    {module.transactions.length === 0 && (
+                      <div className="flex flex-col items-center justify-center">
+                        <h2 className="font-bold text-md mb-2 flex items-center justify-center mt-2">
+                          Não há transações acessíveis
+                        </h2>
+                      </div>
+                    )}
 
-                  {module.transactions.length > 0 &&
-                    module.transactions.map((transaction) => (
-                      <Accordion
-                        className="border border-inputBorder rounded-sm "
-                        key={transaction.id + transaction.name}
-                        type="single"
-                        collapsible
-                      >
-                        <AccordionItem value={`transaction-${transaction.id}`}>
-                          <AccordionTrigger className="bg-slate-300/10 [&[data-state=open]]:bg-secondary [&[data-state=open]]:text-white   p-2 text-sm font-semibold">
-                            Transação - {transaction.name}
-                          </AccordionTrigger>
-                          <AccordionContent className="ml-4 space-y-4">
-                            {transaction.functions.length === 0 && (
-                              <h2 className="font-bold text-md mb-2 flex items-center justify-center mt-2">
-                                Não há funções acessíveis
-                              </h2>
-                            )}
-                            {transaction.functions.length > 0 &&
-                              transaction.functions.map((func) => (
-                                <h2
-                                  key={func.id + func.name}
-                                  className="font-bold text-md mb-2 flex items-center justify-start mt-2"
+                    {module.transactions.length > 0 &&
+                      module.transactions.map((transaction) => (
+                        <Accordion
+                          className="border border-inputBorder rounded-sm "
+                          key={transaction.id + transaction.name}
+                          type="single"
+                          collapsible
+                        >
+                          <AccordionItem
+                            value={`transaction-${transaction.id}`}
+                          >
+                            <AccordionTrigger className="bg-slate-300/10 [&[data-state=open]]:bg-secondary [&[data-state=open]]:text-white   p-2 text-sm font-semibold">
+                              <div className="flex space-x-2">
+                                <p>{transaction.name}</p>
+                                <Link
+                                  href={`/dashboard/profiles/${profileInfo.id}?delete=true&type=transaction&id=${transaction.id}`}
+                                  className="flex "
                                 >
-                                  Função - {func.name}
+                                  <X className="bg-red-500 rounded-xl text-white mr-4 ring-2 ring-white" />
+                                </Link>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent className="ml-4 space-y-4">
+                              {transaction.functions.length === 0 && (
+                                <h2 className="font-bold text-md mb-2 flex items-center justify-center mt-2">
+                                  Não há funções acessíveis
                                 </h2>
-                              ))}
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    ))}
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+                              )}
+                              {transaction.functions.length > 0 &&
+                                transaction.functions.map((func) => (
+                                  <h2
+                                    key={func.id + func.name}
+                                    className="font-bold text-md mb-2 flex items-center justify-start mt-2"
+                                  >
+                                    Função - {func.name}
+                                  </h2>
+                                ))}
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      ))}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </>
           ))}
       </section>
 
@@ -128,7 +152,26 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
         </Modal.Root>
       )}
 
+      {itemType === "transaction" && addModalParams && (
+        <Modal.Root>
+          <CreateProfileTransactionForm
+            module_id={moduleIdParams}
+            profile_id={profileInfo.id}
+          />
+        </Modal.Root>
+      )}
+
       {itemType === "module" && deleteModalParams && (
+        <Modal.Root>
+          <DeleteProfileRelation
+            type={itemType}
+            entity_id={itemIdParams}
+            profile_id={profileInfo.id}
+          />
+        </Modal.Root>
+      )}
+
+      {itemType === "transaction" && deleteModalParams && (
         <Modal.Root>
           <DeleteProfileRelation
             type={itemType}
