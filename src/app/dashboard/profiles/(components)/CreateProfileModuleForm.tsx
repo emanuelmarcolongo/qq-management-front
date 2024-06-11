@@ -103,7 +103,7 @@ const CreatProfileModuleForm = ({
     <section className="w-[400px]  max-h-[700px]  border border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-center jusitfy-center bg-white overflow-y-auto text-sm">
       <div className="flex justify-between w-full">
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
-          Vincular permissão do perfil aos módulos
+          Permissão Perfil-Módulo
         </h1>
         <Link href={`/dashboard/profiles/${profileId}`}>
           <X />
@@ -178,10 +178,12 @@ const CreatProfileModuleForm = ({
             )}
           />
           {availableModules.length > 0 ? (
-            <Button type="submit">Vincular</Button>
+            <Button className="w-full" type="submit">
+              Vincular
+            </Button>
           ) : (
             <Link href={`/dashboard/profiles/${profileId}`}>
-              <Button className="mt-4" type="submit">
+              <Button className="mt-4 w-full" type="submit">
                 Voltar
               </Button>
             </Link>

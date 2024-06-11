@@ -15,10 +15,7 @@ import {
   FormMessage,
 } from "@/src/components/ui/form";
 import { useToast } from "@/src/components/ui/use-toast";
-import {
-  createProfileModuleLink,
-  createProfileTransactionLink,
-} from "@/src/models/validation";
+import { createProfileTransactionLink } from "@/src/models/validation";
 import { AlertCircle, CheckCircle, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -85,7 +82,7 @@ const CreateProfileTransactionForm = ({
         description: (
           <div className="flex space-x-4">
             <CheckCircle color="#11945A" />
-            <p>Módulo(s) vinculado ao perfil com sucesso!</p>
+            <p>Transações vinculadas ao perfil com sucesso!</p>
           </div>
         ),
       });
@@ -113,7 +110,7 @@ const CreateProfileTransactionForm = ({
     <section className="w-[400px]  max-h-[700px]  border border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-center jusitfy-center bg-white overflow-y-auto text-sm">
       <div className="flex justify-between w-full">
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
-          Vincular permissão do perfil as transações
+          Permissão Perfil-Transação
         </h1>
         <Link href={`/dashboard/profiles/${profile_id}`}>
           <X />
@@ -144,7 +141,7 @@ const CreateProfileTransactionForm = ({
                       </FormLabel>
                       <FormDescription>
                         Esse perfil já tem permissão de acesso a todos as
-                        transações
+                        transações presentes no módulo
                       </FormDescription>
                     </>
                   )}
@@ -188,10 +185,12 @@ const CreateProfileTransactionForm = ({
             )}
           />
           {availableTransactions.length > 0 ? (
-            <Button type="submit">Vincular</Button>
+            <Button className="w-full" type="submit">
+              Vincular
+            </Button>
           ) : (
             <Link href={`/dashboard/profiles/${profile_id}`}>
-              <Button className="mt-4" type="submit">
+              <Button className="mt-4 w-full" type="submit">
                 Voltar
               </Button>
             </Link>

@@ -52,9 +52,7 @@ const DeleteProfileRelation = ({
         description: (
           <div className="flex space-x-4">
             <CheckCircle color="#11945A" />
-            <p>
-              Permissão do perfil com {dictionary[type]} revogada com sucesso!
-            </p>
+            <p>Permissão do(a) {dictionary[type]} revogada com sucesso!</p>
           </div>
         ),
       });

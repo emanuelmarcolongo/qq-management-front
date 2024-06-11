@@ -111,7 +111,7 @@ const CreateProfileFunctionForm = ({
     <section className="w-[400px]  max-h-[700px]  border border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-center jusitfy-center bg-white overflow-y-auto text-sm">
       <div className="flex justify-between w-full">
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
-          Vincular permissão do perfil as transações
+          Permissão Perfil-Função
         </h1>
         <Link href={`/dashboard/profiles/${profile_id}`}>
           <X />
@@ -143,7 +143,7 @@ const CreateProfileFunctionForm = ({
                       </FormLabel>
                       <FormDescription>
                         Esse perfil já tem permissão de acesso a todos as
-                        funções
+                        funções do módulo nessa transação específica
                       </FormDescription>
                     </>
                   )}
@@ -187,10 +187,12 @@ const CreateProfileFunctionForm = ({
             )}
           />
           {availableFunctions.length > 0 ? (
-            <Button type="submit">Vincular</Button>
+            <Button className="w-full" type="submit">
+              Vincular
+            </Button>
           ) : (
             <Link href={`/dashboard/profiles/${profile_id}`}>
-              <Button className="mt-4" type="submit">
+              <Button className="mt-4 w-full" type="submit">
                 Voltar
               </Button>
             </Link>
