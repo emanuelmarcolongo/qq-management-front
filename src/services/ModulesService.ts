@@ -3,163 +3,73 @@ import {
   DetailedModule,
   ModulesData,
 } from "../models/types/Modules";
+import createFetchOptions from "./utils/fetchOptions";
+import handleResponse from "./utils/responseHandler";
 
 const getModules = async (): Promise<ModulesData[]> => {
-  const token = `${process.env.TOKEN}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store" as RequestCache,
-  };
-
-  const response = await fetch(`${process.env.API_BASE_URL}/modules`, options);
-  if (!response.ok) {
-    throw new Error(`Erro na requisição: ${response.status}`);
-  }
-
-  const data: ModulesData[] = await response.json();
-  return data;
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules`,
+    createFetchOptions("GET", token)
+  );
+  return handleResponse<ModulesData[]>(response);
 };
 
 const getModuleById = async (id: number): Promise<DetailedModule> => {
-  const token = `${process.env.TOKEN}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store" as RequestCache,
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
-    `${process.env.API_BASE_URL}/modules/${id}`,
-    options
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules/${id}`,
+    createFetchOptions("GET", token)
   );
-  if (!response.ok) {
-    throw new Error(`Erro na requisição: ${response.status}`);
-  }
-
-  const data: DetailedModule = await response.json();
-  return data;
+  return handleResponse<DetailedModule>(response);
 };
 
 const getModulesFromClient = async (): Promise<ModulesData[]> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store" as RequestCache,
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules`,
-    options
+    createFetchOptions("GET", token)
   );
-  if (!response.ok) {
-    throw new Error(`Erro na requisição: ${response.status}`);
-  }
-
-  const data: ModulesData[] = await response.json();
-  return data;
+  return handleResponse<ModulesData[]>(response);
 };
 
 const postModule = async (data: CreateModuleData): Promise<ModulesData> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules`,
-    options
+    createFetchOptions("POST", token, data)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<ModulesData>(response);
 };
 
 const updateModule = async (
   data: CreateModuleData,
   id: number
 ): Promise<ModulesData> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules/${id}`,
-    options
+    createFetchOptions("PUT", token, data)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<ModulesData>(response);
 };
 
 const deleteModule = async (id: number): Promise<ModulesData> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules/${id}`,
-    options
+    createFetchOptions("DELETE", token)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<ModulesData>(response);
 };
 
 const ModulesService = {
   getModules,
+  getModuleById,
+  getModulesFromClient,
   postModule,
   updateModule,
   deleteModule,
-  getModulesFromClient,
-  getModuleById,
 };
 
 export default ModulesService;

@@ -4,13 +4,9 @@ import Content from "@/src/components/page-content";
 import UtilityBar from "@/src/components/utilitybar/UtilityBar";
 import Filter from "@/src/lib/filters";
 import Sort from "@/src/lib/sort";
-import React, { useState } from "react";
-import Modal from "@/src/components/modal";
-import { Function } from "@/src/models/types/Modules";
-import { useSearchParams } from "next/navigation";
-import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
-import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
 import { FunctionWithModule } from "@/src/models/types/Functions";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import FunctionsTable from "./(components)/FunctionTable";
 
 interface FunctionsPageProps {

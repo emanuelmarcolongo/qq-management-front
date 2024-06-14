@@ -1,4 +1,3 @@
-import { ApiResponse } from "../models/types/ApiResponse";
 import { Function, ModulesData, Transaction } from "../models/types/Modules";
 import {
   CreateModuleProfileData,
@@ -11,364 +10,136 @@ import {
   ProfileModule,
   ProfileTransaction,
 } from "../models/types/Profiles";
+import createFetchOptions from "./utils/fetchOptions";
+import handleResponse from "./utils/responseHandler";
 
 const getProfiles = async (): Promise<Profile[]> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store" as RequestCache,
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles`,
-    options
+    createFetchOptions("GET", token)
   );
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<Profile[]>(response);
 };
 
-const createProfile = async (
-  data: CreateProfileData
-): Promise<ApiResponse<Profile>> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+const createProfile = async (data: CreateProfileData): Promise<Profile> => {
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles`,
-    options
+    createFetchOptions("POST", token, data)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<Profile>(response);
 };
 
-const updateProfile = async (id: number, data: any): Promise<Profile> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+const updateProfile = async (
+  id: number,
+  data: Partial<Profile>
+): Promise<Profile> => {
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${id}`,
-    options
+    createFetchOptions("PUT", token, data)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<Profile>(response);
 };
 
 const deleteProfile = async (id: number): Promise<Profile> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${id}`,
-    options
+    createFetchOptions("DELETE", token)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<Profile>(response);
 };
 
 const getProfileById = async (id: number): Promise<DetailedProfile> => {
-  const token = `${process.env.TOKEN}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store" as RequestCache,
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
-    `${process.env.API_BASE_URL}/profiles/${id}`,
-    options
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${id}`,
+    createFetchOptions("GET", token)
   );
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<DetailedProfile>(response);
 };
 
 const getAvailableModules = async (id: number): Promise<ModulesData[]> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store" as RequestCache,
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${id}/modules`,
-    options
+    createFetchOptions("GET", token)
   );
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<ModulesData[]>(response);
 };
 
 const getAvailableTransactions = async (
-  profile_id: number,
-  module_id: number
+  profileId: number,
+  moduleId: number
 ): Promise<Transaction[]> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store" as RequestCache,
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profile_id}/modules/${module_id}/transactions`,
-    options
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profileId}/modules/${moduleId}/transactions`,
+    createFetchOptions("GET", token)
   );
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<Transaction[]>(response);
 };
 
 const getAvailableFunctions = async (
-  profile_id: number,
-  transaction_id: number
+  profileId: number,
+  transactionId: number
 ): Promise<Function[]> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store" as RequestCache,
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions/profiles/${profile_id}/transactions/${transaction_id}`,
-    options
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions/profiles/${profileId}/transactions/${transactionId}`,
+    createFetchOptions("GET", token)
   );
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<Function[]>(response);
 };
 
 const postProfileModule = async (
   profileId: number,
   data: CreateModuleProfileData
 ): Promise<ProfileModule[]> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profileId}/modules`,
-    options
+    createFetchOptions("POST", token, data)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<ProfileModule[]>(response);
 };
 
 const deleteProfileModule = async (
-  profile_id: number,
-  module_id: number
-): Promise<any> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
+  profileId: number,
+  moduleId: number
+): Promise<void> => {
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profile_id}/modules/${module_id}`,
-    options
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profileId}/modules/${moduleId}`,
+    createFetchOptions("DELETE", token)
   );
-
-  const body = await response.json();
-
-  console.log(body);
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
-};
-
-const deleteProfileTransaction = async (
-  profile_id: number,
-  transaction_id: number
-): Promise<any> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profile_id}/transactions/${transaction_id}`,
-    options
-  );
-
-  const body = await response.json();
-
-  console.log(body);
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
-};
-
-const deleteProfileFunction = async (
-  profile_id: number,
-  transaction_id: number,
-  function_id: number
-): Promise<any> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions/${function_id}/profile/${profile_id}/transaction/${transaction_id}`,
-    options
-  );
-
-  const body = await response.json();
-
-  console.log(body);
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  await handleResponse<void>(response);
 };
 
 const postProfileTransaction = async (
   profileId: number,
   data: CreateProfileTransactionData
 ): Promise<ProfileTransaction[]> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profileId}/transaction`,
-    options
+    createFetchOptions("POST", token, data)
   );
+  return handleResponse<ProfileTransaction[]>(response);
+};
 
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+const deleteProfileTransaction = async (
+  profileId: number,
+  transactionId: number
+): Promise<void> => {
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profileId}/transactions/${transactionId}`,
+    createFetchOptions("DELETE", token)
+  );
+  await handleResponse<void>(response);
 };
 
 const postProfileFunction = async (
@@ -376,29 +147,25 @@ const postProfileFunction = async (
   transactionId: number,
   data: CreateProfileFunctionData
 ): Promise<ProfileFunction[]> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions/profiles/${profileId}/transactions/${transactionId}`,
-    options
+    createFetchOptions("POST", token, data)
   );
+  return handleResponse<ProfileFunction[]>(response);
+};
 
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+const deleteProfileFunction = async (
+  profileId: number,
+  transactionId: number,
+  functionId: number
+): Promise<void> => {
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions/${functionId}/profile/${profileId}/transaction/${transactionId}`,
+    createFetchOptions("DELETE", token)
+  );
+  await handleResponse<void>(response);
 };
 
 const ProfilesService = {

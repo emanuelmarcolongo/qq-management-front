@@ -3,118 +3,55 @@ import {
   CreateTransaction,
   TransactionWithModule,
 } from "../models/types/Transactions";
+import createFetchOptions from "./utils/fetchOptions";
+import handleResponse from "./utils/responseHandler";
 
 const getTransactions = async (): Promise<TransactionWithModule[]> => {
-  const token = `${process.env.TOKEN}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store" as RequestCache,
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
-    `${process.env.API_BASE_URL}/transactions`,
-    options
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions`,
+    createFetchOptions("GET", token)
   );
-  if (!response.ok) {
-    throw new Error(`Erro na requisição: ${response.status}`);
-  }
-
-  const data: TransactionWithModule[] = await response.json();
-  return data;
+  return handleResponse<TransactionWithModule[]>(response);
 };
 
 const postTransaction = async (
   data: CreateTransaction
 ): Promise<Transaction> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions`,
-    options
+    createFetchOptions("POST", token, data)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<Transaction>(response);
 };
 
 const updateTransaction = async (
   data: CreateTransaction,
   id: number
 ): Promise<Transaction> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions/${id}`,
-    options
+    createFetchOptions("PUT", token, data)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<Transaction>(response);
 };
 
 const deleteTransaction = async (id: number): Promise<Transaction> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions/${id}`,
-    options
+    createFetchOptions("DELETE", token)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<Transaction>(response);
 };
 
 const transactionService = {
+  getTransactions,
   postTransaction,
   updateTransaction,
   deleteTransaction,
-  getTransactions,
 };
 
 export default transactionService;

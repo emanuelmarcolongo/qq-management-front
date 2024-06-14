@@ -1,6 +1,6 @@
+import transactionService from "@/src/services/TransactionService";
 import { Metadata } from "next";
 import CCTransactionsPage from "./TransactionsPage";
-import transactionService from "@/src/services/TransactionService";
 
 export const metadata: Metadata = {
   title: "Quero-Quero | Transações",

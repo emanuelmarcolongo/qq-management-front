@@ -1,105 +1,45 @@
 import { ApiResponse } from "../models/types/ApiResponse";
 import { CreateUserData, User, UserWithProfile } from "../models/types/User";
+import createFetchOptions from "./utils/fetchOptions";
+import handleResponse from "./utils/responseHandler";
 
-const getUsers = async (): Promise<UserWithProfile[] | void> => {
-  const token = `${process.env.TOKEN}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store" as RequestCache,
-  };
-
-  const response = await fetch(`${process.env.API_BASE_URL}/users`, options);
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+const getUsers = async (): Promise<UserWithProfile[]> => {
+  const token = process.env.TOKEN!;
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/users`,
+    createFetchOptions("GET", token)
+  );
+  return handleResponse<UserWithProfile[]>(response);
 };
 
 const postUser = async (data: CreateUserData): Promise<any> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/register`,
-    options
+    createFetchOptions("POST", token, data)
   );
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<any>(response);
 };
 
 const updateUser = async (
   id: number,
   data: CreateUserData
 ): Promise<ApiResponse<User>> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/${id}`,
-    options
+    createFetchOptions("PUT", token, data)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<ApiResponse<User>>(response);
 };
 
 const deleteUser = async (id: number): Promise<User> => {
-  const token = `${process.env.NEXT_PUBLIC_TOKEN}`;
-
-  const options = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
+  const token = process.env.NEXT_PUBLIC_TOKEN!;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/${id}`,
-    options
+    createFetchOptions("DELETE", token)
   );
-
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message);
-  }
-
-  return body;
+  return handleResponse<User>(response);
 };
 
 const UserService = {
