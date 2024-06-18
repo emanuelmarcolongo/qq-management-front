@@ -1,3 +1,4 @@
+import { getToken } from "../lib/cookies/auth";
 import { Transaction } from "../models/types/Modules";
 import {
   CreateTransaction,
@@ -7,7 +8,7 @@ import createFetchOptions from "./utils/fetchOptions";
 import handleResponse from "./utils/responseHandler";
 
 const getTransactions = async (): Promise<TransactionWithModule[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions`,
     createFetchOptions("GET", token)
@@ -18,7 +19,7 @@ const getTransactions = async (): Promise<TransactionWithModule[]> => {
 const postTransaction = async (
   data: CreateTransaction
 ): Promise<Transaction> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions`,
     createFetchOptions("POST", token, data)
@@ -30,7 +31,7 @@ const updateTransaction = async (
   data: CreateTransaction,
   id: number
 ): Promise<Transaction> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions/${id}`,
     createFetchOptions("PUT", token, data)
@@ -39,7 +40,7 @@ const updateTransaction = async (
 };
 
 const deleteTransaction = async (id: number): Promise<Transaction> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions/${id}`,
     createFetchOptions("DELETE", token)

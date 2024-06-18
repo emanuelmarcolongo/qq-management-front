@@ -1,6 +1,6 @@
 const createFetchOptions = (
   method: string,
-  token: string,
+  token?: string,
   data?: any
 ): RequestInit => {
   const options: RequestInit = {

@@ -1,3 +1,4 @@
+import { getToken } from "../lib/cookies/auth";
 import { Function, ModulesData, Transaction } from "../models/types/Modules";
 import {
   CreateModuleProfileData,
@@ -14,7 +15,7 @@ import createFetchOptions from "./utils/fetchOptions";
 import handleResponse from "./utils/responseHandler";
 
 const getProfiles = async (): Promise<Profile[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles`,
     createFetchOptions("GET", token)
@@ -23,7 +24,7 @@ const getProfiles = async (): Promise<Profile[]> => {
 };
 
 const createProfile = async (data: CreateProfileData): Promise<Profile> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles`,
     createFetchOptions("POST", token, data)
@@ -35,7 +36,7 @@ const updateProfile = async (
   id: number,
   data: Partial<Profile>
 ): Promise<Profile> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${id}`,
     createFetchOptions("PUT", token, data)
@@ -44,7 +45,7 @@ const updateProfile = async (
 };
 
 const deleteProfile = async (id: number): Promise<Profile> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${id}`,
     createFetchOptions("DELETE", token)
@@ -53,7 +54,7 @@ const deleteProfile = async (id: number): Promise<Profile> => {
 };
 
 const getProfileById = async (id: number): Promise<DetailedProfile> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${id}`,
     createFetchOptions("GET", token)
@@ -62,7 +63,7 @@ const getProfileById = async (id: number): Promise<DetailedProfile> => {
 };
 
 const getAvailableModules = async (id: number): Promise<ModulesData[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${id}/modules`,
     createFetchOptions("GET", token)
@@ -74,7 +75,7 @@ const getAvailableTransactions = async (
   profileId: number,
   moduleId: number
 ): Promise<Transaction[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profileId}/modules/${moduleId}/transactions`,
     createFetchOptions("GET", token)
@@ -86,7 +87,7 @@ const getAvailableFunctions = async (
   profileId: number,
   transactionId: number
 ): Promise<Function[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions/profiles/${profileId}/transactions/${transactionId}`,
     createFetchOptions("GET", token)
@@ -98,7 +99,7 @@ const postProfileModule = async (
   profileId: number,
   data: CreateModuleProfileData
 ): Promise<ProfileModule[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profileId}/modules`,
     createFetchOptions("POST", token, data)
@@ -110,7 +111,7 @@ const deleteProfileModule = async (
   profileId: number,
   moduleId: number
 ): Promise<void> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profileId}/modules/${moduleId}`,
     createFetchOptions("DELETE", token)
@@ -122,7 +123,7 @@ const postProfileTransaction = async (
   profileId: number,
   data: CreateProfileTransactionData
 ): Promise<ProfileTransaction[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profileId}/transaction`,
     createFetchOptions("POST", token, data)
@@ -134,7 +135,7 @@ const deleteProfileTransaction = async (
   profileId: number,
   transactionId: number
 ): Promise<void> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/profiles/${profileId}/transactions/${transactionId}`,
     createFetchOptions("DELETE", token)
@@ -147,7 +148,7 @@ const postProfileFunction = async (
   transactionId: number,
   data: CreateProfileFunctionData
 ): Promise<ProfileFunction[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions/profiles/${profileId}/transactions/${transactionId}`,
     createFetchOptions("POST", token, data)
@@ -160,7 +161,7 @@ const deleteProfileFunction = async (
   transactionId: number,
   functionId: number
 ): Promise<void> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions/${functionId}/profile/${profileId}/transaction/${transactionId}`,
     createFetchOptions("DELETE", token)

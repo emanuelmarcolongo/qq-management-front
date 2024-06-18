@@ -1,10 +1,11 @@
+import { getToken } from "../lib/cookies/auth";
 import { CreateFunction, FunctionWithModule } from "../models/types/Functions";
 import { Function } from "../models/types/Modules";
 import createFetchOptions from "./utils/fetchOptions";
 import handleResponse from "./utils/responseHandler";
 
 const getFunctions = async (): Promise<FunctionWithModule[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions`,
     createFetchOptions("GET", token)
@@ -13,7 +14,7 @@ const getFunctions = async (): Promise<FunctionWithModule[]> => {
 };
 
 const postFunction = async (data: CreateFunction): Promise<Function> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions`,
     createFetchOptions("POST", token, data)
@@ -25,7 +26,7 @@ const updateFunction = async (
   data: CreateFunction,
   id: number
 ): Promise<Function> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions/${id}`,
     createFetchOptions("PUT", token, data)
@@ -34,7 +35,7 @@ const updateFunction = async (
 };
 
 const deleteFunction = async (id: number): Promise<Function> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/functions/${id}`,
     createFetchOptions("DELETE", token)

@@ -1,9 +1,4 @@
-import React from "react";
 import profileAvatar from "@/public/profile-avatar.png";
-import Image from "next/image";
-import { LucideLogOut, Menu } from "lucide-react";
-import Link from "next/link";
-import Navlinks from "./Navlinks";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +8,11 @@ import {
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
 import navigation from "@/src/constants/navigation";
+import { Menu } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import LogoutButton from "./LogoutButton";
+import Navlinks from "./Navlinks";
 
 const Navbar = () => {
   return (
@@ -47,13 +47,7 @@ const DesktopNavbar = () => {
       <Navlinks />
 
       <div className="divider h-[1px] w-[90%] my-4 bg-white mx-auto " />
-      <Link
-        href={"/"}
-        className={`flex space-x-4 text-sm w-full h-[45px] pl-12 items-center `}
-      >
-        <LucideLogOut />
-        <p>Logout</p>
-      </Link>
+      <LogoutButton />
     </section>
   );
 };
@@ -89,6 +83,7 @@ const MobileNavbar = () => {
               </Link>
             </DropdownMenuItem>
           ))}
+          <LogoutButton />
         </DropdownMenuContent>
       </DropdownMenu>
     </section>

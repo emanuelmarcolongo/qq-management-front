@@ -1,3 +1,4 @@
+import { getToken } from "../lib/cookies/auth";
 import {
   CreateModuleData,
   DetailedModule,
@@ -7,7 +8,7 @@ import createFetchOptions from "./utils/fetchOptions";
 import handleResponse from "./utils/responseHandler";
 
 const getModules = async (): Promise<ModulesData[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules`,
     createFetchOptions("GET", token)
@@ -16,7 +17,7 @@ const getModules = async (): Promise<ModulesData[]> => {
 };
 
 const getModuleById = async (id: number): Promise<DetailedModule> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules/${id}`,
     createFetchOptions("GET", token)
@@ -25,7 +26,7 @@ const getModuleById = async (id: number): Promise<DetailedModule> => {
 };
 
 const getModulesFromClient = async (): Promise<ModulesData[]> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules`,
     createFetchOptions("GET", token)
@@ -34,7 +35,7 @@ const getModulesFromClient = async (): Promise<ModulesData[]> => {
 };
 
 const postModule = async (data: CreateModuleData): Promise<ModulesData> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules`,
     createFetchOptions("POST", token, data)
@@ -46,7 +47,7 @@ const updateModule = async (
   data: CreateModuleData,
   id: number
 ): Promise<ModulesData> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules/${id}`,
     createFetchOptions("PUT", token, data)
@@ -55,7 +56,7 @@ const updateModule = async (
 };
 
 const deleteModule = async (id: number): Promise<ModulesData> => {
-  const token = process.env.NEXT_PUBLIC_TOKEN!;
+  const token = await getToken();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules/${id}`,
     createFetchOptions("DELETE", token)
