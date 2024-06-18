@@ -1,6 +1,9 @@
 "use server";
 
-import { UserSignInInfoWithToken } from "@/src/models/types/Auth";
+import {
+  UserSignInInfo,
+  UserSignInInfoWithToken,
+} from "@/src/models/types/Auth";
 import { cookies } from "next/headers";
 
 const TOKEN_KEY = "access_token";
@@ -16,6 +19,15 @@ export const setCookies = async (data: UserSignInInfoWithToken) => {
     httpOnly: true,
     expires: Date.now() + oneWeek,
   });
+};
+
+export const getUserInfo = async (): Promise<UserSignInInfo | null> => {
+  const userInfoFromCookies = cookies().get("user_info");
+
+  if (!userInfoFromCookies) return null;
+
+  const parsedUserInfo = JSON.parse(userInfoFromCookies.value);
+  return parsedUserInfo;
 };
 
 export const getToken = async () => {

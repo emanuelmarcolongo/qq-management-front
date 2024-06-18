@@ -8,22 +8,32 @@ import {
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
 import navigation from "@/src/constants/navigation";
+import { getUserInfo } from "@/src/lib/cookies/auth";
+import { UserSignInInfo } from "@/src/models/types/Auth";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import LogoutButton from "./LogoutButton";
+import { redirect } from "next/navigation";
+import { LogoutButton, LogoutButtonMobile } from "./LogoutButton";
 import Navlinks from "./Navlinks";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const userInfo = await getUserInfo();
+
+  if (!userInfo) redirect("/");
   return (
     <>
-      <DesktopNavbar />
-      <MobileNavbar />
+      <DesktopNavbar userInfo={userInfo} />
+      <MobileNavbar userInfo={userInfo} />
     </>
   );
 };
 
-const DesktopNavbar = () => {
+interface NavbarProps {
+  userInfo: UserSignInInfo;
+}
+
+const DesktopNavbar = ({ userInfo }: NavbarProps) => {
   return (
     <section
       id="desktop-navbar"
@@ -38,8 +48,8 @@ const DesktopNavbar = () => {
           height={150}
         />
         <div className="flex flex-col items-center justify-center text-white">
-          <p className="font-semibold text-lg">Emanuel</p>
-          <p className="text-sm font-light ">Admin</p>
+          <p className="font-semibold text-lg">{userInfo.name}</p>
+          <p className="text-sm font-light ">{userInfo.profile}</p>
         </div>
       </article>
       <div className="divider h-[1px] w-[90%] my-4 bg-white mx-auto" />
@@ -52,7 +62,7 @@ const DesktopNavbar = () => {
   );
 };
 
-const MobileNavbar = () => {
+const MobileNavbar = ({ userInfo }: NavbarProps) => {
   return (
     <section className="bg-secondary drop-shadow-xl h-[70px] w-screen fixed top-0 z-10 md:hidden flex items-center justify-between px-4">
       <div className="flex items-center justify-center">
@@ -64,8 +74,8 @@ const MobileNavbar = () => {
           height={60}
         />
         <div className="text-sm text-white ml-4">
-          <p className="font-bold ">Carlos Silva</p>
-          <p>Administrador(a)</p>
+          <p className="font-bold ">{userInfo.name}</p>
+          <p>{userInfo.profile}</p>
         </div>
       </div>
       <DropdownMenu>
@@ -83,7 +93,7 @@ const MobileNavbar = () => {
               </Link>
             </DropdownMenuItem>
           ))}
-          <LogoutButton />
+          <LogoutButtonMobile />
         </DropdownMenuContent>
       </DropdownMenu>
     </section>
