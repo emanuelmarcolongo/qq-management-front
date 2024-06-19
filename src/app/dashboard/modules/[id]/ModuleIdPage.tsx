@@ -1,28 +1,29 @@
 "use client";
 
+import Modal from "@/src/components/modal";
 import Content from "@/src/components/page-content";
-import { DetailedModule } from "@/src/models/types/Modules";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/src/components/ui/accordion";
-import ModuleStylePreview from "../(components)/ModuleStylePreview";
-import TransactionTable from "./(components)/TransactionTable";
-import FunctionsTable from "./(components)/FunctionTable";
 import { Button } from "@/src/components/ui/button";
-import { useSearchParams } from "next/navigation";
 import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
 import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
-import CreateTransactionForm from "./(components)/CreateTransactionForm";
-import Modal from "@/src/components/modal";
+import { DetailedModule } from "@/src/models/types/Modules";
+import { ArrowLeftRight, GripHorizontal } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import ModuleStylePreview from "../(components)/ModuleStylePreview";
 import CreateFunctionForm from "./(components)/CreateFunctionForm";
-import UpdateFunctionForm from "./(components)/UpdateFunctionForm";
-import UpdateTransactionForm from "./(components)/UpdateTransactionForm";
+import CreateTransactionForm from "./(components)/CreateTransactionForm";
 import DeleteFunction from "./(components)/DeleteFunction";
 import DeleteTransaction from "./(components)/DeleteTransaction";
+import FunctionsTable from "./(components)/FunctionTable";
+import TransactionTable from "./(components)/TransactionTable";
+import UpdateFunctionForm from "./(components)/UpdateFunctionForm";
+import UpdateTransactionForm from "./(components)/UpdateTransactionForm";
 
 type ModuleIdPageProps = {
   moduleInfo: DetailedModule;
@@ -75,10 +76,14 @@ const ModuleIdPage = ({ moduleInfo }: ModuleIdPageProps) => {
         <p className="font-bold ">Descrição:</p>
         <p className="text-sm">{description || "Sem descrição"}</p>
       </div>
-      <section className="">
+      <section className="space-y-4">
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
-            <AccordionTrigger>Transações</AccordionTrigger>
+            <AccordionTrigger className=" [&[data-state=open]]:bg-primary [&[data-state=open]]:text-white   p-2 mb-2 rounded-sm font-semibold">
+              <p className="flex">
+                <ArrowLeftRight className="mr-2"></ArrowLeftRight>Transações
+              </p>
+            </AccordionTrigger>
             <AccordionContent>
               <Link href={`/dashboard/modules/${id}?add=true&type=transaction`}>
                 <Button className="mb-4">Adicionar Transação</Button>
@@ -91,7 +96,12 @@ const ModuleIdPage = ({ moduleInfo }: ModuleIdPageProps) => {
 
         <Accordion type="single" collapsible>
           <AccordionItem value="item-2">
-            <AccordionTrigger>Funções</AccordionTrigger>
+            <AccordionTrigger className=" [&[data-state=open]]:bg-primary [&[data-state=open]]:text-white   p-2 mb-2 rounded-sm font-semibold">
+              <p className="flex">
+                <GripHorizontal className="mr-2" />
+                Funções
+              </p>
+            </AccordionTrigger>
             <AccordionContent>
               <Link href={`/dashboard/modules/${id}?add=true&type=function`}>
                 <Button className="mb-4">Adicionar Função</Button>

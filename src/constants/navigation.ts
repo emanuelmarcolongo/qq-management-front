@@ -1,12 +1,12 @@
 import {
-  Tags,
-  User,
-  Package,
   ArrowRightLeft,
   GripHorizontal,
+  Package,
+  Tags,
+  User,
 } from "lucide-react";
 
-const navigation = [
+export const DashboardNavigation = [
   {
     name: "Usuários",
     href: "/dashboard/users",
@@ -34,4 +34,15 @@ const navigation = [
   },
 ];
 
-export default navigation;
+export const AppNavigation = [
+  {
+    name: "Início",
+    href: "/app/home",
+    icon: User,
+  },
+  {
+    name: "Módulos",
+    href: "/app/modules",
+    icon: Package,
+  },
+];

@@ -4,6 +4,7 @@ import {
   DetailedModule,
   ModulesData,
 } from "../models/types/Modules";
+import { ModuleDetail } from "../models/types/Profiles";
 import createFetchOptions from "./utils/fetchOptions";
 import handleResponse from "./utils/responseHandler";
 
@@ -64,6 +65,24 @@ const deleteModule = async (id: number): Promise<ModulesData> => {
   return handleResponse<ModulesData>(response);
 };
 
+const getUserModules = async (): Promise<ModulesData[]> => {
+  const token = await getToken();
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules/user`,
+    createFetchOptions("GET", token)
+  );
+  return handleResponse<ModulesData[]>(response);
+};
+
+const getUserModuleById = async (id: number): Promise<ModuleDetail> => {
+  const token = await getToken();
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/modules/${id}/user`,
+    createFetchOptions("GET", token)
+  );
+  return handleResponse<ModuleDetail>(response);
+};
+
 const ModulesService = {
   getModules,
   getModuleById,
@@ -71,6 +90,8 @@ const ModulesService = {
   postModule,
   updateModule,
   deleteModule,
+  getUserModules,
+  getUserModuleById,
 };
 
 export default ModulesService;

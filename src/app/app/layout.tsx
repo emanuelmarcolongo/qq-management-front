@@ -1,4 +1,4 @@
-import Navbar from "@/src/components/navbar-dashboard/Navbar";
+import Navbar from "@/src/components/navbar-app/Navbar";
 import { Toaster } from "@/src/components/ui/toaster";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -7,7 +7,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "QQ | Dashboard ",
+  title: "QQ | Início ",
   description: "Sistema de gestão Lojas Quero-Quero",
   icons: {
     shortcut: "/favicon.ico",

@@ -44,21 +44,21 @@ export interface ProfileFunction {
   updated_at: Date;
 }
 
-interface ModuleDetail {
+export interface ModuleDetail {
   id: number;
   name: string;
   description: string | null;
   transactions: TransactionDetail[];
 }
 
-interface TransactionDetail {
+export interface TransactionDetail {
   id: number;
   name: string;
   description: string | null;
   functions: FunctionDetail[];
 }
 
-interface FunctionDetail {
+export interface FunctionDetail {
   id: number;
   name: string;
   description: string | null;

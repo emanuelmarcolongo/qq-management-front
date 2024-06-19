@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
-import navigation from "@/src/constants/navigation";
+import { DashboardNavigation } from "@/src/constants/navigation";
 import { getUserInfo } from "@/src/lib/cookies/auth";
 import { UserSignInInfo } from "@/src/models/types/Auth";
 import { Menu } from "lucide-react";
@@ -85,7 +85,7 @@ const MobileNavbar = ({ userInfo }: NavbarProps) => {
         <DropdownMenuContent>
           <DropdownMenuLabel>Ir para:</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {navigation.map((navlink) => (
+          {DashboardNavigation.map((navlink) => (
             <DropdownMenuItem key={navlink.href}>
               <Link className="flex items-center space-x-4" href={navlink.href}>
                 <navlink.icon size={15} />

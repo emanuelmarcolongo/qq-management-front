@@ -1,9 +1,8 @@
 "use client";
 
-import navigation from "@/src/constants/navigation";
+import { DashboardNavigation } from "@/src/constants/navigation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 
 const Navlinks = () => {
   const pathname = usePathname();
@@ -12,7 +11,7 @@ const Navlinks = () => {
       id="navlinks"
       className="flex flex-col items-center justify-center w-full"
     >
-      {navigation.map((item) => (
+      {DashboardNavigation.map((item) => (
         <Link
           key={item.name}
           href={item.href}
