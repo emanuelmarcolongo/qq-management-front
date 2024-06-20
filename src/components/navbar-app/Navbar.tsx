@@ -10,7 +10,7 @@ import {
 import { AppNavigation } from "@/src/constants/navigation";
 import { getUserInfo } from "@/src/lib/cookies/auth";
 import { UserSignInInfo } from "@/src/models/types/Auth";
-import { Menu } from "lucide-react";
+import { Menu, View } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -54,7 +54,7 @@ const DesktopNavbar = ({ userInfo }: NavbarProps) => {
       </article>
       <div className="divider h-[1px] w-[90%] my-4 bg-white mx-auto" />
 
-      <Navlinks />
+      <Navlinks is_admin={userInfo.is_admin} />
 
       <div className="divider h-[1px] w-[90%] my-4 bg-white mx-auto " />
       <LogoutButton />
@@ -93,6 +93,18 @@ const MobileNavbar = ({ userInfo }: NavbarProps) => {
               </Link>
             </DropdownMenuItem>
           ))}
+          {userInfo.is_admin && (
+            <DropdownMenuItem>
+              <Link
+                className="flex items-center space-x-4"
+                href={`/dashboard/users`}
+              >
+                <View size={15} />
+                <p>Dashboard</p>
+              </Link>
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuSeparator />
           <LogoutButtonMobile />
         </DropdownMenuContent>
       </DropdownMenu>

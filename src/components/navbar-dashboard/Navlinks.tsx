@@ -1,10 +1,15 @@
 "use client";
 
 import { DashboardNavigation } from "@/src/constants/navigation";
+import { View } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Navlinks = () => {
+interface NavlinksProps {
+  is_admin: Boolean;
+}
+
+const Navlinks = ({ is_admin }: NavlinksProps) => {
   const pathname = usePathname();
   return (
     <nav
@@ -25,6 +30,15 @@ const Navlinks = () => {
           <p>{item.name}</p>
         </Link>
       ))}
+      {is_admin && (
+        <Link
+          href={`/app/home`}
+          className={`flex space-x-4 text-sm w-full h-[45px] pl-12 items-center `}
+        >
+          <View />
+          <p>Visão do usuário</p>
+        </Link>
+      )}
     </nav>
   );
 };
