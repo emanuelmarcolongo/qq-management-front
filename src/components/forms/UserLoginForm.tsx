@@ -42,7 +42,11 @@ const UserLoginForm = () => {
         ),
       });
 
-      router.push("/dashboard/users");
+      if (userLogin.userInfo.is_admin) {
+        router.push("/dashboard/users");
+      } else {
+        router.push("/app/home");
+      }
     } catch (error) {
       let message = "Erro ao realizar login";
       if (error instanceof Error) {

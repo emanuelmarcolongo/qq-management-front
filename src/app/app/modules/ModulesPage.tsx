@@ -34,7 +34,7 @@ const CCModulesPage = ({ data }: ModulesPageProps) => {
 
   return (
     <Content.Root>
-      <Content.Title title="Módulos" />
+      <Content.Title title="Meus módulos" />
       <UtilityBar config={UserUtilityBarConfig} setSearch={setSearch} />
       <ModuleTable modules={sortedModules} />
     </Content.Root>
