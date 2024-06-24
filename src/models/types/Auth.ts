@@ -25,3 +25,10 @@ export interface UserSignInInfo {
   is_admin: boolean;
   registration: string;
 }
+export interface IRequestPasswordReset {
+  email: string;
+}
+export interface IResetPassword {
+  token: string;
+  password: string;
+}

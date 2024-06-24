@@ -1,19 +1,19 @@
 "use client";
 
+import Modal from "@/src/components/modal";
 import Content from "@/src/components/page-content";
 import UtilityBar from "@/src/components/utilitybar/UtilityBar";
 import Filter from "@/src/lib/filters";
 import Sort from "@/src/lib/sort";
-import React, { useState } from "react";
-import Modal from "@/src/components/modal";
-import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
 import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
-import { useSearchParams } from "next/navigation";
-import ProfileTable from "./(components)/ProfileTable";
+import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
 import { Profile } from "@/src/models/types/Profiles";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import CreatProfileForm from "./(components)/CreateProfileForm";
-import UpdateProfileForm from "./(components)/UpdateProfileForm";
 import DeleteProfile from "./(components)/DeleteProfile";
+import ProfileTable from "./(components)/ProfileTable";
+import UpdateProfileForm from "./(components)/UpdateProfileForm";
 
 interface UserPageProps {
   data: Profile[];

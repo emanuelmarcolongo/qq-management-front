@@ -35,3 +35,17 @@ export const userLoginSchema = z.object({
 export const passwordResetRequestSchema = z.object({
   email: z.string({ message: "Email é obrigatório" }).email("Email inválido"),
 });
+
+export const passwordResetSchema = z
+  .object({
+    password: z
+      .string({ message: "A senha é obrigatória" })
+      .min(5, "A senha deve conter pelo menos 5 caracteres"),
+    confirmPassword: z
+      .string({ message: "A senha é obrigatória" })
+      .min(5, "A senha deve conter pelo menos 5 caracteres"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "As senhas não coincidem",
+    path: ["confirmPassword"],
+  });

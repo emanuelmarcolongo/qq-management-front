@@ -1,5 +1,6 @@
 "use client";
 
+import Modal from "@/src/components/modal";
 import Content from "@/src/components/page-content";
 import {
   Accordion,
@@ -7,24 +8,23 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/src/components/ui/accordion";
-import { DetailedProfile } from "@/src/models/types/Profiles";
-import Modal from "@/src/components/modal";
-import CreatProfileModuleForm from "../(components)/CreateProfileModuleForm";
-import { useSearchParams } from "next/navigation";
-import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
-import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
+import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
+import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import { DetailedProfile } from "@/src/models/types/Profiles";
 import {
   ArrowRightLeft,
   GripHorizontal,
   Package,
+  Plus,
   Trash,
-  X,
 } from "lucide-react";
-import DeleteProfileRelation from "../(components)/DeleteProfileRelation";
-import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
-import CreateProfileTransactionForm from "../(components)/CreateProfileTransactionForm";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import CreateProfileFunctionForm from "../(components)/CreateProfileFunctionForm";
+import CreatProfileModuleForm from "../(components)/CreateProfileModuleForm";
+import CreateProfileTransactionForm from "../(components)/CreateProfileTransactionForm";
+import DeleteProfileRelation from "../(components)/DeleteProfileRelation";
 
 type ProfileIdPageProps = {
   profileInfo: DetailedProfile;
@@ -46,8 +46,8 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
 
   return (
     <Content.Root>
-      <div className="lg:w-1/2">
-        <header className="flex w-full lg:3/5 xl:w-2/5 items-center  justify-between   mb-10">
+      <div className="">
+        <header className="flex w-full items-center  justify-between   mb-10">
           <div>
             <Content.Title title={`Perfil - ${name}`} />
           </div>
@@ -64,7 +64,9 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
             <Link
               href={`/dashboard/profiles/${profileInfo.id}?add=true&type=module`}
             >
-              <Button className="drop-shadow-lg">Adicionar módulo</Button>
+              <Button className="drop-shadow-lg">
+                <Plus></Plus>Vincular módulo
+              </Button>
             </Link>
           </div>
 
@@ -76,36 +78,34 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
           {modules.length > 0 &&
             modules.map((module) => (
               <div key={module.name}>
-                <Accordion
-                  className="border  border-inputBorder rounded-sm "
-                  type="single"
-                  collapsible
-                >
+                <Accordion className=" " type="single" collapsible>
                   <AccordionItem
                     className="drop-shadow-xl"
                     value={`module-${module.id}`}
                   >
-                    <AccordionTrigger className=" [&[data-state=open]]:bg-primary rounded-sm [&[data-state=open]]:text-white  p-2 text-base font-semibold ">
+                    <AccordionTrigger className=" [&[data-state=open]]:bg-primary rounded-sm items-center [&[data-state=open]]:text-white  p-2 text-base font-semibold ">
                       <div className="flex justify-between w-full">
                         <div className="flex gap-2">
                           <Package /> {module.name}
                         </div>
 
-                        <Link
-                          href={`/dashboard/profiles/${profileInfo.id}?delete=true&type=module&id=${module.id}`}
-                          className="flex "
-                        >
-                          <Trash className=" rounded-xl  mr-4" />
-                        </Link>
+                        <div className="flex  items-center space-x-2">
+                          <Link
+                            href={`/dashboard/profiles/${profileInfo.id}?add=true&type=transaction&module_id=${module.id}`}
+                            className="p-1  bg-primary text-slate-50 hover:bg-secondary/90 rounded-md hover:bg-white hover:text-primary"
+                          >
+                            <Plus className=" rounded-xl" />
+                          </Link>
+                          <Link
+                            href={`/dashboard/profiles/${profileInfo.id}?delete=true&type=module&id=${module.id}`}
+                            className="flex "
+                          >
+                            <Trash className=" rounded-xl  mr-4" />
+                          </Link>
+                        </div>
                       </div>
                     </AccordionTrigger>
                     <AccordionContent className="space-y-4 p-2 flex flex-col">
-                      <Link
-                        href={`/dashboard/profiles/${profileInfo.id}?add=true&type=transaction&module_id=${module.id}`}
-                        className=" px-3 py-2.5 bg-primary text-slate-50 hover:bg-primary/90 dark:bg-slate-50 dark:text-primary dark:hover:bg-slate-50/90 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300"
-                      >
-                        Adicionar transação
-                      </Link>
                       {module.transactions.length === 0 && (
                         <div className="flex flex-col items-center justify-center">
                           <h2 className="font-bold text-md mb-2 flex items-center justify-center mt-2">
@@ -125,28 +125,29 @@ const CCProfileIdPage = ({ profileInfo }: ProfileIdPageProps) => {
                             <AccordionItem
                               value={`transaction-${transaction.id}`}
                             >
-                              <AccordionTrigger className="bg-slate-300/10  [&[data-state=open]]:bg-secondary [&[data-state=open]]:text-white   p-2 text-sm font-semibold">
+                              <AccordionTrigger className=" [&[data-state=open]]:bg-secondary [&[data-state=open]]:text-white   p-2 text-sm font-semibold">
                                 <div className="flex justify-between w-full">
                                   <div className="flex gap-2">
                                     <ArrowRightLeft></ArrowRightLeft>
                                     {transaction.name}
                                   </div>
-
-                                  <Link
-                                    href={`/dashboard/profiles/${profileInfo.id}?delete=true&type=transaction&id=${transaction.id}`}
-                                    className="flex "
-                                  >
-                                    <Trash className=" rounded-xl  mr-4" />
-                                  </Link>
+                                  <div className="flex space-x-2 items-center justify-center">
+                                    <Link
+                                      href={`/dashboard/profiles/${profileInfo.id}?add=true&type=function&transaction_id=${transaction.id}`}
+                                      className="p-1  bg-secondary text-slate-50 hover:bg-secondary/90 rounded-md hover:bg-white hover:text-secondary"
+                                    >
+                                      <Plus></Plus>
+                                    </Link>
+                                    <Link
+                                      href={`/dashboard/profiles/${profileInfo.id}?delete=true&type=transaction&id=${transaction.id}`}
+                                      className="flex "
+                                    >
+                                      <Trash className=" rounded-xl  " />
+                                    </Link>
+                                  </div>
                                 </div>
                               </AccordionTrigger>
                               <AccordionContent className="space-y-4 p-2 flex flex-col">
-                                <Link
-                                  href={`/dashboard/profiles/${profileInfo.id}?add=true&type=function&transaction_id=${transaction.id}`}
-                                  className=" px-3 py-2.5 bg-secondary mt-2 text-slate-50 hover:bg-secondary/90 dark:bg-slate-50 dark:text-primary dark:hover:bg-slate-50/90 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300"
-                                >
-                                  Adicionar Função
-                                </Link>
                                 {transaction.functions.length === 0 && (
                                   <h2 className="font-bold text-md mb-2 flex items-center justify-center mt-2">
                                     Não há funções acessíveis

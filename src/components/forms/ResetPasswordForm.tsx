@@ -18,27 +18,41 @@ import { useToast } from "@/src/components/ui/use-toast";
 import authService from "@/src/services/AuthService";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import Link from "next/link";
-import { passwordResetRequestSchema } from "../../models/validation";
+import { useRouter } from "next/navigation";
+import { passwordResetSchema } from "../../models/validation";
 
-const RequestPasswordResetForm = () => {
+interface PasswordResetFormProps {
+  token: string;
+}
+
+const PasswordResetForm = ({ token }: PasswordResetFormProps) => {
+  const router = useRouter();
   const { toast, dismiss } = useToast();
-  const form = useForm<z.infer<typeof passwordResetRequestSchema>>({
-    resolver: zodResolver(passwordResetRequestSchema),
+  const form = useForm<z.infer<typeof passwordResetSchema>>({
+    resolver: zodResolver(passwordResetSchema),
   });
 
-  const onSubmit = async (data: z.infer<typeof passwordResetRequestSchema>) => {
+  const onSubmit = async (data: z.infer<typeof passwordResetSchema>) => {
+    const passwordResetData = {
+      token,
+      password: data.password,
+    };
     try {
-      const requestPasswordReset = await authService.requestPasswordReset(data);
+      const requestPasswordReset = await authService.resetPassword(
+        passwordResetData
+      );
       const { id } = toast({
         description: (
           <div className="flex space-x-4">
             <CheckCircle color="#11945A" />
-            <p>Requisição feita com sucesso! Confira seu e-mail</p>
+            <p>Senha redefinida com sucesso!</p>
           </div>
         ),
       });
+
+      router.push("/");
     } catch (error) {
-      let message = "Erro ao solicitar redefinição de senha";
+      let message = "Erro ao redefinir senha";
       if (error instanceof Error) {
         message = error.message;
       }
@@ -53,6 +67,8 @@ const RequestPasswordResetForm = () => {
         ),
       });
     }
+
+    router.refresh();
   };
 
   return (
@@ -62,9 +78,8 @@ const RequestPasswordResetForm = () => {
           Redefina sua senha
         </h1>
 
-        <h2 className="mb-12 text-textColor text-sm">
-          Informe o e-mail associado à sua conta para receber um link de
-          redefinição de senha
+        <h2 className="mb-12 text-textColor text-sm self-start">
+          Digite a sua nova senha e confirme!
         </h2>
         <Form {...form}>
           <form
@@ -73,10 +88,25 @@ const RequestPasswordResetForm = () => {
           >
             <FormField
               control={form.control}
-              name="email"
+              name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>E-mail</FormLabel>
+                  <FormLabel>Senha</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirmar Senha</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -102,4 +132,4 @@ const RequestPasswordResetForm = () => {
   );
 };
 
-export default RequestPasswordResetForm;
+export default PasswordResetForm;
