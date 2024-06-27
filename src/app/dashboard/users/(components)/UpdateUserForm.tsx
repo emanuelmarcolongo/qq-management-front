@@ -1,9 +1,5 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/src/components/ui/button";
 import {
   Form,
@@ -14,6 +10,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
+import { Input } from "@/src/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -22,15 +19,18 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { useToast } from "@/src/components/ui/use-toast";
-import { registerUserSchema } from "../../../../models/validation";
-import { Input } from "@/src/components/ui/input";
-import { AlertCircle, CheckCircle, X } from "lucide-react";
 import { Profile } from "@/src/models/types/Profiles";
+import { UserWithProfile } from "@/src/models/types/User";
 import ProfilesService from "@/src/services/ProfileService";
 import UserService from "@/src/services/UserService";
-import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, CheckCircle, LoaderCircle, X } from "lucide-react";
 import Link from "next/link";
-import { UserWithProfile } from "@/src/models/types/User";
+import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { registerUserSchema } from "../../../../models/validation";
 
 type UpdateUserFormProps = {
   userInfo: UserWithProfile;
@@ -49,6 +49,10 @@ const UpdateUserForm = ({ userInfo }: UpdateUserFormProps) => {
       username: userInfo.username,
     },
   });
+
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const onSubmit = async (data: z.infer<typeof registerUserSchema>) => {
     try {
@@ -181,7 +185,11 @@ const UpdateUserForm = ({ userInfo }: UpdateUserFormProps) => {
             )}
           />
 
-          <Suspense fallback={<p>Carregando...</p>}>
+          <Suspense
+            fallback={
+              <LoaderCircle className="animate-spin self-center align-middle mr-4" />
+            }
+          >
             <FormField
               control={form.control}
               name="profile_id"
@@ -215,7 +223,10 @@ const UpdateUserForm = ({ userInfo }: UpdateUserFormProps) => {
               )}
             />
           </Suspense>
-          <Button className="w-full" type="submit">
+          <Button disabled={isSubmitting} className="w-full" type="submit">
+            {isSubmitting && (
+              <LoaderCircle className="animate-spin self-center align-middle mr-4" />
+            )}
             Atualizar
           </Button>
         </form>

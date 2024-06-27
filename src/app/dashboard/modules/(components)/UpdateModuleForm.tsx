@@ -1,9 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/src/components/ui/button";
 import {
   Form,
@@ -13,16 +9,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
-import { useToast } from "@/src/components/ui/use-toast";
-import { createModuleSchema } from "@/src/models/validation/module";
 import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
-import { AlertCircle, CheckCircle, X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import ModulesService from "@/src/services/ModulesService";
+import { useToast } from "@/src/components/ui/use-toast";
 import { ModulesData } from "@/src/models/types/Modules";
-import ModuleStylePreview from "./ModuleStylePreview";
+import { createModuleSchema } from "@/src/models/validation/module";
+import ModulesService from "@/src/services/ModulesService";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, CheckCircle, LoaderCircle, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import ModuleStylePreview from "./ModuleStylePreview";
 
 interface CreateModuleFormProps {
   moduleInfo: ModulesData;
@@ -40,6 +40,10 @@ const UpdateModuleForm = ({ moduleInfo }: CreateModuleFormProps) => {
       text_color: moduleInfo.text_color || "#ffffff",
     },
   });
+
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const [modulePreview, setModulePreview] = useState({
     name: moduleInfo.name || "Meu Módulo",
@@ -171,8 +175,11 @@ const UpdateModuleForm = ({ moduleInfo }: CreateModuleFormProps) => {
 
           <ModuleStylePreview modulePreview={modulePreview} />
 
-          <Button className="w-full" type="submit">
-            Atualizar
+          <Button disabled={isSubmitting} className="w-full" type="submit">
+            {isSubmitting && (
+              <LoaderCircle className="animate-spin self-center align-middle mr-4" />
+            )}
+            Editar
           </Button>
         </form>
       </Form>

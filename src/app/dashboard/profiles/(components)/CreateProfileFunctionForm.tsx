@@ -1,8 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/src/components/ui/button";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import {
@@ -15,17 +12,16 @@ import {
   FormMessage,
 } from "@/src/components/ui/form";
 import { useToast } from "@/src/components/ui/use-toast";
-import {
-  createProfileFunctionLink,
-  createProfileModuleLink,
-  createProfileTransactionLink,
-} from "@/src/models/validation";
-import { AlertCircle, CheckCircle, X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { createProfileFunctionLink } from "@/src/models/validation";
 import ProfilesService from "@/src/services/ProfileService";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, CheckCircle, LoaderCircle, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Function, ModulesData, Transaction } from "@/src/models/types/Modules";
+import { Function } from "@/src/models/types/Modules";
 import { Suspense, useEffect, useState } from "react";
 
 interface CreateProfileFunctionFormProps {
@@ -45,6 +41,10 @@ const CreateProfileFunctionForm = ({
       functionIds: [],
     },
   });
+
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const [availableFunctions, setAvailableFunctions] = useState<Function[]>([]);
 
@@ -187,7 +187,10 @@ const CreateProfileFunctionForm = ({
             )}
           />
           {availableFunctions.length > 0 ? (
-            <Button className="w-full" type="submit">
+            <Button disabled={isSubmitting} className="w-full" type="submit">
+              {isSubmitting && (
+                <LoaderCircle className="animate-spin self-center align-middle mr-4" />
+              )}
               Vincular
             </Button>
           ) : (

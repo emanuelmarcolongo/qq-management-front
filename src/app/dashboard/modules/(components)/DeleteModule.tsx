@@ -1,14 +1,13 @@
 "use client";
 
+import Card from "@/src/components/card";
 import { Button } from "@/src/components/ui/button";
 import { useToast } from "@/src/components/ui/use-toast";
-import { AlertCircle, CheckCircle, Package, X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import ModulesService from "@/src/services/ModulesService";
 import { ModulesData } from "@/src/models/types/Modules";
-import ModuleStylePreview from "./ModuleStylePreview";
+import ModulesService from "@/src/services/ModulesService";
+import { AlertCircle, CheckCircle, Package } from "lucide-react";
 import Link from "next/link";
-import Card from "@/src/components/card";
+import { useRouter } from "next/navigation";
 
 interface CreateModuleFormProps {
   moduleInfo: ModulesData;
@@ -17,12 +16,6 @@ interface CreateModuleFormProps {
 const DeleteModule = ({ moduleInfo }: CreateModuleFormProps) => {
   const router = useRouter();
   const { toast, dismiss } = useToast();
-
-  const moduleTagInfo = {
-    name: moduleInfo.name,
-    text_color: moduleInfo.text_color,
-    background_color: moduleInfo.background_color,
-  };
 
   const onSubmit = async () => {
     try {

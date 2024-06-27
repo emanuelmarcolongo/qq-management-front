@@ -11,11 +11,11 @@ import {
 } from "@/src/components/ui/form";
 import { Input } from "@/src/components/ui/input";
 import { useToast } from "@/src/components/ui/use-toast";
-import { setCookies } from "@/src/utils/cookies/auth";
 import { userLoginSchema } from "@/src/models/validation";
 import authService from "@/src/services/AuthService";
+import { setCookies } from "@/src/utils/cookies/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle, CheckCircle } from "lucide-react";
+import { AlertCircle, CheckCircle, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -27,6 +27,10 @@ const UserLoginForm = () => {
   const form = useForm<z.infer<typeof userLoginSchema>>({
     resolver: zodResolver(userLoginSchema),
   });
+
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const onSubmit = async (data: z.infer<typeof userLoginSchema>) => {
     try {
@@ -107,7 +111,10 @@ const UserLoginForm = () => {
               )}
             />
 
-            <Button className="w-full" type="submit">
+            <Button disabled={isSubmitting} className="w-full" type="submit">
+              {isSubmitting && (
+                <LoaderCircle className="animate-spin self-center align-middle mr-4" />
+              )}
               Entrar
             </Button>
           </form>

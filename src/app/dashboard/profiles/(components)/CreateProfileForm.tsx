@@ -1,8 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/src/components/ui/button";
 import {
   Form,
@@ -12,14 +9,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
+import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
 import { useToast } from "@/src/components/ui/use-toast";
 import { createProfileSchema } from "@/src/models/validation";
-import { Input } from "@/src/components/ui/input";
-import { AlertCircle, CheckCircle, X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 import ProfilesService from "@/src/services/ProfileService";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, CheckCircle, LoaderCircle, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const CreatProfileForm = () => {
   const router = useRouter();
@@ -31,6 +31,9 @@ const CreatProfileForm = () => {
       description: "",
     },
   });
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const onSubmit = async (data: z.infer<typeof createProfileSchema>) => {
     try {
@@ -66,6 +69,11 @@ const CreatProfileForm = () => {
   return (
     <section className="w-[400px]  max-h-[700px]  border border-inputBorder p-8 rounded-md shadow-2xl flex flex-col items-center jusitfy-center bg-white overflow-y-auto text-sm">
       <div className="flex justify-between w-full">
+        {isSubmitting && (
+          <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
+            ADICIONANDO PERFIL
+          </h1>
+        )}
         <h1 className="self-start font-bold  text-textColor mb-6 text-xl">
           Adicionar Perfil
         </h1>
@@ -112,7 +120,10 @@ const CreatProfileForm = () => {
             )}
           />
 
-          <Button className="w-full" type="submit">
+          <Button disabled={isSubmitting} className="w-full" type="submit">
+            {isSubmitting && (
+              <LoaderCircle className="animate-spin self-center align-middle mr-4" />
+            )}
             Cadastrar
           </Button>
         </form>

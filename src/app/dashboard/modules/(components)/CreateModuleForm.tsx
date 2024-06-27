@@ -1,8 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/src/components/ui/button";
 import {
   Form,
@@ -12,15 +9,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
-import { useToast } from "@/src/components/ui/use-toast";
-import { createModuleSchema } from "../../../../models/validation";
 import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
-import { AlertCircle, CheckCircle, X } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useToast } from "@/src/components/ui/use-toast";
 import ModulesService from "@/src/services/ModulesService";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, CheckCircle, LoaderCircle, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { createModuleSchema } from "../../../../models/validation";
 
 const CreateModuleForm = () => {
   const router = useRouter();
@@ -32,6 +32,10 @@ const CreateModuleForm = () => {
       text_color: "#ffffff",
     },
   });
+
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const [modulePreview, setModulePreview] = useState({
     name: "Meu Módulo",
@@ -163,7 +167,10 @@ const CreateModuleForm = () => {
 
           <ModuleStylePreview modulePreview={modulePreview} />
 
-          <Button className="w-full" type="submit">
+          <Button disabled={isSubmitting} className="w-full" type="submit">
+            {isSubmitting && (
+              <LoaderCircle className="animate-spin self-center align-middle mr-4" />
+            )}
             Cadastrar
           </Button>
         </form>

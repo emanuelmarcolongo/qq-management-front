@@ -16,7 +16,7 @@ import { z } from "zod";
 import { Input } from "@/src/components/ui/input";
 import { useToast } from "@/src/components/ui/use-toast";
 import authService from "@/src/services/AuthService";
-import { AlertCircle, CheckCircle } from "lucide-react";
+import { AlertCircle, CheckCircle, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { passwordResetSchema } from "../../models/validation";
@@ -31,6 +31,10 @@ const PasswordResetForm = ({ token }: PasswordResetFormProps) => {
   const form = useForm<z.infer<typeof passwordResetSchema>>({
     resolver: zodResolver(passwordResetSchema),
   });
+
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const onSubmit = async (data: z.infer<typeof passwordResetSchema>) => {
     const passwordResetData = {
@@ -116,7 +120,10 @@ const PasswordResetForm = ({ token }: PasswordResetFormProps) => {
               )}
             />
 
-            <Button className="w-full" type="submit">
+            <Button disabled={isSubmitting} className="w-full" type="submit">
+              {isSubmitting && (
+                <LoaderCircle className="animate-spin self-center align-middle mr-4" />
+              )}
               Continuar
             </Button>
           </form>
