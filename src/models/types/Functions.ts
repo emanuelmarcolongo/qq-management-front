@@ -20,3 +20,12 @@ export interface FunctionWithModule {
   updated_at: Date;
   module: ModulesData;
 }
+
+export interface MappedFunction {
+  id: number;
+  name: string;
+  description: string;
+  module: string;
+  module_id: number;
+  created_at: Date;
+}

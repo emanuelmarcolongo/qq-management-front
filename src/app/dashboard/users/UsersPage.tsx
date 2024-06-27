@@ -14,6 +14,10 @@ import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
 import { useSearchParams } from "next/navigation";
 import UpdateUserForm from "./(components)/UpdateUserForm";
 import DeleteUser from "./(components)/DeleteUser";
+import { Button } from "@/src/components/ui/button";
+import { generateExcel } from "@/src/lib/file-saver";
+import { mapUserData } from "@/src/utils/mappers/mapUserData";
+import { Download } from "lucide-react";
 
 interface UserPageProps {
   data: UserWithProfile[];
@@ -54,6 +58,19 @@ const CCUsersPage = ({ data }: UserPageProps) => {
     <Content.Root>
       <Content.Title title="Usuários" />
       <UtilityBar config={UserUtilityBarConfig} setSearch={setSearch} />
+      <Button
+        className="mb-10 bg-secondary hover:bg-secondary/80"
+        onClick={() =>
+          generateExcel(
+            mapUserData(data),
+            "Relatório de Usuários",
+            "userReport.xlsx"
+          )
+        }
+      >
+        <Download className="mr-4" />
+        Baixar Relatório
+      </Button>
       <UserTable users={sortedUsers} />
 
       {addModalParams && (

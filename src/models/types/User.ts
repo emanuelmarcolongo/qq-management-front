@@ -33,3 +33,13 @@ export interface CreateUserData {
   registration: string;
   profile_id: number;
 }
+
+export interface MappedUser {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  registration: string;
+  profile: string; // Nome do perfil
+  created_at: Date;
+}

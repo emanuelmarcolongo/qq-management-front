@@ -8,6 +8,10 @@ import { FunctionWithModule } from "@/src/models/types/Functions";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import FunctionsTable from "./(components)/FunctionTable";
+import { Button } from "@/src/components/ui/button";
+import { generateExcel } from "@/src/lib/file-saver";
+import { mapFunctionData } from "@/src/utils/mappers/mapFunctionData";
+import { Download } from "lucide-react";
 
 interface FunctionsPageProps {
   data: FunctionWithModule[];
@@ -36,6 +40,19 @@ const CCFunctionsPage = ({ data }: FunctionsPageProps) => {
     <Content.Root>
       <Content.Title title="Funções" />
       <UtilityBar config={UserUtilityBarConfig} setSearch={setSearch} />
+      <Button
+        className="mb-10 bg-secondary hover:bg-secondary/80"
+        onClick={() =>
+          generateExcel(
+            mapFunctionData(data),
+            "Relatório de funções",
+            "functionsReport.xlsx"
+          )
+        }
+      >
+        <Download className="mr-4" />
+        Baixar Relatório
+      </Button>
       <FunctionsTable functions={sortedFunctions} />
     </Content.Root>
   );

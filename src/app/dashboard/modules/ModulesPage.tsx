@@ -14,6 +14,9 @@ import CreateModuleForm from "./(components)/CreateModuleForm";
 import { useSearchParams } from "next/navigation";
 import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
 import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import { Button } from "@/src/components/ui/button";
+import { generateExcel } from "@/src/lib/file-saver";
+import { Download } from "lucide-react";
 
 interface ModulesPageProps {
   data: ModulesData[];
@@ -52,6 +55,15 @@ const CCModulesPage = ({ data }: ModulesPageProps) => {
     <Content.Root>
       <Content.Title title="Módulos" />
       <UtilityBar config={UserUtilityBarConfig} setSearch={setSearch} />
+      <Button
+        className="mb-10 bg-secondary hover:bg-secondary/80"
+        onClick={() =>
+          generateExcel(data, "Relatório de modulos", "modulesReport.xlsx")
+        }
+      >
+        <Download className="mr-4" />
+        Baixar Relatório
+      </Button>
       <ModuleTable modules={sortedModules} />
 
       {addModalParams && (

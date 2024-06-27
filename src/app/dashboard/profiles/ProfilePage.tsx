@@ -14,6 +14,9 @@ import CreatProfileForm from "./(components)/CreateProfileForm";
 import DeleteProfile from "./(components)/DeleteProfile";
 import ProfileTable from "./(components)/ProfileTable";
 import UpdateProfileForm from "./(components)/UpdateProfileForm";
+import { Button } from "@/src/components/ui/button";
+import { generateExcel } from "@/src/lib/file-saver";
+import { Download } from "lucide-react";
 
 interface UserPageProps {
   data: Profile[];
@@ -52,6 +55,15 @@ const CCProfilePage = ({ data }: UserPageProps) => {
     <Content.Root>
       <Content.Title title="Perfis" />
       <UtilityBar config={UserUtilityBarConfig} setSearch={setSearch} />
+      <Button
+        className="mb-10 bg-secondary hover:bg-secondary/80"
+        onClick={() =>
+          generateExcel(data, "Relatório de perfis", "profileReport.xlsx")
+        }
+      >
+        <Download className="mr-4" />
+        Baixar Relatório
+      </Button>
       <ProfileTable profiles={sortedProfiles} />
 
       {addModalParams && (

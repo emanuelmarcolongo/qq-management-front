@@ -8,6 +8,10 @@ import { TransactionWithModule } from "@/src/models/types/Transactions";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import TransactionsTable from "./(components)/TransactionTable";
+import { Button } from "@/src/components/ui/button";
+import { generateExcel } from "@/src/lib/file-saver";
+import { Download } from "lucide-react";
+import { mapTransactionData } from "@/src/utils/mappers/mapTransactionData copy";
 
 interface TransactionPageProps {
   data: TransactionWithModule[];
@@ -39,6 +43,19 @@ const CCTransactionsPage = ({ data }: TransactionPageProps) => {
     <Content.Root>
       <Content.Title title="Transações" />
       <UtilityBar config={UserUtilityBarConfig} setSearch={setSearch} />
+      <Button
+        className="mb-10 bg-secondary hover:bg-secondary/80"
+        onClick={() =>
+          generateExcel(
+            mapTransactionData(data),
+            "Relatório de transações",
+            "transactionsReport.xlsx"
+          )
+        }
+      >
+        <Download className="mr-4" />
+        Baixar Relatório
+      </Button>
       <TransactionsTable transactions={sortedTransactions} />
     </Content.Root>
   );
