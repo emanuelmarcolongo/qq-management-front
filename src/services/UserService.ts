@@ -1,4 +1,4 @@
-import { getToken } from "../lib/cookies/auth";
+import { getToken } from "../utils/cookies/auth";
 import { CreateUserData, User, UserWithProfile } from "../models/types/User";
 import createFetchOptions from "./utils/fetchOptions";
 import handleResponse from "./utils/responseHandler";

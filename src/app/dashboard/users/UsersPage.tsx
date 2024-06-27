@@ -3,14 +3,14 @@
 import Content from "@/src/components/page-content";
 import UserTable from "./(components)/UserTable";
 import UtilityBar from "@/src/components/utilitybar/UtilityBar";
-import Filter from "@/src/lib/filters";
-import Sort from "@/src/lib/sort";
+import Filter from "@/src/utils/filters";
+import Sort from "@/src/utils/sort";
 import { UserWithProfile } from "@/src/models/types/User";
 import React, { useState } from "react";
 import Modal from "@/src/components/modal";
 import CreateUserForm from "./(components)/CreateUserForm";
-import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
-import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
+import convertStringToInt from "@/src/utils/converters/ConvertStringToInt";
+import convertStringToBoolean from "@/src/utils/converters/ConvertStringToBool";
 import { useSearchParams } from "next/navigation";
 import UpdateUserForm from "./(components)/UpdateUserForm";
 import DeleteUser from "./(components)/DeleteUser";

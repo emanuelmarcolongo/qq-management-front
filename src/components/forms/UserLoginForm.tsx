@@ -11,7 +11,7 @@ import {
 } from "@/src/components/ui/form";
 import { Input } from "@/src/components/ui/input";
 import { useToast } from "@/src/components/ui/use-toast";
-import { setCookies } from "@/src/lib/cookies/auth";
+import { setCookies } from "@/src/utils/cookies/auth";
 import { userLoginSchema } from "@/src/models/validation";
 import authService from "@/src/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";

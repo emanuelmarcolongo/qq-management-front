@@ -1,5 +1,5 @@
 import Content from "@/src/components/page-content";
-import { getUserInfo } from "@/src/lib/cookies/auth";
+import { getUserInfo } from "@/src/utils/cookies/auth";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 

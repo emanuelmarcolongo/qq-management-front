@@ -2,8 +2,8 @@
 
 import Content from "@/src/components/page-content";
 import UtilityBar from "@/src/components/utilitybar/UtilityBar";
-import Filter from "@/src/lib/filters";
-import Sort from "@/src/lib/sort";
+import Filter from "@/src/utils/filters";
+import Sort from "@/src/utils/sort";
 import React, { useState } from "react";
 import Modal from "@/src/components/modal";
 import { ModulesData } from "@/src/models/types/Modules";
@@ -12,8 +12,8 @@ import UpdateModuleForm from "./(components)/UpdateModuleForm";
 import DeleteModule from "./(components)/DeleteModule";
 import CreateModuleForm from "./(components)/CreateModuleForm";
 import { useSearchParams } from "next/navigation";
-import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
-import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import convertStringToBoolean from "@/src/utils/converters/ConvertStringToBool";
+import convertStringToInt from "@/src/utils/converters/ConvertStringToInt";
 import { Button } from "@/src/components/ui/button";
 import { generateExcel } from "@/src/lib/file-saver";
 import { Download } from "lucide-react";

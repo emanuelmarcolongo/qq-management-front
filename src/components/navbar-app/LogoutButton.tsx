@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteCookies } from "@/src/lib/cookies/auth";
+import { deleteCookies } from "@/src/utils/cookies/auth";
 import { LucideLogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 

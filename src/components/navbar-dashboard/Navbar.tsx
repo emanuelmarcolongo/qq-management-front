@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
 import { DashboardNavigation } from "@/src/constants/navigation";
-import { getUserInfo } from "@/src/lib/cookies/auth";
+import { getUserInfo } from "@/src/utils/cookies/auth";
 import { UserSignInInfo } from "@/src/models/types/Auth";
 import { Menu, View } from "lucide-react";
 import Image from "next/image";

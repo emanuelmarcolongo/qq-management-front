@@ -3,10 +3,10 @@
 import Modal from "@/src/components/modal";
 import Content from "@/src/components/page-content";
 import UtilityBar from "@/src/components/utilitybar/UtilityBar";
-import Filter from "@/src/lib/filters";
-import Sort from "@/src/lib/sort";
-import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
-import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import Filter from "@/src/utils/filters";
+import Sort from "@/src/utils/sort";
+import convertStringToBoolean from "@/src/utils/converters/ConvertStringToBool";
+import convertStringToInt from "@/src/utils/converters/ConvertStringToInt";
 import { Profile } from "@/src/models/types/Profiles";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";

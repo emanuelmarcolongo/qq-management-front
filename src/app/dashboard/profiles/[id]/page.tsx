@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import convertStringToInt from "@/src/utils/converters/ConvertStringToInt";
 import ProfilesService from "@/src/services/ProfileService";
 import CCProfileIdPage from "./ProfileIdPage";
 

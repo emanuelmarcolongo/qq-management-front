@@ -1,4 +1,4 @@
-import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import convertStringToInt from "@/src/utils/converters/ConvertStringToInt";
 import ModulesService from "@/src/services/ModulesService";
 import { Metadata } from "next";
 import ModuleIdPage from "./ModuleIdPage";

@@ -2,8 +2,8 @@
 
 import Content from "@/src/components/page-content";
 import UtilityBar from "@/src/components/utilitybar/UtilityBar";
-import Filter from "@/src/lib/filters";
-import Sort from "@/src/lib/sort";
+import Filter from "@/src/utils/filters";
+import Sort from "@/src/utils/sort";
 import { FunctionWithModule } from "@/src/models/types/Functions";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";

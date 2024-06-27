@@ -1,4 +1,4 @@
-import { getToken } from "../lib/cookies/auth";
+import { getToken } from "../utils/cookies/auth";
 import { Transaction } from "../models/types/Modules";
 import {
   CreateTransaction,

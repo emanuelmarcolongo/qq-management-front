@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import ModuleIdPage from "./ModuleIdPage";
 import ModulesService from "@/src/services/ModulesService";
-import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import convertStringToInt from "@/src/utils/converters/ConvertStringToInt";
 
 export const metadata: Metadata = {
   title: "Quero-Quero | Módulo",

@@ -1,4 +1,4 @@
-import { getToken } from "../lib/cookies/auth";
+import { getToken } from "../utils/cookies/auth";
 import { CreateFunction, FunctionWithModule } from "../models/types/Functions";
 import { Function } from "../models/types/Modules";
 import createFetchOptions from "./utils/fetchOptions";

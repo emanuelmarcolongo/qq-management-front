@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { getUserInfo } from "./lib/cookies/auth";
+import { getUserInfo } from "./utils/cookies/auth";
 
 export async function middleware(request: NextRequest) {
   const acessToken = cookies().get("access_token");

@@ -9,8 +9,8 @@ import {
   AccordionTrigger,
 } from "@/src/components/ui/accordion";
 import { Button } from "@/src/components/ui/button";
-import convertStringToBoolean from "@/src/lib/utils/ConvertStringToBool";
-import convertStringToInt from "@/src/lib/utils/ConvertStringToInt";
+import convertStringToBoolean from "@/src/utils/converters/ConvertStringToBool";
+import convertStringToInt from "@/src/utils/converters/ConvertStringToInt";
 import { DetailedProfile } from "@/src/models/types/Profiles";
 import {
   ArrowRightLeft,
