@@ -10,7 +10,7 @@ const TableCell: React.FC<TableCellProps> = ({
 }) => {
   return (
     <td
-      className={`${className} py-4 px-10 break-words max-w-[180px] `}
+      className={`${className} py-4 px-2 break-words max-w-[180px] `}
       {...rest}
     >
       {children}

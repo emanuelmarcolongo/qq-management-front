@@ -6,11 +6,9 @@ interface TableRootProps {
 
 const TableRoot: React.FC<TableRootProps> = ({ children }) => {
   return (
-    <div className="w-full">
-      <table className="w-full text-sm drop-shadow-sm mb-4 rounded-md">
-        {children}
-      </table>
-    </div>
+    <table className="w-full text-sm drop-shadow-sm mb-4 rounded-md">
+      {children}
+    </table>
   );
 };
 
