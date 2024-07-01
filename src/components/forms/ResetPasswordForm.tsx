@@ -97,7 +97,7 @@ const PasswordResetForm = ({ token }: PasswordResetFormProps) => {
                 <FormItem>
                   <FormLabel>Senha</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input type="password" {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -112,7 +112,7 @@ const PasswordResetForm = ({ token }: PasswordResetFormProps) => {
                 <FormItem>
                   <FormLabel>Confirmar Senha</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input type="password" {...field} />
                   </FormControl>
 
                   <FormMessage />
