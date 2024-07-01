@@ -1,5 +1,5 @@
-import { getToken } from "../utils/cookies/auth";
 import { CreateUserData, User, UserWithProfile } from "../models/types/User";
+import { getToken } from "../utils/cookies/auth";
 import createFetchOptions from "./utils/fetchOptions";
 import handleResponse from "./utils/responseHandler";
 
@@ -15,7 +15,7 @@ const getUsers = async (): Promise<UserWithProfile[]> => {
 const postUser = async (data: CreateUserData): Promise<any> => {
   const token = await getToken();
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/register`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/register`,
     createFetchOptions("POST", token, data)
   );
   return handleResponse<any>(response);
